@@ -310,3 +310,13 @@ undefined = 1
 1. RegularExpressionBody 结束符号的处理 /
 1. RegularExpressionBody 支持 []
 1. '//' 被认为是单行注释，空正则表达式使用 /(?:)/
+
+https://zhuanlan.zhihu.com/p/138919691
+https://www.zhihu.com/column/chendabing
+https://stackoverflow.com/questions/45722082/what-does-inputelementdiv-stand-for-in-ecmascript-lexical-grammar#:~:text=The%20InputElementRegExpOrTemplateTail%20goal%20is%20used%20in%20syntactic%20grammar,neither%20a%20TemplateMiddle%2C%20nor%20a%20TemplateTail%20is%20permitted.
+
+```
+/[/]/.test("/")
+```
+
+https://esprima.readthedocs.io/en/latest/lexical-analysis.html
