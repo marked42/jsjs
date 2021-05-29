@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`compound example should parse multiple tokens 1`] = `
+Array [
+  IdentifierToken {
+    "location": Object {
+      "end": Object {
+        "col": 3,
+        "row": 0,
+      },
+      "from": 0,
+      "start": Object {
+        "col": 0,
+        "row": 0,
+      },
+      "to": 3,
+    },
+    "text": "let",
+  },
+  IdentifierToken {
+    "location": Object {
+      "end": Object {
+        "col": 5,
+        "row": 0,
+      },
+      "from": 4,
+      "start": Object {
+        "col": 4,
+        "row": 0,
+      },
+      "to": 5,
+    },
+    "text": "a",
+  },
+  PunctuatorToken {
+    "location": Object {
+      "end": Object {
+        "col": 7,
+        "row": 0,
+      },
+      "from": 6,
+      "start": Object {
+        "col": 6,
+        "row": 0,
+      },
+      "to": 7,
+    },
+    "text": "=",
+  },
+  NumberToken {
+    "location": Object {
+      "end": Object {
+        "col": 9,
+        "row": 0,
+      },
+      "from": 8,
+      "start": Object {
+        "col": 8,
+        "row": 0,
+      },
+      "to": 9,
+    },
+    "text": "1",
+  },
+  PunctuatorToken {
+    "location": Object {
+      "end": Object {
+        "col": 10,
+        "row": 0,
+      },
+      "from": 9,
+      "start": Object {
+        "col": 9,
+        "row": 0,
+      },
+      "to": 10,
+    },
+    "text": ",",
+  },
+  IdentifierToken {
+    "location": Object {
+      "end": Object {
+        "col": 12,
+        "row": 0,
+      },
+      "from": 11,
+      "start": Object {
+        "col": 11,
+        "row": 0,
+      },
+      "to": 12,
+    },
+    "text": "b",
+  },
+  PunctuatorToken {
+    "location": Object {
+      "end": Object {
+        "col": 14,
+        "row": 0,
+      },
+      "from": 13,
+      "start": Object {
+        "col": 13,
+        "row": 0,
+      },
+      "to": 14,
+    },
+    "text": "=",
+  },
+  StringToken {
+    "location": Object {
+      "end": Object {
+        "col": 20,
+        "row": 0,
+      },
+      "from": 15,
+      "start": Object {
+        "col": 15,
+        "row": 0,
+      },
+      "to": 20,
+    },
+    "text": "\\"str\\"",
+  },
+]
+`;

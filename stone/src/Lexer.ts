@@ -6,6 +6,7 @@ import {
   StringToken,
   Token,
   TokenStream,
+  TokenType,
   WhitespaceToken,
 } from './Token'
 
@@ -46,7 +47,9 @@ export class Lexer extends TokenStream {
       if (token === EOF) {
         break
       }
-      tokens.push(token)
+      if (token.type() !== TokenType.Whitespace) {
+        tokens.push(token)
+      }
     }
     return tokens
   }
@@ -291,6 +294,5 @@ export class Lexer extends TokenStream {
       }
     }
     return text
-    // this.throwTokenError('punctuator')
   }
 }

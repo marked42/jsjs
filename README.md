@@ -87,6 +87,8 @@ U+2029 Paragraph Separator
 
 其他的 Unicode 换行（New Line）或者断行（Line Breaking）符被当做空白符而不是 Line Terminator
 
+其他语言中的换行符划分到空白符中，不做区分，但是 Javascript 中由于可以省略分号，Auto Semi Colon Insertion 会根据两个 Token 之间有没有换行符考虑应该在哪里插入，所以换行符单独划分出来。多行文本注释中如果包含换行符，具有同样的效果。
+
 ### Comment 注释
 
 Single Line Comment

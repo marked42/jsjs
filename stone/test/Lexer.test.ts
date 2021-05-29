@@ -223,26 +223,22 @@ describe('identifier', () => {
 })
 
 describe('whitespace', () => {
-  it.only('should lex whitespace', () => {
-    const identifiers = [' ', '\t']
-    identifiers.forEach((punct) => {
+  it('should lex ignore whitespace', () => {
+    const whitespace = [' ', '\t']
+    whitespace.forEach((punct) => {
       const lexer = new Lexer(punct)
 
       const tokens = lexer.getTokens()
-      expect(tokens).toEqual([
-        new IdentifierToken(punct, {
-          from: 0,
-          to: punct.length,
-          start: {
-            row: 0,
-            col: 0,
-          },
-          end: {
-            row: 0,
-            col: punct.length,
-          },
-        }),
-      ])
+      expect(tokens).toEqual([])
     })
+  })
+})
+
+describe('compound example', () => {
+  it('should parse multiple tokens', () => {
+    const input = 'let a = 1, b = "str"'
+    const lexer = new Lexer(input)
+    const tokens = lexer.getTokens()
+    expect(tokens).toMatchSnapshot()
   })
 })
