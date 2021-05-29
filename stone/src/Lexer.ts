@@ -10,6 +10,7 @@ import {
 } from './Token'
 
 const CHAR_EOF = ''
+const Punctuation_RE = /(\p{P}|=|<|>|&|\||!)/u
 
 export class Lexer extends TokenStream {
   private tokens: Token[] = []
@@ -115,7 +116,7 @@ export class Lexer extends TokenStream {
           match: this.matchString,
         },
         {
-          test: (char: string) => /\p{Punct}/.test(char),
+          test: (char: string) => Punctuation_RE.test(char),
           type: PunctuatorToken,
           match: this.matchPunctuator,
         },
@@ -125,10 +126,6 @@ export class Lexer extends TokenStream {
           match: this.matchWhitespace,
         },
       ]
-      // if (this.peekChar() === CHAR_EOF) {
-      //   this.tokens.push(EOF)
-      //   break
-      // }
 
       for (const option of matches) {
         const { test, type, match } = option
@@ -242,22 +239,26 @@ export class Lexer extends TokenStream {
   private matchString() {
     let text = ''
     text += this.match('"')
-    if (this.peekChar() === '\\') {
-      text += this.nextChar()
-
-      if (this.match(/(n|r|v|t)/)) {
+    while (true) {
+      if (this.peekChar() === '\\') {
         text += this.nextChar()
+
+        // 有效的转义序列
+        if (/("|n|r|v|t)/.test(this.peekChar())) {
+          text += this.nextChar()
+        } else {
+          // 无效的转义序列，例如 \a，转义被忽略，相当于 a
+          text += this.nextChar()
+        }
+      } else if (this.peekChar() === '"') {
+        break
+      } else if (/[\n\r]/.test(this.peekChar())) {
+        throw new Error(
+          `character "${this.peekChar()}" not allowed in string token`
+        )
       } else {
         text += this.nextChar()
       }
-    } else if (this.peekChar() === '"') {
-    } else if (this.match(/[^\n\r\\"]/)) {
-      text += this.nextChar()
-      while (this.match(/[^\n\r\\"]/)) {
-        text += this.nextChar()
-      }
-    } else {
-      this.throwTokenError('string')
     }
 
     text += this.match('"')
@@ -281,9 +282,15 @@ export class Lexer extends TokenStream {
   }
 
   private matchPunctuator() {
-    if (this.match(/\p{Punct}/)) {
-      return this.nextChar()
+    let text = ''
+    while (true) {
+      if (Punctuation_RE.test(this.peekChar())) {
+        text += this.nextChar()
+      } else {
+        break
+      }
     }
-    this.throwTokenError('punctuator')
+    return text
+    // this.throwTokenError('punctuator')
   }
 }

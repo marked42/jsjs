@@ -1,5 +1,10 @@
 import { Lexer } from '../src/Lexer'
-import { NumberToken, StringToken } from '../src/Token'
+import {
+  IdentifierToken,
+  NumberToken,
+  PunctuatorToken,
+  StringToken,
+} from '../src/Token'
 
 describe('number', () => {
   it('should lex decimal integer', () => {
@@ -76,7 +81,7 @@ describe('number', () => {
 })
 
 describe('string', () => {
-  it.only('should lex empty string', () => {
+  it('should lex empty string', () => {
     const input = '""'
     const lexer = new Lexer(input)
 
@@ -94,5 +99,150 @@ describe('string', () => {
         },
       }),
     ])
+  })
+
+  it('should lex normal string', () => {
+    const input = '"a"'
+    const lexer = new Lexer(input)
+
+    expect(lexer.getTokens()).toEqual([
+      new StringToken('"a"', {
+        from: 0,
+        to: 3,
+        start: {
+          row: 0,
+          col: 0,
+        },
+        end: {
+          row: 0,
+          col: 3,
+        },
+      }),
+    ])
+  })
+
+  it('should not allow line terminator ', () => {
+    const input = '"a\n"'
+    const lexer = new Lexer(input)
+
+    expect(() => lexer.getTokens()).toThrow()
+  })
+
+  it.each([
+    [
+      'newline',
+      '"a\\n"',
+      [
+        new StringToken('"a\\n"', {
+          from: 0,
+          to: 5,
+          start: {
+            row: 0,
+            col: 0,
+          },
+          end: {
+            row: 0,
+            col: 5,
+          },
+        }),
+      ],
+    ],
+    [
+      'carriage return',
+      '"a\\r"',
+      [
+        new StringToken('"a\\r"', {
+          from: 0,
+          to: 5,
+          start: {
+            row: 0,
+            col: 0,
+          },
+          end: {
+            row: 0,
+            col: 5,
+          },
+        }),
+      ],
+    ],
+  ])('should lex escape string %s', (name, input, result) => {
+    const lexer = new Lexer(input)
+
+    expect(lexer.getTokens()).toEqual(result)
+  })
+})
+
+describe('punctuator', () => {
+  it('should lex punctuator', () => {
+    const punctuators = ['*', '==', '<=', '=', '>=', '!=', '&&', '||']
+    punctuators.forEach((punct) => {
+      const lexer = new Lexer(punct)
+
+      const tokens = lexer.getTokens()
+      expect(tokens).toEqual([
+        new PunctuatorToken(punct, {
+          from: 0,
+          to: punct.length,
+          start: {
+            row: 0,
+            col: 0,
+          },
+          end: {
+            row: 0,
+            col: punct.length,
+          },
+        }),
+      ])
+    })
+  })
+})
+
+describe('identifier', () => {
+  it('should lex identifier', () => {
+    const identifiers = ['_', 'a', '_a']
+    identifiers.forEach((punct) => {
+      const lexer = new Lexer(punct)
+
+      const tokens = lexer.getTokens()
+      expect(tokens).toEqual([
+        new IdentifierToken(punct, {
+          from: 0,
+          to: punct.length,
+          start: {
+            row: 0,
+            col: 0,
+          },
+          end: {
+            row: 0,
+            col: punct.length,
+          },
+        }),
+      ])
+    })
+  })
+})
+
+describe('whitespace', () => {
+  it.only('should lex whitespace', () => {
+    const identifiers = [' ', '\t']
+    identifiers.forEach((punct) => {
+      const lexer = new Lexer(punct)
+
+      const tokens = lexer.getTokens()
+      expect(tokens).toEqual([
+        new IdentifierToken(punct, {
+          from: 0,
+          to: punct.length,
+          start: {
+            row: 0,
+            col: 0,
+          },
+          end: {
+            row: 0,
+            col: punct.length,
+          },
+        }),
+      ])
+    })
   })
 })

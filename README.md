@@ -322,3 +322,46 @@ https://stackoverflow.com/questions/45722082/what-does-inputelementdiv-stand-for
 https://esprima.readthedocs.io/en/latest/lexical-analysis.html
 
 1. Jest Config Test Typescript VSCode
+   Token 体系的设计，
+
+类继承体系能
+
+够表达树形的类型关系，
+构造方便
+
+序列化时需要转换为 type 字段标识节点类型。
+
+识别 Token
+
+注意可能存在接受空字符进行状态转换，例如空字符串。
+
+Token 有 raw 原始字符串，rawValue 原始值，value 在解析的过程中需要计算。
+
+两种状态转换的操作
+
+1. match 下一个字符必须等于指定字符，否则抛错
+1. 有些匹配模式要求下一个字符满足要求，不满足直接抛错。
+1. 多条并列的规则最好设计成匹配不同模式的字符串，互相之间能够区分。
+1. peek 首先检查下一个字符是否满足条件，不满足的话尝试其他可能性。
+1. 考虑非法状态，接受了不允许的输入结束，直接抛出给出合适的错误信息。解析 token 时首先考虑画出状态机。
+1. 尽量匹配最长的输入，所以当前规则不满足的时候应该回溯到上一个最长的匹配。
+1. 输入耗尽 EOF 的处理
+
+1. 几种匹配模式对应不同的代码
+   1. 顺序 If 嵌套 if
+   1. 选择 if else if
+   1. 零个或者多个 while 循环
+   1. 一个或者多个 '+' 保证至少有一个
+   1. 是否存在 '?' if 判断
+   1. 取反 if 加 条件取反
+
+从 text 计算 Token 的值
+
+1. number 类型处理 0x 0o 0b 等不同进制
+1. string 类型处理自定义转义字符串。
+
+Regular Expression
+
+1. unicode property name
+   https://tc39.es/ecma262/#table-binary-unicode-properties
+   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes
