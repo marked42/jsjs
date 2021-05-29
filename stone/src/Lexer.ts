@@ -241,7 +241,7 @@ export class Lexer extends TokenStream {
 
   private matchString() {
     let text = ''
-    this.match('"')
+    text += this.match('"')
     if (this.peekChar() === '\\') {
       text += this.nextChar()
 
@@ -250,7 +250,9 @@ export class Lexer extends TokenStream {
       } else {
         text += this.nextChar()
       }
+    } else if (this.peekChar() === '"') {
     } else if (this.match(/[^\n\r\\"]/)) {
+      text += this.nextChar()
       while (this.match(/[^\n\r\\"]/)) {
         text += this.nextChar()
       }
@@ -258,7 +260,7 @@ export class Lexer extends TokenStream {
       this.throwTokenError('string')
     }
 
-    this.match('"')
+    text += this.match('"')
     return text
   }
 
@@ -274,7 +276,7 @@ export class Lexer extends TokenStream {
     }
 
     throw new Error(
-      'failed to match character, expect ${expected}, got ${char}'
+      `failed to match character, expect ${expected}, got ${char}`
     )
   }
 
