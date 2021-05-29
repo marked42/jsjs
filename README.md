@@ -320,3 +320,5 @@ https://stackoverflow.com/questions/45722082/what-does-inputelementdiv-stand-for
 ```
 
 https://esprima.readthedocs.io/en/latest/lexical-analysis.html
+
+1. Jest Config Test Typescript VSCode
