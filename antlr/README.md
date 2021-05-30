@@ -64,8 +64,11 @@ VSCode 编辑器插件
 
 例子 arithmetic expression
 
-1. 使用 visitor 模式完成表达式求值
+1. 使用 visitor 模式完成表达式求值 EvalVisitor
 1. 使用 Listener 和 TokenStreamWriter 重新改写 Token 输入流。
+   1. 使用 Listener 模式与直接将代码嵌入到语法中的方式对比。
+   1. 使用栈和 Listener 实现求值
+   1. 在 Node 节点上保存状态
 1. pushMode/popMode
 1. hiddenChannel 将空白发送到另外的 channel，忽略但是又不删除。
 
