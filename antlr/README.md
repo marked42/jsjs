@@ -93,6 +93,20 @@ ANTLR 语法提供的功能
 
 需要做思维导图概括 ANTLR 的功能
 
+## 语法中嵌套代码
+
+## 错误处理的策略
+
+antlr Chapter 9
+
+1. single-token insertion 当前不匹配的 token 是多余的，下一个 token 是预期的 token，删除当前 token 继续解析。
+1. 当前处理的 token 位置，需要在一个或者多个规则中选取合适的使用，如果没有任何一个规则匹配，可以报错 no viable rule.
+
 典型问题
 
 1. 遍历语法树，JSON 转换为 XML。
+1. 作用域构建，和变量使用（变量不存在）、函数调用检查（不是函数）。
+
+1. ANTLR 给出一个计算器的语法与实现，包括基本的四则运算、括号表达式、变量赋值、运算符结合性、优先级等问题。
+
+Tutorial 《ANTLR By Examples》
