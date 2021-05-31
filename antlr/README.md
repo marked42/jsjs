@@ -92,3 +92,7 @@ ANTLR 语法提供的功能
 1. Punctuation
 
 需要做思维导图概括 ANTLR 的功能
+
+典型问题
+
+1. 遍历语法树，JSON 转换为 XML。

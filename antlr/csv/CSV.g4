@@ -6,7 +6,7 @@ header: row;
 
 row: field (',' field)*;
 
-field: TEXT | STRING |; // allow empty
+field: TEXT #text | STRING #string | #empty; // allow empty
 
 TEXT: ~[,\r\n]+; // 不允许','，换行符，限制在一个field之内
 

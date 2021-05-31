@@ -1,4 +1,4 @@
-// Generated from CSV.g4 by ANTLR 4.9.2
+// Generated from /Users/zhangpenghui/code/jsjs/antlr/csv/CSV.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class CSVParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.9.2", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -106,14 +106,6 @@ public class CSVParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_file; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).enterFile(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).exitFile(this);
-		}
 	}
 
 	public final FileContext file() throws RecognitionException {
@@ -164,14 +156,6 @@ public class CSVParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_header; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).enterHeader(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).exitHeader(this);
-		}
 	}
 
 	public final HeaderContext header() throws RecognitionException {
@@ -206,14 +190,6 @@ public class CSVParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_row; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).enterRow(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).exitRow(this);
-		}
 	}
 
 	public final RowContext row() throws RecognitionException {
@@ -268,37 +244,13 @@ public class CSVParser extends Parser {
 	public static class StringContext extends FieldContext {
 		public TerminalNode STRING() { return getToken(CSVParser.STRING, 0); }
 		public StringContext(FieldContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).enterString(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).exitString(this);
-		}
 	}
 	public static class TextContext extends FieldContext {
 		public TerminalNode TEXT() { return getToken(CSVParser.TEXT, 0); }
 		public TextContext(FieldContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).enterText(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).exitText(this);
-		}
 	}
 	public static class EmptyContext extends FieldContext {
 		public EmptyContext(FieldContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).enterEmpty(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CSVListener ) ((CSVListener)listener).exitEmpty(this);
-		}
 	}
 
 	public final FieldContext field() throws RecognitionException {

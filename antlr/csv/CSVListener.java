@@ -37,13 +37,39 @@ public interface CSVListener extends ParseTreeListener {
 	 */
 	void exitRow(CSVParser.RowContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CSVParser#field}.
+	 * Enter a parse tree produced by the {@code text}
+	 * labeled alternative in {@link CSVParser#field}.
 	 * @param ctx the parse tree
 	 */
-	void enterField(CSVParser.FieldContext ctx);
+	void enterText(CSVParser.TextContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CSVParser#field}.
+	 * Exit a parse tree produced by the {@code text}
+	 * labeled alternative in {@link CSVParser#field}.
 	 * @param ctx the parse tree
 	 */
-	void exitField(CSVParser.FieldContext ctx);
+	void exitText(CSVParser.TextContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code string}
+	 * labeled alternative in {@link CSVParser#field}.
+	 * @param ctx the parse tree
+	 */
+	void enterString(CSVParser.StringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code string}
+	 * labeled alternative in {@link CSVParser#field}.
+	 * @param ctx the parse tree
+	 */
+	void exitString(CSVParser.StringContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code empty}
+	 * labeled alternative in {@link CSVParser#field}.
+	 * @param ctx the parse tree
+	 */
+	void enterEmpty(CSVParser.EmptyContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code empty}
+	 * labeled alternative in {@link CSVParser#field}.
+	 * @param ctx the parse tree
+	 */
+	void exitEmpty(CSVParser.EmptyContext ctx);
 }
