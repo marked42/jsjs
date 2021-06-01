@@ -95,6 +95,50 @@ ANTLR 语法提供的功能
 
 ## 语法中嵌套代码
 
+生成代码的模板如下，可以嵌套代码的地方有 header, member 和每条规则中。
+
+```txt
+<header>
+public class <grammarName>Parser extends Parser {
+<members>
+... }
+
+<!-- 嵌套header和member -->
+@header {
+package tools;
+import java.util.*;
+}
+
+@parser::members {
+  Map<String, Integer> memory = new HashMap<>();
+
+  int eval(int op, int left, int right) {
+    switch (op) {
+      case MUL: return left * right;
+      case DIV: return left / right;
+      case ADD: return left + right;
+      case SUB: return left - right;
+    }
+    return 0;
+  }
+}
+
+// 在规则中使用 {} 嵌套目标语言的任意合法代码语句，使用$开头的变量引用规则对应的token和子规则的数据，通过locals,return
+<!-- 为规则额外的数据，通过a=e的形式为规则的组成部分另起别名，所有的数据都保存在规则对应的RuleContext对象实例中，
+都可以通过$去引用。 -->
+expr
+   locals [int i=0]
+	returns[int v]:
+	ID {
+    String id = $ID.text;
+    $v = memory.getOrDefault(id, 0);
+  }
+	| NUMBER { $v = $NUMBER.int; }
+	| a = expr op = (ADD | SUB) b = expr { $v = eval($a.v, $op.type, $b.v); }
+	| a = expr op = (MUL | DIV) b = expr { $v = eval($a.v, $op.type, $b.v); }
+	| '(' expr ')' { $v = $expr.v; };
+```
+
 ## 错误处理的策略
 
 antlr Chapter 9
