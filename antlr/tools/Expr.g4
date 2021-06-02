@@ -1,6 +1,7 @@
 grammar Expr;
 
 @header {
+package tools;
 import java.util.*;
 }
 
@@ -20,16 +21,21 @@ import java.util.*;
 
 prog: stat+;
 
-stat: expr NEWLINE | ID '=' expr NEWLINE | NEWLINE;
+stat:
+	expr NEWLINE { System.out.println($expr.v); }
+	| ID '=' expr NEWLINE { memory.put($ID.text, $expr.v); }
+	| NEWLINE;
 
-expr:
-	expr ADD expr
-	| expr SUB expr
-	| expr MUL expr
-	| expr DIV expr
-	| '(' expr ')'
-	| NUMBER
-	| expr '/' expr;
+expr
+	returns[int v]:
+	ID {
+    String id = $ID.text;
+    $v = memory.getOrDefault(id, 0);
+  }
+	| NUMBER { $v = $NUMBER.int; }
+	| a = expr op = (ADD | SUB) b = expr { $v = eval($a.v, $op.type, $b.v); }
+	| a = expr op = (MUL | DIV) b = expr { $v = eval($a.v, $op.type, $b.v); }
+	| '(' expr ')' { $v = $expr.v; };
 
 MUL: '*';
 DIV: '/';

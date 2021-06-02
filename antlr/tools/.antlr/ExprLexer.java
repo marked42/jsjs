@@ -1,5 +1,6 @@
-// Generated from /Users/penghui/coding/jsjs/antlr/expr/Expr.g4 by ANTLR 4.8
+// Generated from /Users/penghui/coding/jsjs/antlr/tools/Expr.g4 by ANTLR 4.8
 
+package tools;
 import java.util.*;
 
 import org.antlr.v4.runtime.Lexer;
