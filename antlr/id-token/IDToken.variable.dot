@@ -1,0 +1,18 @@
+digraph ATN {
+rankdir=LR;
+s5[fontsize=11, label="5", shape=doublecircle, fixedsize=true, width=.6];
+s4[fontsize=11,label="4", shape=circle, fixedsize=true, width=.55, peripheries=1];
+s25[fontsize=11,label="25", shape=circle, fixedsize=true, width=.55, peripheries=1];
+s26[fontsize=11,label="26", shape=circle, fixedsize=true, width=.55, peripheries=1];
+s27[fontsize=11,label="27", shape=circle, fixedsize=true, width=.55, peripheries=1];
+s28[fontsize=11,label="28", shape=circle, fixedsize=true, width=.55, peripheries=1];
+s29[fontsize=11,label="29", shape=circle, fixedsize=true, width=.55, peripheries=1];
+s30[fontsize=11,label="30", shape=circle, fixedsize=true, width=.55, peripheries=1];
+s4 -> s25 [fontname="Times-Italic", label="&epsilon;"];
+s25 -> s26 [fontsize=11, fontname="Courier", arrowsize=.7, label = "'{'", arrowhead = normal];
+s26 -> s27 [fontsize=11, fontname="Courier", arrowsize=.7, label = "action_2:-1", arrowhead = normal];
+s27 -> s28 [fontsize=11, fontname="Courier", arrowsize=.7, label = "ID", arrowhead = normal];
+s28 -> s29 [fontsize=11, fontname="Courier", arrowsize=.7, label = "action_2:-1", arrowhead = normal];
+s29 -> s30 [fontsize=11, fontname="Courier", arrowsize=.7, label = "'}'", arrowhead = normal];
+s30 -> s5 [fontname="Times-Italic", label="&epsilon;"];
+}
