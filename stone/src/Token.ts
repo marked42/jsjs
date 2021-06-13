@@ -20,14 +20,14 @@ interface SourceLocation {
 }
 
 export abstract class Token {
-  constructor(private _text: string, private _location?: SourceLocation) {}
+  constructor(private text: string, private location?: SourceLocation) {}
   abstract type(): TokenType
-  text() {
-    return this._text
+  getText() {
+    return this.text
   }
-  location(): SourceLocation {
-    if (this._location !== void 0) {
-      return this._location
+  getLocation(): SourceLocation {
+    if (this.location !== void 0) {
+      return this.location
     }
     return {
       start: void 0,

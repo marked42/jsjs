@@ -1,8 +1,13 @@
 grammar StoneTest;
 
-program: stateme+;
+program: statement+;
 
-stateme: Number | Identifier | String | Punctuator | Whitespace;
+statement:
+	Number
+	| Identifier
+	| String
+	| Punctuator
+	| Whitespace;
 
 Number: '0' | [1-9][0-9]+;
 
@@ -19,4 +24,4 @@ String: '"' (EscapeSequence | NonEscapeSequence)* '"';
 
 fragment EscapeSequence: '\\';
 
-fragment NonEscapeSequence: ~["\n\r\\];
+fragment NonEscapeSequence: ~["\n\r\\]*;

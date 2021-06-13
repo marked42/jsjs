@@ -18,10 +18,10 @@ public class StoneTestParser extends Parser {
 	public static final int
 		Number=1, Identifier=2, Whitespace=3, Punctuator=4, String=5;
 	public static final int
-		RULE_program = 0, RULE_stateme = 1;
+		RULE_program = 0, RULE_statement = 1;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"program", "stateme"
+			"program", "statement"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -88,11 +88,11 @@ public class StoneTestParser extends Parser {
 	}
 
 	public static class ProgramContext extends ParserRuleContext {
-		public List<StatemeContext> stateme() {
-			return getRuleContexts(StatemeContext.class);
+		public List<StatementContext> statement() {
+			return getRuleContexts(StatementContext.class);
 		}
-		public StatemeContext stateme(int i) {
-			return getRuleContext(StatemeContext.class,i);
+		public StatementContext statement(int i) {
+			return getRuleContext(StatementContext.class,i);
 		}
 		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -114,7 +114,7 @@ public class StoneTestParser extends Parser {
 				{
 				{
 				setState(4);
-				stateme();
+				statement();
 				}
 				}
 				setState(7); 
@@ -134,21 +134,21 @@ public class StoneTestParser extends Parser {
 		return _localctx;
 	}
 
-	public static class StatemeContext extends ParserRuleContext {
+	public static class StatementContext extends ParserRuleContext {
 		public TerminalNode Number() { return getToken(StoneTestParser.Number, 0); }
 		public TerminalNode Identifier() { return getToken(StoneTestParser.Identifier, 0); }
 		public TerminalNode String() { return getToken(StoneTestParser.String, 0); }
 		public TerminalNode Punctuator() { return getToken(StoneTestParser.Punctuator, 0); }
 		public TerminalNode Whitespace() { return getToken(StoneTestParser.Whitespace, 0); }
-		public StatemeContext(ParserRuleContext parent, int invokingState) {
+		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_stateme; }
+		@Override public int getRuleIndex() { return RULE_statement; }
 	}
 
-	public final StatemeContext stateme() throws RecognitionException {
-		StatemeContext _localctx = new StatemeContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_stateme);
+	public final StatementContext statement() throws RecognitionException {
+		StatementContext _localctx = new StatementContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_statement);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);

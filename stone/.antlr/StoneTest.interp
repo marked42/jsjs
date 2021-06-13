@@ -16,7 +16,7 @@ String
 
 rule names:
 program
-stateme
+statement
 
 
 atn:
