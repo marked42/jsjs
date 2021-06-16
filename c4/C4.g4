@@ -78,18 +78,17 @@ expr:
 
 Id: [a-zA-Z_][a-zA-Z0-9_]*;
 
-String: '"' (~["\\] | SlashSequence)* '"';
+String: '"' (~["\\\r\n] | EscapeSequence | LineContinuation)* '"';
 
-fragment SlashSequence:
-	'\\' (EscapeCharacter | UnescapeCharacter);
-fragment EscapeCharacter: 'n';
-fragment UnescapeCharacter: ~[n];
+fragment LineContinuation: '\\\r\n' | '\\\r' | '\\\n';
+// "\c" unknown escape sequence 其中'\'被忽略
+fragment EscapeSequence: '\\' ['"?abfnrtv\\];
 
-Comment: '//' ~[\n]* -> skip;
+Comment: '//' ~[\r\n]* -> skip;
 
-WS: [ \t\n\r] -> skip;
+Whitespace: [ \t] -> skip;
 
-// Boolean: 'true' | 'false';
+Newline: ('\r''\n'? | '\n') -> skip;
 
 Number:
 	'0'
