@@ -8,12 +8,12 @@ globalDeclaration:
 	| functionDeclaration;
 
 enumDeclaration:
-	'enum' Id? '{' enumConstant (',' enumConstant)* '}';
-enumConstant: Id ('=' Number)?;
+	'enum' Identifier? '{' enumConstant (',' enumConstant)* '}';
+enumConstant: Identifier ('=' NumericLiteral)?;
 
 // 不支持变量声明的同时初始化
 variableDeclaration: type variable (',' variable)*;
-variable: '*'* Id;
+variable: '*'* Identifier;
 
 type: ('int' | 'char');
 
@@ -45,9 +45,9 @@ emptyStatement: ';';
 expressionStatement: expr ';';
 
 expr:
-	Id
-	| Number
-	| String
+	Identifier
+	| NumericLiteral
+	| StringLiteral
 	| 'sizeof' expr
 	| '!' expr
 	| '-' expr
@@ -76,21 +76,22 @@ expr:
 	| expr '|' expr
 	| expr '^' expr;
 
-Id: [a-zA-Z_][a-zA-Z0-9_]*;
+Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 
-String: '"' (~["\\\r\n] | EscapeSequence | LineContinuation)* '"';
+StringLiteral:
+	'"' (~["\\\r\n] | EscapeSequence | LineContinuation)* '"';
 
 fragment LineContinuation: '\\\r\n' | '\\\r' | '\\\n';
 // "\c" unknown escape sequence 其中'\'被忽略
 fragment EscapeSequence: '\\' ['"?abfnrtv\\];
 
-Comment: '//' ~[\r\n]* -> skip;
+LineComment: '//' ~[\r\n]* -> skip;
 
 Whitespace: [ \t] -> skip;
 
-Newline: ('\r''\n'? | '\n') -> skip;
+Newline: ('\r' '\n'? | '\n') -> skip;
 
-Number:
+NumericLiteral:
 	'0'
 	| [1-9][0-9]*
 	| '0' ('x' | 'X') [0-9A-Fa-f]+

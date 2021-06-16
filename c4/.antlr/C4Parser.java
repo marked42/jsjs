@@ -21,7 +21,8 @@ public class C4Parser extends Parser {
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
 		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, 
-		T__38=39, T__39=40, T__40=41, Id=42, String=43, Comment=44, WS=45, Number=46;
+		T__38=39, T__39=40, T__40=41, Identifier=42, StringLiteral=43, LineComment=44, 
+		Whitespace=45, Newline=46, NumericLiteral=47;
 	public static final int
 		RULE_program = 0, RULE_globalDeclaration = 1, RULE_enumDeclaration = 2, 
 		RULE_enumConstant = 3, RULE_variableDeclaration = 4, RULE_variable = 5, 
@@ -56,8 +57,8 @@ public class C4Parser extends Parser {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, "Id", "String", "Comment", "WS", 
-			"Number"
+			null, null, null, null, null, null, "Identifier", "StringLiteral", "LineComment", 
+			"Whitespace", "Newline", "NumericLiteral"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -222,7 +223,7 @@ public class C4Parser extends Parser {
 		public EnumConstantContext enumConstant(int i) {
 			return getRuleContext(EnumConstantContext.class,i);
 		}
-		public TerminalNode Id() { return getToken(C4Parser.Id, 0); }
+		public TerminalNode Identifier() { return getToken(C4Parser.Identifier, 0); }
 		public EnumDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -241,10 +242,10 @@ public class C4Parser extends Parser {
 			setState(52);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==Id) {
+			if (_la==Identifier) {
 				{
 				setState(51);
-				match(Id);
+				match(Identifier);
 				}
 			}
 
@@ -284,8 +285,8 @@ public class C4Parser extends Parser {
 	}
 
 	public static class EnumConstantContext extends ParserRuleContext {
-		public TerminalNode Id() { return getToken(C4Parser.Id, 0); }
-		public TerminalNode Number() { return getToken(C4Parser.Number, 0); }
+		public TerminalNode Identifier() { return getToken(C4Parser.Identifier, 0); }
+		public TerminalNode NumericLiteral() { return getToken(C4Parser.NumericLiteral, 0); }
 		public EnumConstantContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -300,7 +301,7 @@ public class C4Parser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(65);
-			match(Id);
+			match(Identifier);
 			setState(68);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -309,7 +310,7 @@ public class C4Parser extends Parser {
 				setState(66);
 				match(T__4);
 				setState(67);
-				match(Number);
+				match(NumericLiteral);
 				}
 			}
 
@@ -383,7 +384,7 @@ public class C4Parser extends Parser {
 	}
 
 	public static class VariableContext extends ParserRuleContext {
-		public TerminalNode Id() { return getToken(C4Parser.Id, 0); }
+		public TerminalNode Identifier() { return getToken(C4Parser.Identifier, 0); }
 		public VariableContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -412,7 +413,7 @@ public class C4Parser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(85);
-			match(Id);
+			match(Identifier);
 			}
 		}
 		catch (RecognitionException re) {
@@ -640,7 +641,7 @@ public class C4Parser extends Parser {
 			setState(115);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__5) | (1L << T__8) | (1L << T__10) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << Id) | (1L << String) | (1L << Number))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__5) | (1L << T__8) | (1L << T__10) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << Identifier) | (1L << StringLiteral) | (1L << NumericLiteral))) != 0)) {
 				{
 				{
 				setState(112);
@@ -703,9 +704,9 @@ public class C4Parser extends Parser {
 			case T__18:
 			case T__19:
 			case T__20:
-			case Id:
-			case String:
-			case Number:
+			case Identifier:
+			case StringLiteral:
+			case NumericLiteral:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(119);
@@ -792,9 +793,9 @@ public class C4Parser extends Parser {
 			case T__18:
 			case T__19:
 			case T__20:
-			case Id:
-			case String:
-			case Number:
+			case Identifier:
+			case StringLiteral:
+			case NumericLiteral:
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(126);
@@ -940,7 +941,7 @@ public class C4Parser extends Parser {
 			setState(148);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__5) | (1L << T__8) | (1L << T__10) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << Id) | (1L << String) | (1L << Number))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__5) | (1L << T__8) | (1L << T__10) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << Identifier) | (1L << StringLiteral) | (1L << NumericLiteral))) != 0)) {
 				{
 				{
 				setState(145);
@@ -1069,9 +1070,9 @@ public class C4Parser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
-		public TerminalNode Id() { return getToken(C4Parser.Id, 0); }
-		public TerminalNode Number() { return getToken(C4Parser.Number, 0); }
-		public TerminalNode String() { return getToken(C4Parser.String, 0); }
+		public TerminalNode Identifier() { return getToken(C4Parser.Identifier, 0); }
+		public TerminalNode NumericLiteral() { return getToken(C4Parser.NumericLiteral, 0); }
+		public TerminalNode StringLiteral() { return getToken(C4Parser.StringLiteral, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
@@ -1103,22 +1104,22 @@ public class C4Parser extends Parser {
 			setState(184);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case Id:
+			case Identifier:
 				{
 				setState(163);
-				match(Id);
+				match(Identifier);
 				}
 				break;
-			case Number:
+			case NumericLiteral:
 				{
 				setState(164);
-				match(Number);
+				match(NumericLiteral);
 				}
 				break;
-			case String:
+			case StringLiteral:
 				{
 				setState(165);
-				match(String);
+				match(StringLiteral);
 				}
 				break;
 			case T__15:
@@ -1514,7 +1515,7 @@ public class C4Parser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\60\u00fe\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\61\u00fe\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\3\2\6\2,\n\2\r\2\16\2-\3\3\3\3\3\3\5\3"+
@@ -1543,7 +1544,7 @@ public class C4Parser extends Parser {
 		"\60\3\2\2\2\62\61\3\2\2\2\63\5\3\2\2\2\64\66\7\3\2\2\65\67\7,\2\2\66\65"+
 		"\3\2\2\2\66\67\3\2\2\2\678\3\2\2\289\7\4\2\29>\5\b\5\2:;\7\5\2\2;=\5\b"+
 		"\5\2<:\3\2\2\2=@\3\2\2\2><\3\2\2\2>?\3\2\2\2?A\3\2\2\2@>\3\2\2\2AB\7\6"+
-		"\2\2B\7\3\2\2\2CF\7,\2\2DE\7\7\2\2EG\7\60\2\2FD\3\2\2\2FG\3\2\2\2G\t\3"+
+		"\2\2B\7\3\2\2\2CF\7,\2\2DE\7\7\2\2EG\7\61\2\2FD\3\2\2\2FG\3\2\2\2G\t\3"+
 		"\2\2\2HI\5\16\b\2IN\5\f\7\2JK\7\5\2\2KM\5\f\7\2LJ\3\2\2\2MP\3\2\2\2NL"+
 		"\3\2\2\2NO\3\2\2\2O\13\3\2\2\2PN\3\2\2\2QS\7\b\2\2RQ\3\2\2\2SV\3\2\2\2"+
 		"TR\3\2\2\2TU\3\2\2\2UW\3\2\2\2VT\3\2\2\2WX\7,\2\2X\r\3\2\2\2YZ\t\2\2\2"+
@@ -1566,7 +1567,7 @@ public class C4Parser extends Parser {
 		"\u009d\7\20\2\2\u009c\u009e\5(\25\2\u009d\u009c\3\2\2\2\u009d\u009e\3"+
 		"\2\2\2\u009e#\3\2\2\2\u009f\u00a0\7\21\2\2\u00a0%\3\2\2\2\u00a1\u00a2"+
 		"\5(\25\2\u00a2\u00a3\7\21\2\2\u00a3\'\3\2\2\2\u00a4\u00a5\b\25\1\2\u00a5"+
-		"\u00bb\7,\2\2\u00a6\u00bb\7\60\2\2\u00a7\u00bb\7-\2\2\u00a8\u00a9\7\22"+
+		"\u00bb\7,\2\2\u00a6\u00bb\7\61\2\2\u00a7\u00bb\7-\2\2\u00a8\u00a9\7\22"+
 		"\2\2\u00a9\u00bb\5(\25\32\u00aa\u00ab\7\23\2\2\u00ab\u00bb\5(\25\31\u00ac"+
 		"\u00ad\7\24\2\2\u00ad\u00bb\5(\25\30\u00ae\u00af\7\25\2\2\u00af\u00bb"+
 		"\5(\25\27\u00b0\u00b1\7\26\2\2\u00b1\u00bb\5(\25\26\u00b2\u00b3\7\b\2"+
