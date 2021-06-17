@@ -19,6 +19,7 @@ export interface Token {
   source: string
 }
 
+// TODO: refactor as class for simple construction
 export interface StringLiteral extends Token {
   value: string
 }

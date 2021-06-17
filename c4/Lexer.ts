@@ -1,5 +1,11 @@
 import { CharacterStream } from './CharacterStream'
-import { Token, TokenType, Identifier, StringLiteral } from './Token'
+import {
+  Token,
+  TokenType,
+  Identifier,
+  StringLiteral,
+  LineComment,
+} from './Token'
 import * as Errors from './Errors'
 
 export class Lexer {
@@ -15,10 +21,17 @@ export class Lexer {
     return this.charCode
   }
 
+  // TODO: better naming ?
   ungetChar() {
     this.codes.splice(this.codes.length - 1, 1)
     this.stream.prev()
     this.charCode = this.codes[this.codes.length - 1]
+  }
+
+  acceptCharCodes() {
+    const source = String.fromCharCode(...this.codes)
+    this.resetCharCodes()
+    return source
   }
 
   resetCharCodes() {
@@ -38,6 +51,7 @@ export class Lexer {
         if (charCodeIs(this.charCode, '\\')) {
           this.getChar()
           if (charCodeIs(this.charCode, '"')) {
+            // TODO: refactor as char code constant
             value.push('"'.charCodeAt(0))
           } else if (charCodeIs(this.charCode, "'")) {
             value.push("'".charCodeAt(0))
@@ -77,11 +91,9 @@ export class Lexer {
         ) {
           throw Errors.StringLiteralUnescapedNewline
         } else if (charCodeIs(this.charCode, '"')) {
-          const source = String.fromCharCode(...this.codes)
-          this.resetCharCodes()
           return {
             type: TokenType.StringLiteral,
-            source,
+            source: this.acceptCharCodes(),
             value: String.fromCharCode(...value),
           } as StringLiteral
         } else if (this.charCode === CharacterStream.EOF) {
@@ -94,24 +106,30 @@ export class Lexer {
     } else if (isDigit(this.charCode)) {
       // LineComment
     } else if (charCodeIs(this.charCode, '/')) {
-      this.stream.next()
+      this.getChar()
 
-      if (charCodeIs(this.stream.peek(), '/')) {
-        this.stream.next()
-        const codes = []
+      if (charCodeIs(this.charCode, '/')) {
+        const value: number[] = []
         while (true) {
-          const code = this.stream.peek()
-          if (!charCodeIs(code, '\r') && !charCodeIs(code, '\n')) {
-            codes.push(code)
-            this.stream.next()
-          } else {
+          this.getChar()
+          if (
+            charCodeIs(this.charCode, '\r') ||
+            charCodeIs(this.charCode, '\n') ||
+            this.charCode === CharacterStream.EOF
+          ) {
+            if (this.charCode !== CharacterStream.EOF) {
+              this.ungetChar()
+            }
             return {
               type: TokenType.LineComment,
-              source: String.fromCharCode(...codes),
-            }
+              source: this.acceptCharCodes(),
+              value: String.fromCharCode(...value),
+            } as LineComment
           }
+          value.push(this.charCode)
         }
       } else {
+        this.ungetChar()
         return {
           type: TokenType.Operator,
           source: '/',
@@ -173,6 +191,7 @@ export class Lexer {
   }
 }
 
+// TODO: move to charcode utils
 function charCodeIs(code: number, text: string) {
   if (text.length !== 1) {
     throw new Error('text must be single character, got ' + text)
