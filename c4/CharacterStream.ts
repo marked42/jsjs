@@ -20,4 +20,8 @@ export class CharacterStream {
 
     return code
   }
+
+  prev() {
+    this.index -= 1
+  }
 }

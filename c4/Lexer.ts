@@ -1,17 +1,99 @@
 import { CharacterStream } from './CharacterStream'
-import { Token, TokenType, Identifier } from './Token'
+import { Token, TokenType, Identifier, StringLiteral } from './Token'
+import * as Errors from './Errors'
 
 export class Lexer {
+  private codes: number[] = []
+  private charCode: number = -1
   constructor(private stream: CharacterStream) {}
 
+  getChar() {
+    this.charCode = this.stream.next()
+    if (this.charCode !== CharacterStream.EOF) {
+      this.codes.push(this.charCode)
+    }
+    return this.charCode
+  }
+
+  ungetChar() {
+    this.codes.splice(this.codes.length - 1, 1)
+    this.stream.prev()
+    this.charCode = this.codes[this.codes.length - 1]
+  }
+
+  resetCharCodes() {
+    this.codes = []
+    this.charCode = -1
+  }
+
   next(): Token {
-    const charCode = this.stream.peek()
+    this.getChar()
     // StringLiteral
-    if (charCodeIs(charCode, '"')) {
+    if (charCodeIs(this.charCode, '"')) {
+      const value = []
+
+      while (true) {
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '\\')) {
+          this.getChar()
+          if (charCodeIs(this.charCode, '"')) {
+            value.push('"'.charCodeAt(0))
+          } else if (charCodeIs(this.charCode, "'")) {
+            value.push("'".charCodeAt(0))
+          } else if (charCodeIs(this.charCode, 'b')) {
+            value.push('\b'.charCodeAt(0))
+          } else if (charCodeIs(this.charCode, 'f')) {
+            value.push('\f'.charCodeAt(0))
+          } else if (charCodeIs(this.charCode, 'n')) {
+            value.push('\n'.charCodeAt(0))
+          } else if (charCodeIs(this.charCode, 'r')) {
+            value.push('\r'.charCodeAt(0))
+          } else if (charCodeIs(this.charCode, 't')) {
+            value.push('\t'.charCodeAt(0))
+          } else if (charCodeIs(this.charCode, 'v')) {
+            value.push('\v'.charCodeAt(0))
+          } else if (charCodeIs(this.charCode, '\\')) {
+            value.push('\\'.charCodeAt(0))
+          } else if (charCodeIs(this.charCode, '\r')) {
+            value.push('\r'.charCodeAt(0))
+            this.getChar()
+            if (charCodeIs(this.charCode, '\n')) {
+              value.push('\n'.charCodeAt(0))
+            } else {
+              this.ungetChar()
+            }
+          } else if (charCodeIs(this.charCode, '\n')) {
+            value.push('\n'.charCodeAt(0))
+          } else {
+            console.error(
+              'invalid escape sequence \\' + String.fromCharCode(this.charCode)
+            )
+            value.push(this.charCode)
+          }
+        } else if (
+          charCodeIs(this.charCode, '\r') ||
+          charCodeIs(this.charCode, '\n')
+        ) {
+          throw Errors.StringLiteralUnescapedNewline
+        } else if (charCodeIs(this.charCode, '"')) {
+          const source = String.fromCharCode(...this.codes)
+          this.resetCharCodes()
+          return {
+            type: TokenType.StringLiteral,
+            source,
+            value: String.fromCharCode(...value),
+          } as StringLiteral
+        } else if (this.charCode === CharacterStream.EOF) {
+          throw Errors.StringLiteralEndEarly
+        } else {
+          value.push(this.charCode)
+        }
+      }
       // NumericLiteral
-    } else if (isDigit(charCode)) {
+    } else if (isDigit(this.charCode)) {
       // LineComment
-    } else if (charCodeIs(charCode, '/')) {
+    } else if (charCodeIs(this.charCode, '/')) {
       this.stream.next()
 
       if (charCodeIs(this.stream.peek(), '/')) {
@@ -36,13 +118,18 @@ export class Lexer {
         }
       }
       // Whitespace
-    } else if (isWhitespace(charCode)) {
+    } else if (isWhitespace(this.charCode)) {
       const codes = [this.stream.next()]
       while (isWhitespace(this.stream.peek())) {
         codes.push(this.stream.next())
       }
+
+      return {
+        type: TokenType.Whitespace,
+        source: String.fromCharCode(...codes),
+      }
       // Newline
-    } else if (charCodeIs(charCode, '\r')) {
+    } else if (charCodeIs(this.charCode, '\r')) {
       this.stream.next()
       if (charCodeIs(this.stream.peek(), '\n')) {
         this.stream.next()
@@ -56,13 +143,13 @@ export class Lexer {
           source: '\r',
         }
       }
-    } else if (charCodeIs(charCode, '\n')) {
+    } else if (charCodeIs(this.charCode, '\n')) {
       this.stream.next()
       return {
         type: TokenType.Whitespace,
         source: '\n',
       }
-    } else if (isIdentifierStart(charCode)) {
+    } else if (isIdentifierStart(this.charCode)) {
       const codes = [this.stream.next()]
 
       while (true) {
@@ -82,7 +169,7 @@ export class Lexer {
       }
     }
 
-    throw new Error('Unexpected token ' + String.fromCharCode(charCode))
+    throw new Error('Unexpected token ' + String.fromCharCode(this.charCode))
   }
 }
 
