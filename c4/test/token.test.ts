@@ -213,3 +213,29 @@ describe('Whitespace', () => {
     })
   })
 })
+
+describe('Newline', () => {
+  it('recognize \\r\\n as newline', () => {
+    const input = '\r\n'
+    expect(recognizeToken(input)).toEqual({
+      type: TokenType.Newline,
+      source: '\r\n',
+    })
+  })
+
+  it('recognize \\r as newline', () => {
+    const input = '\r'
+    expect(recognizeToken(input)).toEqual({
+      type: TokenType.Newline,
+      source: '\r',
+    })
+  })
+
+  it('recognize \\n as newline', () => {
+    const input = '\n'
+    expect(recognizeToken(input)).toEqual({
+      type: TokenType.Newline,
+      source: '\n',
+    })
+  })
+})

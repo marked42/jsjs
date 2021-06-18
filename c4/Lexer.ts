@@ -148,23 +148,22 @@ export class Lexer {
       }
       // Newline
     } else if (charCodeIs(this.charCode, '\r')) {
-      this.stream.next()
-      if (charCodeIs(this.stream.peek(), '\n')) {
-        this.stream.next()
+      this.getChar()
+      if (charCodeIs(this.charCode, '\n')) {
         return {
           type: TokenType.Newline,
           source: '\r\n',
         }
       } else {
+        this.ungetChar()
         return {
           type: TokenType.Newline,
           source: '\r',
         }
       }
     } else if (charCodeIs(this.charCode, '\n')) {
-      this.stream.next()
       return {
-        type: TokenType.Whitespace,
+        type: TokenType.Newline,
         source: '\n',
       }
     } else if (isIdentifierStart(this.charCode)) {
