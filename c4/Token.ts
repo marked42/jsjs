@@ -7,6 +7,8 @@ export enum TokenType {
   NumericLiteral,
   EOF,
   Operator,
+  // TODO:
+  Keyword,
 }
 
 export const TokenEOF = {
