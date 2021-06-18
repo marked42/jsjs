@@ -239,3 +239,58 @@ describe('Newline', () => {
     })
   })
 })
+
+describe('Identifier', () => {
+  it.each([
+    [
+      'a',
+      {
+        type: TokenType.Identifier,
+        source: 'a',
+        name: 'a',
+      },
+    ],
+    [
+      'A',
+      {
+        type: TokenType.Identifier,
+        source: 'A',
+        name: 'A',
+      },
+    ],
+    [
+      '_',
+      {
+        type: TokenType.Identifier,
+        source: '_',
+        name: '_',
+      },
+    ],
+    [
+      '_a1',
+      {
+        type: TokenType.Identifier,
+        source: '_a1',
+        name: '_a1',
+      },
+    ],
+    [
+      'aa1',
+      {
+        type: TokenType.Identifier,
+        source: 'aa1',
+        name: 'aa1',
+      },
+    ],
+    [
+      'AA1',
+      {
+        type: TokenType.Identifier,
+        source: 'AA1',
+        name: 'AA1',
+      },
+    ],
+  ])('recognize identifier', (input, result) => {
+    expect(recognizeToken(input)).toEqual(result)
+  })
+})

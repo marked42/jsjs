@@ -167,23 +167,16 @@ export class Lexer {
         source: '\n',
       }
     } else if (isIdentifierStart(this.charCode)) {
-      const codes = [this.stream.next()]
+      do {
+        this.getChar()
+      } while (isIdentifierContinue(this.charCode))
 
-      while (true) {
-        const code = this.stream.peek()
-        if (isIdentifierContinue(code)) {
-          codes.push(code)
-          this.stream.next()
-          continue
-        }
-
-        const source = String.fromCharCode(...codes)
-        return {
-          type: TokenType.Identifier,
-          source,
-          name: source,
-        } as Identifier
-      }
+      const source = this.acceptCharCodes()
+      return {
+        type: TokenType.Identifier,
+        source,
+        name: source,
+      } as Identifier
     }
 
     throw new Error('Unexpected token ' + String.fromCharCode(this.charCode))
