@@ -294,3 +294,101 @@ describe('Identifier', () => {
     expect(recognizeToken(input)).toEqual(result)
   })
 })
+
+describe('NumericLiteral', () => {
+  it.each([
+    [
+      'single digit zero',
+      '0',
+      {
+        type: TokenType.NumericLiteral,
+        source: '0',
+        value: 0,
+      },
+    ],
+    [
+      'non-zero single digit',
+      '1',
+      {
+        type: TokenType.NumericLiteral,
+        source: '1',
+        value: 1,
+      },
+    ],
+    [
+      'with multiple decimal digits followed by non digit',
+      '121as',
+      {
+        type: TokenType.NumericLiteral,
+        source: '121',
+        value: 121,
+      },
+    ],
+    [
+      'with multiple decimal digits followed by EOF',
+      '121',
+      {
+        type: TokenType.NumericLiteral,
+        source: '121',
+        value: 121,
+      },
+    ],
+    [
+      'with binary digits',
+      '0b11',
+      {
+        type: TokenType.NumericLiteral,
+        source: '0b11',
+        value: 3,
+      },
+    ],
+    [
+      'throw error with no following binary digit',
+      '0b',
+      Errors.NumericLiteralUnexpectedNonBinaryDigitAfter0B,
+    ],
+    [
+      'with octal digits',
+      '011',
+      {
+        type: TokenType.NumericLiteral,
+        source: '011',
+        value: 9,
+      },
+    ],
+    [
+      'throw error with no following octal digit',
+      '08',
+      Errors.NumericLiteralUnexpectedDigitInOctalInteger,
+    ],
+    [
+      'hex digits',
+      '0x11',
+      {
+        type: TokenType.NumericLiteral,
+        source: '0x11',
+        value: 17,
+      },
+    ],
+    [
+      'hex digits',
+      '0x0a',
+      {
+        type: TokenType.NumericLiteral,
+        source: '0x0a',
+        value: 10,
+      },
+    ],
+    [
+      'throw error with no following hex digit',
+      '0xg',
+      Errors.NumericLiteralUnexpectedNonHexDigitAfter0X,
+    ],
+  ])('recognize numeric literal %s', (_title, input, result) => {
+    if (result instanceof Error) {
+      expect(() => recognizeToken(input)).toThrowError(result)
+    } else {
+      expect(recognizeToken(input)).toEqual(result)
+    }
+  })
+})

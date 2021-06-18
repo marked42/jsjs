@@ -5,6 +5,7 @@ import {
   Identifier,
   StringLiteral,
   LineComment,
+  NumericLiteral,
 } from './Token'
 import * as Errors from './Errors'
 
@@ -23,9 +24,12 @@ export class Lexer {
 
   // TODO: better naming ?
   ungetChar() {
-    this.codes.splice(this.codes.length - 1, 1)
-    this.stream.prev()
-    this.charCode = this.codes[this.codes.length - 1]
+    if (this.charCode !== CharacterStream.EOF) {
+      this.codes.splice(this.codes.length - 1, 1)
+      this.stream.prev()
+      this.charCode = this.codes[this.codes.length - 1]
+    }
+    return this.charCode
   }
 
   acceptCharCodes() {
@@ -104,6 +108,70 @@ export class Lexer {
       }
       // NumericLiteral
     } else if (isDigit(this.charCode)) {
+      let value = getDigitIntegerValue(this.charCode)
+
+      if (isDigitZero(this.charCode)) {
+        this.getChar()
+
+        if (charCodeIs(this.charCode, 'x') || charCodeIs(this.charCode, 'X')) {
+          this.getChar()
+          if (!isHexDigit(this.charCode)) {
+            throw Errors.NumericLiteralUnexpectedNonHexDigitAfter0X
+          }
+          while (true) {
+            value = value * 16 + getDigitIntegerValue(this.charCode)
+
+            this.getChar()
+            if (!isHexDigit(this.charCode)) {
+              this.ungetChar()
+              break
+            }
+          }
+        } else if (
+          charCodeIs(this.charCode, 'b') ||
+          charCodeIs(this.charCode, 'B')
+        ) {
+          this.getChar()
+          if (!isBinaryDigit(this.charCode)) {
+            throw Errors.NumericLiteralUnexpectedNonBinaryDigitAfter0B
+          }
+          while (true) {
+            value = value * 2 + getDigitIntegerValue(this.charCode)
+
+            this.getChar()
+            if (!isBinaryDigit(this.charCode)) {
+              this.ungetChar()
+              break
+            }
+          }
+        } else if (isDigit(this.charCode)) {
+          while (true) {
+            if (!isDigit(this.charCode)) {
+              this.ungetChar()
+              break
+            }
+            if (!isOctalDigit(this.charCode)) {
+              throw Errors.NumericLiteralUnexpectedDigitInOctalInteger
+            }
+            value = value * 8 + getDigitIntegerValue(this.charCode)
+            this.getChar()
+          }
+        }
+      } else {
+        while (true) {
+          this.getChar()
+          if (!isDigit(this.charCode)) {
+            this.ungetChar()
+            break
+          }
+          value = value * 10 + getDigitIntegerValue(this.charCode)
+        }
+      }
+      return {
+        type: TokenType.NumericLiteral,
+        source: this.acceptCharCodes(),
+        value,
+      } as NumericLiteral
       // LineComment
     } else if (charCodeIs(this.charCode, '/')) {
       this.getChar()
@@ -193,6 +261,46 @@ function charCodeIs(code: number, text: string) {
 
 function isDigit(code: number) {
   return code >= '0'.charCodeAt(0) && code <= '9'.charCodeAt(0)
+}
+
+function isDigitZero(code: number) {
+  return code === '0'.charCodeAt(0)
+}
+
+function isBinaryDigit(code: number) {
+  const binaryDigitCodes = ['0', '1'].map((c) => c.charCodeAt(0))
+
+  return binaryDigitCodes.includes(code)
+}
+
+function getDigitIntegerValue(code: number) {
+  if (isLowerCaseAToF(code)) {
+    return code - 'a'.charCodeAt(0) + 10
+  }
+  if (isUpperCaseAToF(code)) {
+    return code - 'A'.charCodeAt(0) + 10
+  }
+  return code - '0'.charCodeAt(0)
+}
+
+function isLowerCaseAToF(code: number) {
+  return code >= 'a'.charCodeAt(0) && code <= 'f'.charCodeAt(0)
+}
+
+function isUpperCaseAToF(code: number) {
+  return code >= 'A'.charCodeAt(0) && code <= 'F'.charCodeAt(0)
+}
+
+function isOctalDigit(code: number) {
+  return code >= '0'.charCodeAt(0) && code <= '7'.charCodeAt(0)
+}
+
+function isHexDigit(code: number) {
+  return (
+    isDigit(code) ||
+    (code >= 'a'.charCodeAt(0) && code <= 'f'.charCodeAt(0)) ||
+    (code >= 'A'.charCodeAt(0) && code <= 'F'.charCodeAt(0))
+  )
 }
 
 function isWhitespace(code: number) {
