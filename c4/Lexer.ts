@@ -137,14 +137,14 @@ export class Lexer {
       }
       // Whitespace
     } else if (isWhitespace(this.charCode)) {
-      const codes = [this.stream.next()]
-      while (isWhitespace(this.stream.peek())) {
-        codes.push(this.stream.next())
+      this.getChar()
+      while (isWhitespace(this.charCode)) {
+        this.getChar()
       }
 
       return {
         type: TokenType.Whitespace,
-        source: String.fromCharCode(...codes),
+        source: this.acceptCharCodes(),
       }
       // Newline
     } else if (charCodeIs(this.charCode, '\r')) {
