@@ -392,3 +392,82 @@ describe('NumericLiteral', () => {
     }
   })
 })
+
+describe('Keyword', () => {
+  it('recognize keyword', () => {
+    const keywords = [
+      ['enum', TokenType.Enum],
+      ['int', TokenType.Int],
+      ['char', TokenType.Char],
+      ['if', TokenType.If],
+      ['else', TokenType.Else],
+      ['return', TokenType.Return],
+      ['while', TokenType.While],
+    ] as const
+
+    keywords.forEach((option) => {
+      const [keyword, type] = option
+
+      expect(recognizeToken(keyword)).toEqual({
+        type,
+        source: keyword,
+      })
+    })
+  })
+})
+
+describe('Operator and Punctuation', () => {
+  it('recognize operator', () => {
+    const keywords = [
+      ['sizeof', TokenType.Sizeof],
+      ['+', TokenType.Plus],
+      ['++', TokenType.Increment],
+      ['+=', TokenType.PlusAssign],
+      ['-', TokenType.Minus],
+      ['--', TokenType.Decrement],
+      ['-=', TokenType.MinusAssign],
+      ['*', TokenType.Star],
+      ['**', TokenType.StarStar],
+      ['*=', TokenType.StarAssign],
+      ['/', TokenType.Div],
+      ['/=', TokenType.DivAssign],
+      ['~', TokenType.Tilde],
+      ['&', TokenType.And],
+      ['&&', TokenType.AndAnd],
+      ['|', TokenType.Or],
+      ['||', TokenType.OrOr],
+      ['^', TokenType.Xor],
+      ['=', TokenType.Assign],
+      ['==', TokenType.Equal],
+      ['!', TokenType.Negate],
+      ['!=', TokenType.NotEqual],
+      ['>', TokenType.Greater],
+      ['>=', TokenType.GreaterEqual],
+      ['<', TokenType.Less],
+      ['<=', TokenType.LessEqual],
+      ['>>', TokenType.RightShift],
+      ['<<', TokenType.LeftShift],
+
+      ['(', TokenType.LeftParen],
+      [')', TokenType.RightParen],
+      ['{', TokenType.LeftBracket],
+      ['}', TokenType.RightBracket],
+      ['[', TokenType.LeftSquare],
+      [']', TokenType.RightSquare],
+      ['?', TokenType.Question],
+      [':', TokenType.Colon],
+      [',', TokenType.Comma],
+      [';', TokenType.SemiColon],
+      ['.', TokenType.Dot],
+    ] as const
+
+    keywords.forEach((option) => {
+      const [keyword, type] = option
+
+      expect(recognizeToken(keyword)).toEqual({
+        type,
+        source: keyword,
+      })
+    })
+  })
+})

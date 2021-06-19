@@ -8,6 +8,7 @@ import {
   NumericLiteral,
 } from './Token'
 import * as Errors from './Errors'
+import * as Warnings from './Warnings'
 
 export class Lexer {
   private codes: number[] = []
@@ -47,6 +48,23 @@ export class Lexer {
   resetCharCodes() {
     this.codes = []
     this.charCode = -1
+  }
+
+  recognizeKeyword(name: string) {
+    const map: { [key: string]: TokenType } = {
+      enum: TokenType.Enum,
+      int: TokenType.Int,
+      char: TokenType.Char,
+      if: TokenType.If,
+      else: TokenType.Else,
+      while: TokenType.While,
+      return: TokenType.Return,
+
+      sizeof: TokenType.Sizeof,
+    }
+    const tokenType = map[name] || TokenType.Identifier
+
+    return tokenType
   }
 
   next(): Token {
@@ -105,9 +123,7 @@ export class Lexer {
           } else if (charCodeIs(this.charCode, '\n')) {
             value.push('\n'.charCodeAt(0))
           } else {
-            console.error(
-              'invalid escape sequence \\' + String.fromCharCode(this.charCode)
-            )
+            console.error(Warnings.StringLiteralInvalidEscapeSequence)
             value.push(this.charCode)
           }
         } else if (
@@ -217,11 +233,16 @@ export class Lexer {
           }
           value.push(this.charCode)
         }
+      } else if (charCodeIs(this.charCode, '=')) {
+        return {
+          type: TokenType.DivAssign,
+          source: this.acceptCharCodes(),
+        }
       } else {
         this.ungetChar()
         return {
-          type: TokenType.Operator,
-          source: '/',
+          type: TokenType.Div,
+          source: this.acceptCharCodes(),
         }
       }
       // Whitespace
@@ -261,11 +282,148 @@ export class Lexer {
       } while (isIdentifierContinue(this.charCode))
 
       const source = this.acceptCharCodes()
+      const tokenType = this.recognizeKeyword(source)
+
+      if (tokenType === TokenType.Identifier) {
+        return {
+          type: tokenType,
+          source,
+          name: source,
+        } as Identifier
+      }
+
       return {
-        type: TokenType.Identifier,
+        type: tokenType,
         source,
-        name: source,
-      } as Identifier
+      }
+    } else {
+      let type!: TokenType
+      if (charCodeIs(this.charCode, '!')) {
+        type = TokenType.Negate
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.NotEqual
+        } else {
+          this.ungetChar()
+        }
+      } else if (charCodeIs(this.charCode, '-')) {
+        type = TokenType.Minus
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '-')) {
+          type = TokenType.Decrement
+        } else if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.MinusAssign
+        } else {
+          this.ungetChar()
+        }
+      } else if (charCodeIs(this.charCode, '+')) {
+        type = TokenType.Plus
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '+')) {
+          type = TokenType.Increment
+        } else if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.PlusAssign
+        } else {
+          this.ungetChar()
+        }
+      } else if (charCodeIs(this.charCode, '*')) {
+        type = TokenType.Star
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '*')) {
+          type = TokenType.StarStar
+        } else if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.StarAssign
+        } else {
+          this.ungetChar()
+        }
+      } else if (charCodeIs(this.charCode, '~')) {
+        type = TokenType.Tilde
+      } else if (charCodeIs(this.charCode, '&')) {
+        type = TokenType.And
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '&')) {
+          type = TokenType.AndAnd
+        } else {
+          this.ungetChar()
+        }
+      } else if (charCodeIs(this.charCode, '|')) {
+        type = TokenType.Or
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '|')) {
+          type = TokenType.OrOr
+        } else {
+          this.ungetChar()
+        }
+      } else if (charCodeIs(this.charCode, '^')) {
+        type = TokenType.Xor
+        this.getChar()
+      } else if (charCodeIs(this.charCode, '=')) {
+        type = TokenType.Assign
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.Equal
+        } else {
+          this.ungetChar()
+        }
+      } else if (charCodeIs(this.charCode, '>')) {
+        type = TokenType.Greater
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.GreaterEqual
+        } else if (charCodeIs(this.charCode, '>')) {
+          type = TokenType.RightShift
+        } else {
+          this.ungetChar()
+        }
+      } else if (charCodeIs(this.charCode, '<')) {
+        type = TokenType.Less
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.LessEqual
+        } else if (charCodeIs(this.charCode, '<')) {
+          type = TokenType.LeftShift
+        } else {
+          this.ungetChar()
+        }
+      } else if (charCodeIs(this.charCode, '(')) {
+        type = TokenType.LeftParen
+      } else if (charCodeIs(this.charCode, ')')) {
+        type = TokenType.RightParen
+      } else if (charCodeIs(this.charCode, '{')) {
+        type = TokenType.LeftBracket
+      } else if (charCodeIs(this.charCode, '}')) {
+        type = TokenType.RightBracket
+      } else if (charCodeIs(this.charCode, '[')) {
+        type = TokenType.LeftSquare
+      } else if (charCodeIs(this.charCode, ']')) {
+        type = TokenType.RightSquare
+      } else if (charCodeIs(this.charCode, '?')) {
+        type = TokenType.Question
+      } else if (charCodeIs(this.charCode, ':')) {
+        type = TokenType.Colon
+      } else if (charCodeIs(this.charCode, ';')) {
+        type = TokenType.SemiColon
+      } else if (charCodeIs(this.charCode, ',')) {
+        type = TokenType.Comma
+      } else if (charCodeIs(this.charCode, '.')) {
+        type = TokenType.Dot
+      }
+
+      if (type !== undefined) {
+        return {
+          type,
+          source: this.acceptCharCodes(),
+        }
+      }
     }
 
     throw new Error('Unexpected token ' + String.fromCharCode(this.charCode))
