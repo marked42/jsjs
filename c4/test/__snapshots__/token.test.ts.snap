@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`multiple tokens of different types should recognize different types of tokens 1`] = `
+Array [
+  Object {
+    "source": "
+",
+    "type": 2,
+  },
+  Object {
+    "source": "      ",
+    "type": 1,
+  },
+  Object {
+    "source": "int",
+    "type": 9,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "name": "a",
+    "source": "a",
+    "type": 3,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "source": "=",
+    "type": 36,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "source": "0b01",
+    "type": 5,
+    "value": 1,
+  },
+  Object {
+    "source": ";",
+    "type": 54,
+  },
+  Object {
+    "source": "
+",
+    "type": 2,
+  },
+  Object {
+    "source": "      ",
+    "type": 1,
+  },
+  Object {
+    "source": "// line comment",
+    "type": 4,
+    "value": " line comment",
+  },
+  Object {
+    "source": "
+",
+    "type": 2,
+  },
+  Object {
+    "source": "      ",
+    "type": 1,
+  },
+  Object {
+    "source": "char",
+    "type": 10,
+  },
+  Object {
+    "source": "*",
+    "type": 21,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "name": "b",
+    "source": "b",
+    "type": 3,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "source": "=",
+    "type": 36,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "source": "\\"test\\"",
+    "type": 0,
+    "value": "test",
+  },
+  Object {
+    "source": ";",
+    "type": 54,
+  },
+  Object {
+    "source": "
+",
+    "type": 2,
+  },
+  Object {
+    "source": "
+",
+    "type": 2,
+  },
+  Object {
+    "source": "      ",
+    "type": 1,
+  },
+  Object {
+    "source": "int",
+    "type": 9,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "name": "c",
+    "source": "c",
+    "type": 3,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "source": "=",
+    "type": 36,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "name": "a",
+    "source": "a",
+    "type": 3,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "source": "==",
+    "type": 37,
+  },
+  Object {
+    "source": " ",
+    "type": 1,
+  },
+  Object {
+    "name": "b",
+    "source": "b",
+    "type": 3,
+  },
+  Object {
+    "source": ";",
+    "type": 54,
+  },
+  Object {
+    "source": "
+",
+    "type": 2,
+  },
+  Object {
+    "source": "    ",
+    "type": 1,
+  },
+  Object {
+    "source": "",
+    "type": 6,
+  },
+]
+`;

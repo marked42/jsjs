@@ -6,6 +6,7 @@ import {
   StringLiteral,
   LineComment,
   NumericLiteral,
+  TokenEOF,
 } from './Token'
 import * as Errors from './Errors'
 import * as Warnings from './Warnings'
@@ -247,9 +248,13 @@ export class Lexer {
       }
       // Whitespace
     } else if (isWhitespace(this.charCode)) {
-      this.getChar()
-      while (isWhitespace(this.charCode)) {
+      while (true) {
         this.getChar()
+        if (isWhitespace(this.charCode)) {
+          continue
+        }
+        this.ungetChar()
+        break
       }
 
       return {
@@ -262,24 +267,29 @@ export class Lexer {
       if (charCodeIs(this.charCode, '\n')) {
         return {
           type: TokenType.Newline,
-          source: '\r\n',
+          source: this.acceptCharCodes(),
         }
       } else {
         this.ungetChar()
         return {
           type: TokenType.Newline,
-          source: '\r',
+          source: this.acceptCharCodes(),
         }
       }
     } else if (charCodeIs(this.charCode, '\n')) {
       return {
         type: TokenType.Newline,
-        source: '\n',
+        source: this.acceptCharCodes(),
       }
     } else if (isIdentifierStart(this.charCode)) {
-      do {
+      while (true) {
         this.getChar()
-      } while (isIdentifierContinue(this.charCode))
+        if (isIdentifierContinue(this.charCode)) {
+          continue
+        }
+        this.ungetChar()
+        break
+      }
 
       const source = this.acceptCharCodes()
       const tokenType = this.recognizeKeyword(source)
@@ -296,6 +306,8 @@ export class Lexer {
         type: tokenType,
         source,
       }
+    } else if (this.charCode === CharacterStream.EOF) {
+      return TokenEOF
     } else {
       let type!: TokenType
       if (charCodeIs(this.charCode, '!')) {

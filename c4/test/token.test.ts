@@ -1,6 +1,6 @@
 import { Lexer } from '../Lexer'
 import { CharacterStream } from '../CharacterStream'
-import { TokenType } from '../Token'
+import { TokenEOF, TokenType, Token } from '../Token'
 import * as Errors from '../Errors'
 
 function recognizeToken(input: string) {
@@ -469,5 +469,31 @@ describe('Operator and Punctuation', () => {
         source: keyword,
       })
     })
+  })
+})
+
+describe('multiple tokens of different types', () => {
+  it('should recognize different types of tokens', () => {
+    const input = `
+      int a = 0b01;
+      // line comment
+      char* b = "test";
+
+      int c = a == b;
+    `
+
+    const stream = new CharacterStream(input)
+    const lexer = new Lexer(stream)
+
+    const tokens: Token[] = []
+    while (true) {
+      const token = lexer.next()
+      tokens.push(token)
+      if (token === TokenEOF) {
+        break
+      }
+    }
+
+    expect(tokens).toMatchSnapshot()
   })
 })
