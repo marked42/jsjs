@@ -6,12 +6,23 @@ import * as Warnings from './Warnings'
 export class Lexer {
   private codes: number[] = []
   private charCode: number = -1
-  private skipWhitespaceAndNewline = false
+  private skippedTokenTypes: TokenType[] = []
+
+  private tokens: Token[] = []
+  private currentTokenIndex = -1
 
   constructor(private stream: CharacterStream) {}
 
-  setSkipWhitespaceAndNewline(value: boolean) {
-    this.skipWhitespaceAndNewline = value
+  skipComment() {
+    this.skippedTokenTypes.push(TokenType.LineComment)
+  }
+
+  skipWhitespace() {
+    this.skippedTokenTypes.push(TokenType.Whitespace)
+  }
+
+  skipNewline() {
+    this.skippedTokenTypes.push(TokenType.Newline)
   }
 
   getChar() {
@@ -63,19 +74,35 @@ export class Lexer {
     return tokenType
   }
 
-  next(): Token {
+  prev(): Token {
+    if (this.currentTokenIndex < 0) {
+      throw new Error('no previous token')
+    }
+    this.currentTokenIndex -= 1
+    return this.tokens[this.currentTokenIndex + 1]
+  }
+
+  nextNonSkippedToken() {
     while (true) {
       const token = this._next()
 
       if (
-        this.skipWhitespaceAndNewline &&
-        [TokenType.Whitespace, TokenType.Newline].includes(token.type)
+        this.skippedTokenTypes.length > 0 &&
+        this.skippedTokenTypes.includes(token.type)
       ) {
         continue
       }
 
       return token
     }
+  }
+
+  next(): Token {
+    if (this.currentTokenIndex + 1 >= this.tokens.length) {
+      this.tokens.push(this.nextNonSkippedToken())
+    }
+    this.currentTokenIndex += 1
+    return this.tokens[this.currentTokenIndex]
   }
 
   _next(): Token {

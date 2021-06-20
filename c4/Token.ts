@@ -2,8 +2,8 @@ export enum TokenType {
   EOF = -1,
   StringLiteral,
   Identifier,
-  LineComment,
   NumericLiteral,
+  LineComment,
   Whitespace,
   Newline,
 

@@ -1,16 +1,16 @@
 export enum ASTNodeType {
-  Identifier,
-  NumericLiteral,
-  StringLiteral,
-  UnaryExpression,
-  BinaryExpression,
-  LogicalExpression,
+  Identifier = 'Identifier',
+  NumericLiteral = 'NumericLiteral',
+  StringLiteral = 'StringLiteral',
+  UnaryExpression = 'UnaryExpression',
+  BinaryExpression = 'BinaryExpression',
+  LogicalExpression = 'LogicalExpression',
 
-  MemberExpression,
-  ConditionalExpression,
+  MemberExpression = 'MemberExpression',
+  ConditionalExpression = 'ConditionalExpression',
 
-  VariableDeclaration,
-  VariableDeclarator,
+  VariableDeclaration = 'VariableDeclaration',
+  VariableDeclarator = 'VariableDeclarator',
 }
 
 export abstract class ASTNode {
