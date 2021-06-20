@@ -5,97 +5,97 @@ Array [
   Object {
     "source": "
 ",
-    "type": 2,
+    "type": 5,
   },
   Object {
     "source": "      ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "int",
-    "type": 9,
+    "type": 7,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "name": "a",
     "source": "a",
-    "type": 3,
+    "type": 1,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "=",
-    "type": 36,
+    "type": 34,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "0b01",
-    "type": 5,
+    "type": 3,
     "value": 1,
   },
   Object {
     "source": ";",
-    "type": 54,
+    "type": 52,
   },
   Object {
     "source": "
 ",
-    "type": 2,
+    "type": 5,
   },
   Object {
     "source": "      ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "// line comment",
-    "type": 4,
+    "type": 2,
     "value": " line comment",
   },
   Object {
     "source": "
 ",
-    "type": 2,
+    "type": 5,
   },
   Object {
     "source": "      ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "char",
-    "type": 10,
+    "type": 8,
   },
   Object {
     "source": "*",
-    "type": 21,
+    "type": 19,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "name": "b",
     "source": "b",
-    "type": 3,
+    "type": 1,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "=",
-    "type": 36,
+    "type": 34,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "\\"test\\"",
@@ -104,85 +104,85 @@ Array [
   },
   Object {
     "source": ";",
-    "type": 54,
+    "type": 52,
   },
   Object {
     "source": "
 ",
-    "type": 2,
+    "type": 5,
   },
   Object {
     "source": "
 ",
-    "type": 2,
+    "type": 5,
   },
   Object {
     "source": "      ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "int",
-    "type": 9,
+    "type": 7,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "name": "c",
     "source": "c",
-    "type": 3,
+    "type": 1,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "=",
-    "type": 36,
+    "type": 34,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "name": "a",
     "source": "a",
-    "type": 3,
+    "type": 1,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "==",
-    "type": 37,
+    "type": 35,
   },
   Object {
     "source": " ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "name": "b",
     "source": "b",
-    "type": 3,
+    "type": 1,
   },
   Object {
     "source": ";",
-    "type": 54,
+    "type": 52,
   },
   Object {
     "source": "
 ",
-    "type": 2,
+    "type": 5,
   },
   Object {
     "source": "    ",
-    "type": 1,
+    "type": 4,
   },
   Object {
     "source": "",
-    "type": 6,
+    "type": -1,
   },
 ]
 `;

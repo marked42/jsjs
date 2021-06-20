@@ -1,12 +1,11 @@
 export enum TokenType {
+  EOF = -1,
   StringLiteral,
-  Whitespace,
-  Newline,
   Identifier,
   LineComment,
   NumericLiteral,
-  EOF,
-  Operator,
+  Whitespace,
+  Newline,
 
   // Keyword,
   Enum,
@@ -49,6 +48,7 @@ export enum TokenType {
   RightShift,
   LeftShift,
 
+  // Punctuation
   LeftParen,
   RightParen,
   LeftSquare,
