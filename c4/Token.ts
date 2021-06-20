@@ -62,37 +62,56 @@ export enum TokenType {
   Dot,
 }
 
-export const TokenEOF = {
+export type Keyword =
+  | TokenType.Enum
+  | TokenType.Int
+  | TokenType.Char
+  | TokenType.If
+  | TokenType.Else
+  | TokenType.While
+  | TokenType.Return
+
+export const TokenEOF: EOF = {
   type: TokenType.EOF,
-  source: '',
 }
 
-export interface Token {
-  type: TokenType
+export interface EOF {
+  type: TokenType.EOF
+}
+
+export interface TokenWithSource {
+  type: OtherTokenType
   source: string
 }
 
-// TODO: refactor as class for simple construction
-export interface StringLiteral extends Token {
+export type OtherTokenType = Exclude<
+  TokenType,
+  TokenType.EOF | StringValueType | NumberValueType | StringNameType
+>
+
+export type StringValueType = TokenType.StringLiteral | TokenType.LineComment
+
+export interface StringValueToken extends Omit<TokenWithSource, 'type'> {
+  type: StringValueType
   value: string
 }
 
-export interface Whitespace extends Token {
-  value: string
+type NumberValueType = TokenType.NumericLiteral
+
+export interface NumberValueToken extends Omit<TokenWithSource, 'type'> {
+  type: NumberValueType
+  value: number
 }
 
-export interface Newline extends Token {
-  value: string
-}
-
-export interface Identifier extends Token {
+type StringNameType = TokenType.Identifier
+export interface StringNameToken extends Omit<TokenWithSource, 'type'> {
+  type: StringNameType
   name: string
 }
 
-export interface LineComment extends Token {
-  value: string
-}
-
-export interface NumericLiteral extends Token {
-  value: number
-}
+export type Token =
+  | EOF
+  | TokenWithSource
+  | StringValueToken
+  | NumberValueToken
+  | StringNameToken

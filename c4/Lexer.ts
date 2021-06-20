@@ -1,13 +1,5 @@
 import { CharacterStream } from './CharacterStream'
-import {
-  Token,
-  TokenType,
-  Identifier,
-  StringLiteral,
-  LineComment,
-  NumericLiteral,
-  TokenEOF,
-} from './Token'
+import { Token, TokenType, TokenEOF, OtherTokenType, Keyword } from './Token'
 import * as Errors from './Errors'
 import * as Warnings from './Warnings'
 
@@ -52,7 +44,10 @@ export class Lexer {
   }
 
   recognizeKeyword(name: string) {
-    const map: { [key: string]: TokenType } = {
+    // TODO: better type organization
+    const map: {
+      [key: string]: Keyword | TokenType.Sizeof | TokenType.Identifier
+    } = {
       enum: TokenType.Enum,
       int: TokenType.Int,
       char: TokenType.Char,
@@ -137,7 +132,7 @@ export class Lexer {
             type: TokenType.StringLiteral,
             source: this.acceptCharCodes(),
             value: String.fromCharCode(...value),
-          } as StringLiteral
+          }
         } else if (this.charCode === CharacterStream.EOF) {
           throw Errors.StringLiteralEndEarly
         } else {
@@ -209,7 +204,7 @@ export class Lexer {
         type: TokenType.NumericLiteral,
         source: this.acceptCharCodes(),
         value,
-      } as NumericLiteral
+      }
       // LineComment
     } else if (charCodeIs(this.charCode, '/')) {
       this.getChar()
@@ -230,7 +225,7 @@ export class Lexer {
               type: TokenType.LineComment,
               source: this.acceptCharCodes(),
               value: String.fromCharCode(...value),
-            } as LineComment
+            }
           }
           value.push(this.charCode)
         }
@@ -299,7 +294,7 @@ export class Lexer {
           type: tokenType,
           source,
           name: source,
-        } as Identifier
+        }
       }
 
       return {
@@ -309,7 +304,7 @@ export class Lexer {
     } else if (this.charCode === CharacterStream.EOF) {
       return TokenEOF
     } else {
-      let type!: TokenType
+      let type!: OtherTokenType
       if (charCodeIs(this.charCode, '!')) {
         type = TokenType.Negate
         this.getChar()
