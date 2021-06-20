@@ -38,7 +38,7 @@ Array [
   },
   Object {
     "source": "0b01",
-    "type": 3,
+    "type": 2,
     "value": 1,
   },
   Object {
@@ -56,7 +56,7 @@ Array [
   },
   Object {
     "source": "// line comment",
-    "type": 2,
+    "type": 3,
     "value": " line comment",
   },
   Object {
