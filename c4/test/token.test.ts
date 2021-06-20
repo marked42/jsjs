@@ -7,7 +7,7 @@ function recognizeToken(input: string) {
   const stream = new CharacterStream(input)
   const lexer = new Lexer(stream)
 
-  return lexer.next()
+  return lexer._next()
 }
 
 describe('StringLiteral', () => {

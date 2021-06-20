@@ -12,7 +12,13 @@ import * as Errors from './Errors'
 export class Lexer {
   private codes: number[] = []
   private charCode: number = -1
+  private skipWhitespaceAndNewline = false
+
   constructor(private stream: CharacterStream) {}
+
+  setSkipWhitespaceAndNewline(value: boolean) {
+    this.skipWhitespaceAndNewline = value
+  }
 
   getChar() {
     this.charCode = this.stream.next()
@@ -44,6 +50,21 @@ export class Lexer {
   }
 
   next(): Token {
+    while (true) {
+      const token = this._next()
+
+      if (
+        this.skipWhitespaceAndNewline &&
+        [TokenType.Whitespace, TokenType.Newline].includes(token.type)
+      ) {
+        continue
+      }
+
+      return token
+    }
+  }
+
+  _next(): Token {
     this.getChar()
     // StringLiteral
     if (charCodeIs(this.charCode, '"')) {
