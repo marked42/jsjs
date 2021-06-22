@@ -47,4 +47,10 @@ describe('expression', () => {
     const parser = parserForInput(input)
     expect(parser.expression()).toMatchSnapshot()
   })
+
+  it('should parse parenthesis correctly', () => {
+    const input = '1 + (2 + 3) * 4'
+    const parser = parserForInput(input)
+    expect(parser.expression()).toMatchSnapshot()
+  })
 })

@@ -43,6 +43,10 @@ export class Parser {
       result = new StringLiteral(token.value)
     } else if (token.type === TokenType.NumericLiteral) {
       result = new NumericLiteral(token.value)
+    } else if (token.type === TokenType.LeftParen) {
+      result = this.expression()
+      result.parenthesized = true
+      this.match(TokenType.RightParen)
     } else if (
       // check operators
       token.type === TokenType.Plus ||
@@ -110,6 +114,11 @@ export class Parser {
         } else {
           this.lexer.prev()
         }
+        break
+      }
+
+      if (token.type === TokenType.RightParen) {
+        this.lexer.prev()
         break
       }
 

@@ -56,6 +56,44 @@ BinaryExpression {
 }
 `;
 
+exports[`expression should parse parenthesis correctly 1`] = `
+BinaryExpression {
+  "left": NumericLiteral {
+    "parenthesized": false,
+    "type": "NumericLiteral",
+    "value": 1,
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": BinaryExpression {
+      "left": NumericLiteral {
+        "parenthesized": false,
+        "type": "NumericLiteral",
+        "value": 2,
+      },
+      "op": "+",
+      "parenthesized": true,
+      "right": NumericLiteral {
+        "parenthesized": false,
+        "type": "NumericLiteral",
+        "value": 3,
+      },
+      "type": "BinaryExpression",
+    },
+    "op": "*",
+    "parenthesized": false,
+    "right": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 4,
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
 exports[`expression should parse postfix operators correctly 1`] = `
 BinaryExpression {
   "left": UnaryExpression {
