@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`expression should parse binary operators with correct precedence 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 1,
+    },
+    "op": "*",
+    "parenthesized": false,
+    "right": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 2,
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`expression should parse left associative binary operators correctly 1`] = `
+BinaryExpression {
+  "left": BinaryExpression {
+    "left": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "+",
+    "parenthesized": false,
+    "right": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 1,
+    },
+    "type": "BinaryExpression",
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": NumericLiteral {
+    "parenthesized": false,
+    "type": "NumericLiteral",
+    "value": 2,
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`expression should parse postfix operators correctly 1`] = `
+BinaryExpression {
+  "left": UnaryExpression {
+    "op": "-",
+    "operand": UnaryExpression {
+      "op": "++",
+      "operand": Identifier {
+        "name": "a",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": false,
+      "type": "UnaryExpression",
+    },
+    "parenthesized": false,
+    "prefix": true,
+    "type": "UnaryExpression",
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 1,
+    },
+    "op": "*",
+    "parenthesized": false,
+    "right": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 2,
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`expression should parse prefix operators correctly 1`] = `
+BinaryExpression {
+  "left": UnaryExpression {
+    "op": "-",
+    "operand": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "prefix": true,
+    "type": "UnaryExpression",
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 1,
+    },
+    "op": "*",
+    "parenthesized": false,
+    "right": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 2,
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`expression should parse prefix operators correctly at right 1`] = `
+BinaryExpression {
+  "left": NumericLiteral {
+    "parenthesized": false,
+    "type": "NumericLiteral",
+    "value": 1,
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": UnaryExpression {
+    "op": "-",
+    "operand": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "prefix": true,
+    "type": "UnaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`expression should parse right associative binary operators correctly 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "**",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 1,
+    },
+    "op": "**",
+    "parenthesized": false,
+    "right": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 2,
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;

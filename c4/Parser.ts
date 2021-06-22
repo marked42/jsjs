@@ -10,9 +10,9 @@ import { Lexer } from './Lexer'
 import { Token, TokenType } from './Token'
 import {
   getPrefixOperatorPrecedence,
-  getInfixOperatorPrecedenceAssociativity,, getPostifxOperatorPrecedenceAssociativity
+  getInfixOperatorPrecedenceAssociativity,
+  getPostifxOperatorPrecedenceAssociativity,
 } from './Operators'
-import { Token, Token } from '../src/Token'
 
 export class Parser {
   constructor(private lexer: Lexer) {
@@ -31,10 +31,12 @@ export class Parser {
     return token
   }
 
-  expression(lp: number): Expression {
+  // 1. 起始优先级minPrecedence默认为0
+  expression(minPrecedence: number = 0): Expression {
     const token = this.lexer.next()
     let result: Expression
 
+    // 2. 操作数生成对应的ASTNode
     if (token.type === TokenType.Identifier) {
       result = new Identifier(token.name)
     } else if (token.type === TokenType.StringLiteral) {
@@ -48,16 +50,27 @@ export class Parser {
       token.type === TokenType.Star ||
       token.type === TokenType.Div
     ) {
+      // 3. 前缀操作符处理
       const precedence = getPrefixOperatorPrecedence(token.source)
       const operand = this.expression(precedence)
 
-      return new UnaryExpression(operand, token.source, true)
+      result = new UnaryExpression(operand, token.source, true)
     } else {
+      // 4. 其余为非法token，包括EOF
       throw new Error(`unexpected token ${token}`)
     }
 
+    // 5. 中缀、后缀操作符的解析有三种情况
+    // 5.1. 优先级低终止循环，当前调用返回
+    // 5.2. 优先级高且右侧还能结合操作数，递归调用继续循环
+    // 5.3. 优先级高但是右侧不能结合操作数，终止循环
     while (true) {
       const token = this.lexer.next()
+
+      // 6. 循环终止条件一 没有更多token
+      if (token.type === TokenType.EOF) {
+        break
+      }
 
       if (
         token.type === TokenType.Plus ||
@@ -71,7 +84,9 @@ export class Parser {
           associativity,
         } = getInfixOperatorPrecedenceAssociativity(token.source)
 
-        if (precedence < lp) {
+        // 7. 二元操作符优先级低，
+        if (precedence < minPrecedence) {
+          this.lexer.prev()
           break
         }
 
@@ -86,16 +101,19 @@ export class Parser {
         token.type === TokenType.Increment ||
         token.type === TokenType.Decrement
       ) {
-        const precedence = getPostifxOperatorPrecedenceAssociativity(token.source);
-        if (precedence > lp) {
+        const precedence = getPostifxOperatorPrecedenceAssociativity(
+          token.source
+        )
+        if (precedence > minPrecedence) {
           result = new UnaryExpression(result, token.source, false)
           // TODO: 也可以使用peek操作， peek和prev是实现同样功能的两种方式，都需要token缓冲区支持
-          this.lexer.prev();
+        } else {
+          this.lexer.prev()
         }
-        break;
+        break
       }
 
-      throw new Error('unexpected token ' + token)
+      throw new Error('unexpected token ' + JSON.stringify(token, null, 2))
     }
 
     return result

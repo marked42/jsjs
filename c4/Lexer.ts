@@ -75,10 +75,14 @@ export class Lexer {
   }
 
   prev(): Token {
-    return
+    if (this.currentTokenIndex < 0) {
+      throw new Error('no previous token')
+    }
+    this.currentTokenIndex -= 1
+    return this.tokens[this.currentTokenIndex + 1]
   }
 
-  next(): Token {
+  nextNonSkippedToken() {
     while (true) {
       const token = this._next()
 
@@ -91,6 +95,14 @@ export class Lexer {
 
       return token
     }
+  }
+
+  next(): Token {
+    if (this.currentTokenIndex + 1 >= this.tokens.length) {
+      this.tokens.push(this.nextNonSkippedToken())
+    }
+    this.currentTokenIndex += 1
+    return this.tokens[this.currentTokenIndex]
   }
 
   _next(): Token {
