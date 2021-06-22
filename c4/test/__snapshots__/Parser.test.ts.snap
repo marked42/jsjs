@@ -28,6 +28,62 @@ BinaryExpression {
 }
 `;
 
+exports[`expression should parse index correctly 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": MemberExpression {
+    "computed": true,
+    "object": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "property": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 1,
+    },
+    "type": "MemberExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`expression should parse index with lower precedence correctly 1`] = `
+MemberExpression {
+  "computed": true,
+  "object": MemberExpression {
+    "computed": false,
+    "object": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "property": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "MemberExpression",
+  },
+  "parenthesized": false,
+  "property": NumericLiteral {
+    "parenthesized": false,
+    "type": "NumericLiteral",
+    "value": 1,
+  },
+  "type": "MemberExpression",
+}
+`;
+
 exports[`expression should parse left associative binary operators correctly 1`] = `
 BinaryExpression {
   "left": BinaryExpression {

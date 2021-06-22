@@ -2,12 +2,13 @@ import {
   BinaryExpression,
   Expression,
   Identifier,
+  MemberExpression,
   NumericLiteral,
   StringLiteral,
   UnaryExpression,
 } from './AST'
 import { Lexer } from './Lexer'
-import { Token, TokenType } from './Token'
+import { TokenType } from './Token'
 import {
   getPrefixOperatorPrecedence,
   getInfixOperatorPrecedenceAssociativity,
@@ -81,7 +82,8 @@ export class Parser {
         token.type === TokenType.Minus ||
         token.type === TokenType.Star ||
         token.type === TokenType.Div ||
-        token.type === TokenType.StarStar
+        token.type === TokenType.StarStar ||
+        token.type === TokenType.Dot
       ) {
         const {
           precedence,
@@ -97,7 +99,11 @@ export class Parser {
         const newLp = associativity === 'left' ? precedence + 1 : precedence
         const right = this.expression(newLp)
         // TODO: binary operator type warning
-        result = new BinaryExpression(result, right, token.source as any)
+        if (token.type === TokenType.Dot) {
+          result = new MemberExpression(result, right)
+        } else {
+          result = new BinaryExpression(result, right, token.source as any)
+        }
         continue
       }
 
@@ -118,6 +124,29 @@ export class Parser {
       }
 
       if (token.type === TokenType.RightParen) {
+        this.lexer.prev()
+        break
+      }
+
+      if (token.type === TokenType.LeftSquare) {
+        const {
+          precedence,
+          associativity,
+        } = getInfixOperatorPrecedenceAssociativity(token.source)
+
+        // 7. 二元操作符优先级低，
+        if (precedence < minPrecedence) {
+          this.lexer.prev()
+          break
+        }
+
+        const member = this.expression()
+        this.match(TokenType.RightSquare)
+        result = new MemberExpression(result, member, true)
+        continue
+      }
+
+      if (token.type === TokenType.RightSquare) {
         this.lexer.prev()
         break
       }
