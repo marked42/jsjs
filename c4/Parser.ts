@@ -1,5 +1,6 @@
 import {
   BinaryExpression,
+  ConditionalExpression,
   Expression,
   Identifier,
   MemberExpression,
@@ -134,7 +135,6 @@ export class Parser {
           associativity,
         } = getInfixOperatorPrecedenceAssociativity(token.source)
 
-        // 7. 二元操作符优先级低，
         if (precedence < minPrecedence) {
           this.lexer.prev()
           break
@@ -147,6 +147,30 @@ export class Parser {
       }
 
       if (token.type === TokenType.RightSquare) {
+        this.lexer.prev()
+        break
+      }
+
+      if (token.type === TokenType.Question) {
+        const {
+          precedence,
+          associativity,
+        } = getInfixOperatorPrecedenceAssociativity(token.source)
+
+        if (precedence < minPrecedence) {
+          this.lexer.prev()
+          break
+        }
+
+        const newLp = associativity === 'left' ? precedence + 1 : precedence
+        const consequent = this.expression(0)
+        this.match(TokenType.Colon)
+        const alternate = this.expression(newLp)
+        result = new ConditionalExpression(result, consequent, alternate)
+        continue
+      }
+
+      if (token.type === TokenType.Colon) {
         this.lexer.prev()
         break
       }

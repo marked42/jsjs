@@ -65,4 +65,28 @@ describe('expression', () => {
     const parser = parserForInput(input)
     expect(parser.expression()).toMatchSnapshot()
   })
+
+  it('should parse conditional operators', () => {
+    const input = 'a ? b : c'
+    const parser = parserForInput(input)
+    expect(parser.expression()).toMatchSnapshot()
+  })
+
+  it('should parse conditional operators with right associativity', () => {
+    const input = 'a ? b : c ? d : e'
+    const parser = parserForInput(input)
+    expect(parser.expression()).toMatchSnapshot()
+  })
+
+  it('should parse conditional operators with correct precedence relative to .', () => {
+    const input = 'a.b ? c : d'
+    const parser = parserForInput(input)
+    expect(parser.expression()).toMatchSnapshot()
+  })
+
+  it('should parse conditional operators with correct precedence relative to +', () => {
+    const input = 'a + b ? c : d'
+    const parser = parserForInput(input)
+    expect(parser.expression()).toMatchSnapshot()
+  })
 })
