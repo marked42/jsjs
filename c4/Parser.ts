@@ -42,9 +42,7 @@ export class Parser {
     } else if (
       // check operators
       token.type === TokenType.Plus ||
-      token.type === TokenType.Minus ||
-      token.type === TokenType.Star ||
-      token.type === TokenType.Div
+      token.type === TokenType.Minus
     ) {
       // 3. 前缀操作符处理
       const precedence = getPrefixOperatorPrecedence(token.source)
