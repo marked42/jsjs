@@ -23,19 +23,9 @@ export class Parser {
     lexer.skipWhitespace()
   }
 
-  match(type: TokenType) {
-    const token = this.lexer.next()
-
-    if (token.type !== type) {
-      throw new Error(`expect token type ${type}, encountered ${token}`)
-    }
-
-    return token
-  }
-
   // 1. 起始优先级minPrecedence默认为0
   expression(minPrecedence: number = 0): Expression {
-    const token = this.lexer.next()
+    const token = this.lexer.consume()
     let result: Expression
 
     // 2. 操作数生成对应的ASTNode
@@ -48,7 +38,7 @@ export class Parser {
     } else if (token.type === TokenType.LeftParen) {
       result = this.expression()
       result.parenthesized = true
-      this.match(TokenType.RightParen)
+      this.lexer.consume(TokenType.RightParen)
     } else if (
       // check operators
       token.type === TokenType.Plus ||
@@ -71,7 +61,7 @@ export class Parser {
     // 5.2. 优先级高且右侧还能结合操作数，递归调用继续循环
     // 5.3. 优先级高但是右侧不能结合操作数，终止循环
     while (true) {
-      const token = this.lexer.next()
+      const token = this.lexer.lookahead()
 
       // 6. 循环终止条件一 没有更多token
       if (token.type === TokenType.EOF) {
@@ -93,9 +83,9 @@ export class Parser {
 
         // 7. 二元操作符优先级低，
         if (precedence < minPrecedence) {
-          this.lexer.prev()
           break
         }
+        this.lexer.consume()
 
         const newLp = associativity === 'left' ? precedence + 1 : precedence
         const right = this.expression(newLp)
@@ -117,15 +107,13 @@ export class Parser {
         )
         if (precedence > minPrecedence) {
           result = new UnaryExpression(result, token.source, false)
+          this.lexer.consume()
           // TODO: 也可以使用peek操作， peek和prev是实现同样功能的两种方式，都需要token缓冲区支持
-        } else {
-          this.lexer.prev()
         }
         break
       }
 
       if (token.type === TokenType.RightParen) {
-        this.lexer.prev()
         break
       }
 
@@ -136,18 +124,17 @@ export class Parser {
         } = getInfixOperatorPrecedenceAssociativity(token.source)
 
         if (precedence < minPrecedence) {
-          this.lexer.prev()
           break
         }
+        this.lexer.consume()
 
         const member = this.expression()
-        this.match(TokenType.RightSquare)
+        this.lexer.consume(TokenType.RightSquare)
         result = new MemberExpression(result, member, true)
         continue
       }
 
       if (token.type === TokenType.RightSquare) {
-        this.lexer.prev()
         break
       }
 
@@ -158,20 +145,19 @@ export class Parser {
         } = getInfixOperatorPrecedenceAssociativity(token.source)
 
         if (precedence < minPrecedence) {
-          this.lexer.prev()
           break
         }
+        this.lexer.consume()
 
         const newLp = associativity === 'left' ? precedence + 1 : precedence
         const consequent = this.expression(0)
-        this.match(TokenType.Colon)
+        this.lexer.consume(TokenType.Colon)
         const alternate = this.expression(newLp)
         result = new ConditionalExpression(result, consequent, alternate)
         continue
       }
 
       if (token.type === TokenType.Colon) {
-        this.lexer.prev()
         break
       }
 
