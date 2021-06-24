@@ -1,13 +1,12 @@
 import type { InfixParselet } from './Parselet'
 import type { ParseletParser } from './ParseletParser'
 import { BinaryExpression, Expression } from '../AST'
-import { OperatorAssociativity } from '../Operators'
 import type { Token } from '../Token'
+import { AssociativeOperator } from './Operator'
 
 export class BinaryOperatorParselet implements InfixParselet {
   constructor(
-    private precedence: number,
-    private associativity: OperatorAssociativity,
+    private readonly operator: AssociativeOperator,
     private compose?: (
       left: Expression,
       right: Expression,
@@ -17,7 +16,9 @@ export class BinaryOperatorParselet implements InfixParselet {
 
   parse(parser: ParseletParser, result: Expression, token: Token) {
     const minPrecedence =
-      this.associativity === 'left' ? this.precedence + 1 : this.precedence
+      this.operator.associativity === 'left'
+        ? this.operator.precedence + 1
+        : this.operator.precedence
     const right = parser.expression(minPrecedence)
 
     const defaultCompose = (
@@ -31,6 +32,6 @@ export class BinaryOperatorParselet implements InfixParselet {
   }
 
   getPrecedence() {
-    return this.precedence
+    return this.operator.precedence
   }
 }
