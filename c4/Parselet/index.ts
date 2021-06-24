@@ -34,6 +34,7 @@ export class Parser extends ParseletParser {
     this.registerIndexOperators()
     this.registerConditionalOperators()
     this.registerDot()
+    // TODO: call expression
   }
 
   registerAtoms() {
