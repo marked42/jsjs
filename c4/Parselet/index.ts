@@ -1,6 +1,6 @@
 import { ParseletParser } from './ParseletParser'
 import { Lexer } from '../Lexer'
-import { TokenType } from '../Token'
+import { Token, TokenType } from '../Token'
 import { IdentifierParselet } from './IdentifierParselet'
 import { NumericLiteralParselet } from './NumericLiteralParselet'
 import { PrefixOperatorParselet } from './PrefixOperatorParselet'
@@ -9,6 +9,8 @@ import { OperatorAssociativity } from '../Operators'
 import { PostfixOperatorParselet } from './PostfixOperatorParselet'
 import { LeftParenParselet } from './LeftParenParselet'
 import { EndTokenParselet } from './EndTokenParselet'
+import { LeftSquareParselet } from './IndexOperatorParselet'
+import { Expression, MemberExpression } from '../AST'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {
@@ -23,6 +25,10 @@ export class Parser extends ParseletParser {
     // 括号表达式
     this.registerPrefixParselet(TokenType.LeftParen, new LeftParenParselet())
     this.registerInfixParselet(TokenType.RightParen, new EndTokenParselet())
+
+    // 索引表达式a[b]
+    this.registerInfixParselet(TokenType.LeftSquare, new LeftSquareParselet(14))
+    this.registerInfixParselet(TokenType.RightSquare, new EndTokenParselet())
 
     this.registerPostfixOperators([
       [TokenType.Increment, 15],
@@ -40,11 +46,20 @@ export class Parser extends ParseletParser {
       [TokenType.Star, 2, 'left'],
       [TokenType.Div, 2, 'left'],
       [TokenType.StarStar, 3, 'right'],
-      [TokenType.Dot, 14, 'left'],
+      // [TokenType.Dot, 14, 'left'],
       // TODO:
       //   [TokenType.LeftBracket, 3, 'right'],
       //   [TokenType.Question, 3, 'right'],
     ])
+
+    this.registerInfixParselet(
+      TokenType.Dot,
+      new (class extends BinaryOperatorParselet {
+        composeExpression(left: Expression, right: Expression, token: Token) {
+          return new MemberExpression(left, right, false)
+        }
+      })(14, 'left')
+    )
   }
 
   registerPrefixOperators(prefixOperators: Array<[TokenType, number]>) {

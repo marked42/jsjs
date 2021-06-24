@@ -10,13 +10,22 @@ export class BinaryOperatorParselet implements InfixParselet {
     private associativity: OperatorAssociativity
   ) {}
 
+  composeExpression(
+    left: Expression,
+    right: Expression,
+    token: Token
+  ): Expression {
+    // @ts-ignore TODO:
+    return new BinaryExpression(left, right, token.source)
+  }
+
   parse(parser: ParseletParser, result: Expression, token: Token) {
     const minPrecedence =
       this.associativity === 'left' ? this.precedence + 1 : this.precedence
     const right = parser.expression(minPrecedence)
 
     // @ts-ignore TODO:
-    return new BinaryExpression(result, right, token.source)
+    return this.composeExpression(result, right, token)
   }
 
   getPrecedence() {

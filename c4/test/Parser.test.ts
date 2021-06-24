@@ -55,17 +55,17 @@ describe('expression', () => {
     expect(parser.expression()).toMatchSnapshot()
   })
 
-  // it('should parse index correctly', () => {
-  //   const input = 'a + b[1]'
-  //   const parser = parserForInput(input)
-  //   expect(parser.expression()).toMatchSnapshot()
-  // })
+  it('should parse index correctly', () => {
+    const input = 'a + b[1]'
+    const parser = parserForInput(input)
+    expect(parser.expression()).toMatchSnapshot()
+  })
 
-  // it('should parse index with lower precedence correctly', () => {
-  //   const input = 'a.b[1]'
-  //   const parser = parserForInput(input)
-  //   expect(parser.expression()).toMatchSnapshot()
-  // })
+  it('should parse index with lower precedence correctly', () => {
+    const input = 'a.b[1]'
+    const parser = parserForInput(input)
+    expect(parser.expression()).toMatchSnapshot()
+  })
 
   // it('should parse conditional operators', () => {
   //   const input = 'a ? b : c'
