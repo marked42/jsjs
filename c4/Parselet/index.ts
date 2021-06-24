@@ -1,8 +1,12 @@
 import { ParseletParser } from './ParseletParser'
 import { Lexer } from '../Lexer'
-import { Token, TokenType } from '../Token'
-import { IdentifierParselet } from './IdentifierParselet'
-import { NumericLiteralParselet } from './NumericLiteralParselet'
+import {
+  NumberValueToken,
+  StringNameToken,
+  StringValueToken,
+  Token,
+  TokenType,
+} from '../Token'
 import { PrefixOperatorParselet } from './PrefixOperatorParselet'
 import { BinaryOperatorParselet } from './BinaryOperatorParselet'
 import { OperatorAssociativity } from '../Operators'
@@ -10,26 +14,22 @@ import { PostfixOperatorParselet } from './PostfixOperatorParselet'
 import { LeftParenParselet } from './LeftParenParselet'
 import { EndTokenParselet } from './EndTokenParselet'
 import { LeftSquareParselet } from './IndexOperatorParselet'
-import { ConditionalExpression, Expression, MemberExpression } from '../AST'
+import {
+  ConditionalExpression,
+  Expression,
+  Identifier,
+  MemberExpression,
+  NumericLiteral,
+  StringLiteral,
+} from '../AST'
 import { InfixParselet } from './Parselet'
+import { AtomParselet } from './AtomParselet'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {
     super(lexer)
 
-    this.registerPrefixParselet(TokenType.Identifier, new IdentifierParselet())
-    this.registerPrefixParselet(
-      TokenType.NumericLiteral,
-      new NumericLiteralParselet()
-    )
-
-    // 括号表达式
-    this.registerPrefixParselet(TokenType.LeftParen, new LeftParenParselet())
-    this.registerInfixParselet(TokenType.RightParen, new EndTokenParselet())
-
-    // 索引表达式a[b]
-    this.registerInfixParselet(TokenType.LeftSquare, new LeftSquareParselet(14))
-    this.registerInfixParselet(TokenType.RightSquare, new EndTokenParselet())
+    this.registerAtoms()
 
     this.registerPostfixOperators([
       [TokenType.Increment, 15],
@@ -47,11 +47,36 @@ export class Parser extends ParseletParser {
       [TokenType.Star, 2, 'left'],
       [TokenType.Div, 2, 'left'],
       [TokenType.StarStar, 3, 'right'],
-      // TODO:
-      //   [TokenType.LeftBracket, 3, 'right'],
-      //   [TokenType.Question, 3, 'right'],
     ])
 
+    this.registerParenthesis()
+    this.registerIndexOperators()
+    this.registerConditionalOperators()
+    this.registerDot()
+  }
+
+  registerAtoms() {
+    this.registerPrefixParselet(
+      TokenType.Identifier,
+      new AtomParselet<StringNameToken>((token) => {
+        return new Identifier(token.name)
+      })
+    )
+    this.registerPrefixParselet(
+      TokenType.NumericLiteral,
+      new AtomParselet<NumberValueToken>(
+        (token) => new NumericLiteral(token.value)
+      )
+    )
+    this.registerPrefixParselet(
+      TokenType.StringLiteral,
+      new AtomParselet<StringValueToken>(
+        (token) => new StringLiteral(token.value)
+      )
+    )
+  }
+
+  registerDot() {
     this.registerInfixParselet(
       TokenType.Dot,
       new (class extends BinaryOperatorParselet {
@@ -60,11 +85,21 @@ export class Parser extends ParseletParser {
         }
       })(14, 'left')
     )
-
-    this.registerConditionalExpression()
   }
 
-  registerConditionalExpression() {
+  registerIndexOperators() {
+    // 索引表达式a[b]
+    this.registerInfixParselet(TokenType.LeftSquare, new LeftSquareParselet(14))
+    this.registerInfixParselet(TokenType.RightSquare, new EndTokenParselet())
+  }
+
+  registerParenthesis() {
+    // 括号表达式
+    this.registerPrefixParselet(TokenType.LeftParen, new LeftParenParselet())
+    this.registerInfixParselet(TokenType.RightParen, new EndTokenParselet())
+  }
+
+  registerConditionalOperators() {
     this.registerInfixParselet(
       TokenType.Question,
       new (class implements InfixParselet {
