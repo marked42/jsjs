@@ -7,25 +7,27 @@ import type { Token } from '../Token'
 export class BinaryOperatorParselet implements InfixParselet {
   constructor(
     private precedence: number,
-    private associativity: OperatorAssociativity
+    private associativity: OperatorAssociativity,
+    private compose?: (
+      left: Expression,
+      right: Expression,
+      token: Token
+    ) => Expression
   ) {}
-
-  composeExpression(
-    left: Expression,
-    right: Expression,
-    token: Token
-  ): Expression {
-    // @ts-ignore TODO:
-    return new BinaryExpression(left, right, token.source)
-  }
 
   parse(parser: ParseletParser, result: Expression, token: Token) {
     const minPrecedence =
       this.associativity === 'left' ? this.precedence + 1 : this.precedence
     const right = parser.expression(minPrecedence)
 
-    // @ts-ignore TODO:
-    return this.composeExpression(result, right, token)
+    const defaultCompose = (
+      left: Expression,
+      right: Expression,
+      token: Token
+      // @ts-ignore TODO:
+    ) => new BinaryExpression(left, right, token.source as any)
+    const compose = this.compose || defaultCompose
+    return compose(result, right, token)
   }
 
   getPrecedence() {

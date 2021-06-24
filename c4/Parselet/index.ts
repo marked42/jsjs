@@ -11,9 +11,7 @@ import { PrefixOperatorParselet } from './PrefixOperatorParselet'
 import { BinaryOperatorParselet } from './BinaryOperatorParselet'
 import { OperatorAssociativity } from '../Operators'
 import { PostfixOperatorParselet } from './PostfixOperatorParselet'
-import { LeftParenParselet } from './LeftParenParselet'
 import { EndTokenParselet } from './EndTokenParselet'
-import { LeftSquareParselet } from './IndexOperatorParselet'
 import {
   ConditionalExpression,
   Expression,
@@ -22,7 +20,6 @@ import {
   NumericLiteral,
   StringLiteral,
 } from '../AST'
-import { InfixParselet } from './Parselet'
 import { AtomParselet } from './AtomParselet'
 
 export class Parser extends ParseletParser {
@@ -63,48 +60,68 @@ export class Parser extends ParseletParser {
   registerDot() {
     this.registerInfixParselet(
       TokenType.Dot,
-      new (class extends BinaryOperatorParselet {
-        composeExpression(left: Expression, right: Expression, token: Token) {
-          return new MemberExpression(left, right, false)
-        }
-      })(14, 'left')
+      new BinaryOperatorParselet(
+        14,
+        'left',
+        (left: Expression, right: Expression, token: Token) =>
+          new MemberExpression(left, right, false)
+      )
     )
   }
 
   registerIndexOperators() {
     // 索引表达式a[b]
-    this.registerInfixParselet(TokenType.LeftSquare, new LeftSquareParselet(14))
+    this.registerInfixParselet(TokenType.LeftSquare, {
+      parse(parser: ParseletParser, result: Expression, token: Token) {
+        const property = parser.expression(0)
+
+        parser.consume(TokenType.RightSquare)
+
+        return new MemberExpression(result, property, true)
+      },
+
+      getPrecedence() {
+        return 14
+      },
+    })
+
     this.registerInfixParselet(TokenType.RightSquare, new EndTokenParselet())
   }
 
   registerParenthesis() {
     // 括号表达式
-    this.registerPrefixParselet(TokenType.LeftParen, new LeftParenParselet())
+    this.registerPrefixParselet(TokenType.LeftParen, {
+      parse(parser: ParseletParser, token: Token) {
+        const expr = parser.expression(0)
+
+        expr.parenthesized = true
+        parser.consume(TokenType.RightParen)
+
+        return expr
+      },
+    })
     this.registerInfixParselet(TokenType.RightParen, new EndTokenParselet())
   }
 
   registerConditionalOperators() {
-    this.registerInfixParselet(
-      TokenType.Question,
-      new (class implements InfixParselet {
-        parse(
-          parser: ParseletParser,
-          result: Expression,
-          token: Token
-        ): Expression {
-          const rightAssociativePrecedence = this.getPrecedence()
-          const consequent = parser.expression(rightAssociativePrecedence)
-          parser.consume(TokenType.Colon)
-          const alternate = parser.expression(0)
+    this.registerInfixParselet(TokenType.Question, {
+      parse(
+        parser: ParseletParser,
+        result: Expression,
+        token: Token
+      ): Expression {
+        const rightAssociativePrecedence = this.getPrecedence()
+        const consequent = parser.expression(rightAssociativePrecedence)
+        parser.consume(TokenType.Colon)
+        const alternate = parser.expression(0)
 
-          return new ConditionalExpression(result, consequent, alternate)
-        }
-        getPrecedence(): number {
-          // TODO: extract precedence
-          return 3
-        }
-      })()
-    )
+        return new ConditionalExpression(result, consequent, alternate)
+      },
+      getPrecedence(): number {
+        // TODO: extract precedence
+        return 3
+      },
+    })
 
     this.registerInfixParselet(TokenType.Colon, new EndTokenParselet())
   }
