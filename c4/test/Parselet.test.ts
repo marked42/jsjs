@@ -1,4 +1,4 @@
-import { Parser } from '../Parser'
+import { Parser } from '../Parselet'
 import { Lexer } from '../Lexer'
 import { CharacterStream } from '../CharacterStream'
 

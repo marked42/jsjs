@@ -30,25 +30,9 @@ export class Parser extends ParseletParser {
     super(lexer)
 
     this.registerAtoms()
-
-    this.registerPostfixOperators([
-      [TokenType.Increment, 15],
-      [TokenType.Decrement, 15],
-    ])
-
-    this.registerPrefixOperators([
-      [TokenType.Minus, 14],
-      [TokenType.Plus, 14],
-    ])
-
-    this.registerBinaryOperators([
-      [TokenType.Plus, 1, 'left'],
-      [TokenType.Minus, 1, 'left'],
-      [TokenType.Star, 2, 'left'],
-      [TokenType.Div, 2, 'left'],
-      [TokenType.StarStar, 3, 'right'],
-    ])
-
+    this.registerPostfixOperators()
+    this.registerPrefixOperators()
+    this.registerBinaryOperators()
     this.registerParenthesis()
     this.registerIndexOperators()
     this.registerConditionalOperators()
@@ -116,6 +100,7 @@ export class Parser extends ParseletParser {
           return new ConditionalExpression(result, consequent, alternate)
         }
         getPrecedence(): number {
+          // TODO: extract precedence
           return 3
         }
       })()
@@ -124,21 +109,35 @@ export class Parser extends ParseletParser {
     this.registerInfixParselet(TokenType.Colon, new EndTokenParselet())
   }
 
-  registerPrefixOperators(prefixOperators: Array<[TokenType, number]>) {
+  registerPrefixOperators() {
+    const prefixOperators: Array<[TokenType, number]> = [
+      [TokenType.Minus, 14],
+      [TokenType.Plus, 14],
+    ]
     prefixOperators.forEach(([type, precedence]) => {
       this.registerPrefixParselet(type, new PrefixOperatorParselet(precedence))
     })
   }
 
-  registerPostfixOperators(postfixOperators: Array<[TokenType, number]>) {
+  registerPostfixOperators() {
+    const postfixOperators: Array<[TokenType, number]> = [
+      [TokenType.Increment, 15],
+      [TokenType.Decrement, 15],
+    ]
     postfixOperators.forEach(([type, precedence]) => {
       this.registerInfixParselet(type, new PostfixOperatorParselet(precedence))
     })
   }
 
-  registerBinaryOperators(
-    binaryOperators: Array<[TokenType, number, OperatorAssociativity]>
-  ) {
+  registerBinaryOperators() {
+    const binaryOperators: Array<[TokenType, number, OperatorAssociativity]> = [
+      [TokenType.Plus, 1, 'left'],
+      [TokenType.Minus, 1, 'left'],
+      [TokenType.Star, 2, 'left'],
+      [TokenType.Div, 2, 'left'],
+      [TokenType.StarStar, 3, 'right'],
+    ]
+
     binaryOperators.forEach(([type, precedence, assoc]) => {
       this.registerInfixParselet(
         type,
