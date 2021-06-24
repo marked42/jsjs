@@ -10,7 +10,8 @@ import { PostfixOperatorParselet } from './PostfixOperatorParselet'
 import { LeftParenParselet } from './LeftParenParselet'
 import { EndTokenParselet } from './EndTokenParselet'
 import { LeftSquareParselet } from './IndexOperatorParselet'
-import { Expression, MemberExpression } from '../AST'
+import { ConditionalExpression, Expression, MemberExpression } from '../AST'
+import { InfixParselet } from './Parselet'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {
@@ -46,7 +47,6 @@ export class Parser extends ParseletParser {
       [TokenType.Star, 2, 'left'],
       [TokenType.Div, 2, 'left'],
       [TokenType.StarStar, 3, 'right'],
-      // [TokenType.Dot, 14, 'left'],
       // TODO:
       //   [TokenType.LeftBracket, 3, 'right'],
       //   [TokenType.Question, 3, 'right'],
@@ -60,6 +60,33 @@ export class Parser extends ParseletParser {
         }
       })(14, 'left')
     )
+
+    this.registerConditionalExpression()
+  }
+
+  registerConditionalExpression() {
+    this.registerInfixParselet(
+      TokenType.Question,
+      new (class implements InfixParselet {
+        parse(
+          parser: ParseletParser,
+          result: Expression,
+          token: Token
+        ): Expression {
+          const rightAssociativePrecedence = this.getPrecedence()
+          const consequent = parser.expression(rightAssociativePrecedence)
+          parser.consume(TokenType.Colon)
+          const alternate = parser.expression(0)
+
+          return new ConditionalExpression(result, consequent, alternate)
+        }
+        getPrecedence(): number {
+          return 3
+        }
+      })()
+    )
+
+    this.registerInfixParselet(TokenType.Colon, new EndTokenParselet())
   }
 
   registerPrefixOperators(prefixOperators: Array<[TokenType, number]>) {
