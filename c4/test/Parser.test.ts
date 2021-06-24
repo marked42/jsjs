@@ -1,4 +1,5 @@
-import { Parser } from '../Parser'
+// import { Parser } from '../Parser'
+import { Parser } from '../Parselet'
 import { Lexer } from '../Lexer'
 import { CharacterStream } from '../CharacterStream'
 
@@ -47,4 +48,46 @@ describe('expression', () => {
     const parser = parserForInput(input)
     expect(parser.expression()).toMatchSnapshot()
   })
+
+  it('should parse parenthesis correctly', () => {
+    const input = '1 + (2 + 3) * 4'
+    const parser = parserForInput(input)
+    expect(parser.expression()).toMatchSnapshot()
+  })
+
+  // it('should parse index correctly', () => {
+  //   const input = 'a + b[1]'
+  //   const parser = parserForInput(input)
+  //   expect(parser.expression()).toMatchSnapshot()
+  // })
+
+  // it('should parse index with lower precedence correctly', () => {
+  //   const input = 'a.b[1]'
+  //   const parser = parserForInput(input)
+  //   expect(parser.expression()).toMatchSnapshot()
+  // })
+
+  // it('should parse conditional operators', () => {
+  //   const input = 'a ? b : c'
+  //   const parser = parserForInput(input)
+  //   expect(parser.expression()).toMatchSnapshot()
+  // })
+
+  // it('should parse conditional operators with right associativity', () => {
+  //   const input = 'a ? b : c ? d : e'
+  //   const parser = parserForInput(input)
+  //   expect(parser.expression()).toMatchSnapshot()
+  // })
+
+  // it('should parse conditional operators with correct precedence relative to .', () => {
+  //   const input = 'a.b ? c : d'
+  //   const parser = parserForInput(input)
+  //   expect(parser.expression()).toMatchSnapshot()
+  // })
+
+  // it('should parse conditional operators with correct precedence relative to +', () => {
+  //   const input = 'a + b ? c : d'
+  //   const parser = parserForInput(input)
+  //   expect(parser.expression()).toMatchSnapshot()
+  // })
 })

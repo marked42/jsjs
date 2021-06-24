@@ -8,8 +8,8 @@ export class Lexer {
   private charCode: number = -1
   private skippedTokenTypes: TokenType[] = []
 
-  private tokens: Token[] = []
-  private currentTokenIndex = -1
+  private lookaheadTokens: Token[] = []
+  private lookaheadTokenIndex = 0
 
   constructor(private stream: CharacterStream) {}
 
@@ -74,12 +74,28 @@ export class Lexer {
     return tokenType
   }
 
-  prev(): Token {
-    if (this.currentTokenIndex < 0) {
-      throw new Error('no previous token')
+  fillQueue(num: number) {
+    for (let i = 0; i !== num; i++) {
+      this.lookaheadTokens.push(this.nextNonSkippedToken())
     }
-    this.currentTokenIndex -= 1
-    return this.tokens[this.currentTokenIndex + 1]
+  }
+
+  lookahead(i: number = 0) {
+    const targetIndex = this.lookaheadTokenIndex + i
+    this.fillQueue(targetIndex - this.lookaheadTokens.length + 1)
+
+    return this.lookaheadTokens[targetIndex]
+  }
+
+  consume(tokenType?: TokenType): Token {
+    const token = this.lookahead()
+
+    if (tokenType !== undefined && tokenType !== token.type) {
+      throw new Error(`expect token type ${tokenType}, encountered ${token}`)
+    }
+    this.lookaheadTokenIndex++
+
+    return token
   }
 
   nextNonSkippedToken() {
@@ -95,14 +111,6 @@ export class Lexer {
 
       return token
     }
-  }
-
-  next(): Token {
-    if (this.currentTokenIndex + 1 >= this.tokens.length) {
-      this.tokens.push(this.nextNonSkippedToken())
-    }
-    this.currentTokenIndex += 1
-    return this.tokens[this.currentTokenIndex]
   }
 
   _next(): Token {

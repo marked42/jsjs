@@ -1,4 +1,4 @@
-export type OperatorAssociativity = 'left' | 'right'
+export type OperatorAssociativity = 'left' | 'right' | 'none'
 
 // C operator precedence https://en.cppreference.com/w/c/language/operator_precedence
 export function getInfixOperatorPrecedenceAssociativity(op: string) {
@@ -9,7 +9,11 @@ export function getInfixOperatorPrecedenceAssociativity(op: string) {
     '-': [1, 'left'],
     '*': [2, 'left'],
     '/': [2, 'left'],
+    // TODO: c has no ** operator
     '**': [3, 'right'],
+    '[': [14, 'none'],
+    '.': [14, 'left'],
+    '?': [3, 'right'],
   } as const
 
   const value = InfixPostfixOperatorsConfiguration[op]

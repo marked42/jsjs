@@ -16,3 +16,5 @@ export const NumericLiteralUnexpectedNonBinaryDigitAfter0B = new Error(
 export const NumericLiteralUnexpectedNonHexDigitAfter0X = new Error(
   'unexpected non hex digit after prefix 0x, expect at least one hex digit followed'
 )
+
+export const UnexpectedToken = new Error('unexpected token ')
