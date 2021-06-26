@@ -9,7 +9,6 @@ import {
 } from '../Token'
 import { PrefixOperatorParselet } from './PrefixOperatorParselet'
 import { BinaryOperatorParselet } from './BinaryOperatorParselet'
-import { OperatorAssociativity } from '../Operators'
 import { PostfixOperatorParselet } from './PostfixOperatorParselet'
 import { EndTokenParselet } from './EndTokenParselet'
 import {
@@ -21,14 +20,21 @@ import {
   StringLiteral,
 } from '../AST'
 import { AtomParselet } from './AtomParselet'
+import {
+  BinaryOperator,
+  PostfixOperator,
+  PrefixOperator,
+  FirstOperator,
+  LastOperator,
+} from './Operator'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {
     super(lexer)
 
     this.registerAtoms()
-    this.registerPostfixOperators()
     this.registerPrefixOperators()
+    this.registerPostfixOperators()
     this.registerBinaryOperators()
     this.registerParenthesis()
     this.registerIndexOperators()
@@ -62,8 +68,7 @@ export class Parser extends ParseletParser {
     this.registerInfixParselet(
       TokenType.Dot,
       new BinaryOperatorParselet(
-        14,
-        'left',
+        new BinaryOperator(14, 'left'),
         (left: Expression, right: Expression, token: Token) =>
           new MemberExpression(left, right, false)
       )
@@ -72,17 +77,19 @@ export class Parser extends ParseletParser {
 
   registerIndexOperators() {
     // 索引表达式a[b]
+    const leftSquare = new FirstOperator(14, true)
+    const rightSquare = new LastOperator(14, false)
+
     this.registerInfixParselet(TokenType.LeftSquare, {
       parse(parser: ParseletParser, result: Expression, token: Token) {
-        const property = parser.expression(0)
-
+        const property = parser.expression(leftSquare.rightBindingPower())
         parser.consume(TokenType.RightSquare)
 
         return new MemberExpression(result, property, true)
       },
 
       getPrecedence() {
-        return 14
+        return leftSquare.leftBindingPower()
       },
     })
 
@@ -90,10 +97,12 @@ export class Parser extends ParseletParser {
   }
 
   registerParenthesis() {
+    const leftParen = new FirstOperator(15, false)
+    const rightParen = new LastOperator(15, false)
     // 括号表达式
     this.registerPrefixParselet(TokenType.LeftParen, {
       parse(parser: ParseletParser, token: Token) {
-        const expr = parser.expression(0)
+        const expr = parser.expression(leftParen.rightBindingPower())
 
         expr.parenthesized = true
         parser.consume(TokenType.RightParen)
@@ -105,22 +114,23 @@ export class Parser extends ParseletParser {
   }
 
   registerConditionalOperators() {
+    const question = new FirstOperator(3, true)
+    const colon = new LastOperator(3, true)
+
     this.registerInfixParselet(TokenType.Question, {
       parse(
         parser: ParseletParser,
         result: Expression,
         token: Token
       ): Expression {
-        const rightAssociativePrecedence = this.getPrecedence()
-        const consequent = parser.expression(rightAssociativePrecedence)
+        const consequent = parser.expression(this.getPrecedence())
         parser.consume(TokenType.Colon)
-        const alternate = parser.expression(0)
+        const alternate = parser.expression(colon.rightBindingPower())
 
         return new ConditionalExpression(result, consequent, alternate)
       },
       getPrecedence(): number {
-        // TODO: extract precedence
-        return 3
+        return question.leftBindingPower()
       },
     })
 
@@ -128,39 +138,35 @@ export class Parser extends ParseletParser {
   }
 
   registerPrefixOperators() {
-    const prefixOperators: Array<[TokenType, number]> = [
-      [TokenType.Minus, 14],
-      [TokenType.Plus, 14],
-    ]
-    prefixOperators.forEach(([type, precedence]) => {
-      this.registerPrefixParselet(type, new PrefixOperatorParselet(precedence))
+    const operators = [
+      [TokenType.Minus, new PrefixOperator(14)],
+      [TokenType.Plus, new PrefixOperator(14)],
+    ] as const
+    operators.forEach(([type, op]) => {
+      this.registerPrefixParselet(type, new PrefixOperatorParselet(op))
     })
   }
 
   registerPostfixOperators() {
-    const postfixOperators: Array<[TokenType, number]> = [
-      [TokenType.Increment, 15],
-      [TokenType.Decrement, 15],
-    ]
-    postfixOperators.forEach(([type, precedence]) => {
-      this.registerInfixParselet(type, new PostfixOperatorParselet(precedence))
+    const operators = [
+      [TokenType.Increment, new PostfixOperator(15)],
+      [TokenType.Decrement, new PostfixOperator(15)],
+    ] as const
+    operators.forEach(([type, op]) => {
+      this.registerInfixParselet(type, new PostfixOperatorParselet(op))
     })
   }
 
   registerBinaryOperators() {
-    const binaryOperators: Array<[TokenType, number, OperatorAssociativity]> = [
-      [TokenType.Plus, 1, 'left'],
-      [TokenType.Minus, 1, 'left'],
-      [TokenType.Star, 2, 'left'],
-      [TokenType.Div, 2, 'left'],
-      [TokenType.StarStar, 3, 'right'],
-    ]
-
-    binaryOperators.forEach(([type, precedence, assoc]) => {
-      this.registerInfixParselet(
-        type,
-        new BinaryOperatorParselet(precedence, assoc)
-      )
+    const operators = [
+      [TokenType.Plus, new BinaryOperator(1, 'left')],
+      [TokenType.Minus, new BinaryOperator(1, 'left')],
+      [TokenType.Star, new BinaryOperator(2, 'left')],
+      [TokenType.Div, new BinaryOperator(2, 'left')],
+      [TokenType.StarStar, new BinaryOperator(3, 'right')],
+    ] as const
+    operators.forEach(([type, op]) => {
+      this.registerInfixParselet(type, new BinaryOperatorParselet(op))
     })
   }
 }

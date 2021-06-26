@@ -57,6 +57,10 @@ export class FirstOperator extends PrecedentialOperator {
     }
     throw new Error('operator has no left binding power')
   }
+
+  rightBindingPower() {
+    return 0
+  }
 }
 
 /**
