@@ -88,7 +88,6 @@ export class Parser {
 
         const newLp = associativity === 'left' ? precedence + 1 : precedence
         const right = this.expression(newLp)
-        // TODO: binary operator type warning
         if (token.type === TokenType.Dot) {
           result = new MemberExpression(result, right)
         } else {
@@ -107,7 +106,6 @@ export class Parser {
         if (precedence > minPrecedence) {
           result = new UnaryExpression(result, token.source, false)
           this.lexer.consume()
-          // TODO: 也可以使用peek操作， peek和prev是实现同样功能的两种方式，都需要token缓冲区支持
         }
         break
       }
