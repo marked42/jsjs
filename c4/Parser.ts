@@ -1,5 +1,6 @@
 import {
   BinaryExpression,
+  CallExpression,
   ConditionalExpression,
   Expression,
   Identifier,
@@ -156,6 +157,31 @@ export class Parser {
       }
 
       if (token.type === TokenType.Colon) {
+        break
+      }
+
+      if (token.type === TokenType.LeftParen) {
+        const {
+          precedence,
+          associativity,
+        } = getInfixOperatorPrecedenceAssociativity(token.source)
+
+        if (precedence < minPrecedence) {
+          break
+        }
+        this.lexer.consume()
+
+        const params = [this.expression(0)]
+        while (this.lexer.lookahead(0).type !== TokenType.RightParen) {
+          this.lexer.consume(TokenType.Comma)
+          params.push(this.expression(0))
+        }
+        this.lexer.consume(TokenType.RightParen)
+        result = new CallExpression(result, params)
+        continue
+      }
+
+      if ([TokenType.Comma, TokenType.RightParen].includes(token.type)) {
         break
       }
 

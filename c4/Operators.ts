@@ -12,6 +12,7 @@ export function getInfixOperatorPrecedenceAssociativity(op: string) {
     // TODO: c has no ** operator
     '**': [3, 'right'],
     '[': [14, 'none'],
+    '(': [15, 'none'],
     '.': [14, 'left'],
     '?': [3, 'right'],
   } as const
