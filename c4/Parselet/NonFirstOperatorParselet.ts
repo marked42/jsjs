@@ -1,7 +1,7 @@
 import { Expression } from '../AST'
 import { Token } from '../Token'
 import { Operator } from './Operator'
-import { OperatorInfixParselet } from './Parselet'
+import { OperatorInfixParselet } from './OperatorInfixParselet'
 import { ParseletParser } from './ParseletParser'
 
 export class NonFirstOperatorParselet extends OperatorInfixParselet {

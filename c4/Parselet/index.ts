@@ -26,7 +26,7 @@ import { PrefixOperator } from './PrefixOperator'
 import { PostfixOperator } from './PostfixOperator'
 import { BinaryOperator } from './BinaryOperator'
 import { MiddleOperator } from './MiddleOperator'
-import { OperatorInfixParselet } from './Parselet'
+import { OperatorInfixParselet } from './OperatorInfixParselet'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {

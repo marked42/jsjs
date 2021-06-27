@@ -1,4 +1,4 @@
-import { OperatorInfixParselet } from './Parselet'
+import { OperatorInfixParselet } from './OperatorInfixParselet'
 import type { ParseletParser } from './ParseletParser'
 import { BinaryExpression, Expression } from '../AST'
 import type { Token } from '../Token'
