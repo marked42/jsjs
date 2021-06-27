@@ -1,10 +1,48 @@
 import { Operator, OperatorAssociativity } from './Operator'
 
+interface OperatorPrecedence {
+  value(): number
+
+  /**
+   * 最低的优先级，解析表达式时依次作为初始的优先级，任何操作符的优先级都大于此优先级
+   */
+  min(): OperatorPrecedence
+
+  higherPrecedenceByOne(): OperatorPrecedence
+
+  /**
+   *
+   * @param op
+   * @returns -1表示小于目标优先级，0表示等于目标优先级，1表示大于目标优先级
+   */
+  compare(op: OperatorPrecedence): number
+}
+
+export class IncreasingOperatorPrecedence implements OperatorPrecedence {
+  private static min = new IncreasingOperatorPrecedence()
+
+  value(): number {
+    throw new Error('Method not implemented.')
+  }
+
+  min(): IncreasingOperatorPrecedence {
+    return IncreasingOperatorPrecedence.min
+  }
+
+  higherPrecedenceByOne() {
+    // TODO:
+    return IncreasingOperatorPrecedence.min
+  }
+
+  compare(op: IncreasingOperatorPrecedence): number {
+    throw new Error('Method not implemented.')
+  }
+}
+
 /**
  * decide operator left binding power and right binding power according to
- * whether operator has left or right operand and operation position in expression.
+ * whether operator has left or right operand and operator position in expression.
  */
-
 export class PrecedentialOperator implements Operator {
   private hasPrecedingOperand = true
   private hasFollowingOperand = true
