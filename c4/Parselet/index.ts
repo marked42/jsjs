@@ -21,11 +21,11 @@ import {
 } from '../AST'
 import { AtomParselet } from './AtomParselet'
 import {
-  BinaryOperator,
   PostfixOperator,
   PrefixOperator,
   PrecedentialOperator,
 } from './Operator'
+import { BinaryOperator } from './BinaryOperator'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {

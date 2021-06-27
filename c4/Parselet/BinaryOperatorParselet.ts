@@ -2,7 +2,7 @@ import type { InfixParselet } from './Parselet'
 import type { ParseletParser } from './ParseletParser'
 import { BinaryExpression, Expression } from '../AST'
 import type { Token } from '../Token'
-import { BinaryOperator } from './Operator'
+import { BinaryOperator } from './BinaryOperator'
 
 export class BinaryOperatorParselet implements InfixParselet {
   constructor(
