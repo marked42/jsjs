@@ -28,6 +28,35 @@ BinaryExpression {
 }
 `;
 
+exports[`expression should parse call expression  1`] = `
+CallExpression {
+  "callee": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "params": Array [
+    Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    Identifier {
+      "name": "c",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    Identifier {
+      "name": "d",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+  ],
+  "parenthesized": false,
+  "type": "CallExpression",
+}
+`;
+
 exports[`expression should parse conditional operators 1`] = `
 ConditionalExpression {
   "alternate": Identifier {

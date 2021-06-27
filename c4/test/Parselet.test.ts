@@ -89,4 +89,10 @@ describe('expression', () => {
     const parser = parserForInput(input)
     expect(parser.expression()).toMatchSnapshot()
   })
+
+  it('should parse call expression ', () => {
+    const input = 'a(b, c, d)'
+    const parser = parserForInput(input)
+    expect(parser.expression()).toMatchSnapshot()
+  })
 })

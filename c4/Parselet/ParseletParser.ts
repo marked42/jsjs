@@ -21,6 +21,10 @@ export class ParseletParser {
     this.infixParselets.set(type, parselet)
   }
 
+  lookahead(i: number) {
+    return this.lexer.lookahead(i)
+  }
+
   consume(type?: TokenType) {
     return this.lexer.consume(type)
   }

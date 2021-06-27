@@ -91,7 +91,9 @@ export class Lexer {
     const token = this.lookahead()
 
     if (tokenType !== undefined && tokenType !== token.type) {
-      throw new Error(`expect token type ${tokenType}, encountered ${token}`)
+      throw new Error(
+        `expect token type ${tokenType}, encountered ${JSON.stringify(token)}`
+      )
     }
     this.lookaheadTokenIndex++
 

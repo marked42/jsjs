@@ -18,12 +18,14 @@ import {
   MemberExpression,
   NumericLiteral,
   StringLiteral,
+  CallExpression,
 } from '../AST'
 import { AtomParselet } from './AtomParselet'
 import { PrecedentialOperator } from './PrecedentialOperator'
 import { PrefixOperator } from './PrefixOperator'
 import { PostfixOperator } from './PostfixOperator'
 import { BinaryOperator } from './BinaryOperator'
+import { MiddleOperator } from './MiddleOperator'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {
@@ -37,7 +39,7 @@ export class Parser extends ParseletParser {
     this.registerIndexOperators()
     this.registerConditionalOperators()
     this.registerDot()
-    // TODO: call expression
+    this.registerCallExpression()
   }
 
   registerAtoms() {
@@ -134,6 +136,51 @@ export class Parser extends ParseletParser {
         return expr
       },
     })
+    this.registerInfixParselet(
+      TokenType.RightParen,
+      new NonFirstOperatorParselet(rightParen)
+    )
+  }
+
+  registerCallExpression() {
+    const leftParen = new PrecedentialOperator(15, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: true,
+      isFirstOperator: true,
+      isLastOperator: false,
+      expressionStartWithOperand: true,
+    })
+    const comma = new MiddleOperator(15)
+    const rightParen = new PrecedentialOperator(15, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: false,
+      isFirstOperator: false,
+      isLastOperator: true,
+      expressionStartWithOperand: false,
+    })
+
+    // 括号表达式中'('是前缀操作符，这里括号'('是中缀操作符。
+    this.registerInfixParselet(TokenType.LeftParen, {
+      parse(parser: ParseletParser, result: Expression, token: Token) {
+        const params = [parser.expression(leftParen.rightBindingPower())]
+
+        while (parser.lookahead(0).type !== TokenType.RightParen) {
+          parser.consume(TokenType.Comma)
+          params.push(parser.expression(leftParen.rightBindingPower()))
+        }
+        parser.consume(TokenType.RightParen)
+
+        return new CallExpression(result, params)
+      },
+      leftBindingPower() {
+        return leftParen.leftBindingPower()
+      },
+    })
+    this.registerInfixParselet(
+      TokenType.Comma,
+      new NonFirstOperatorParselet(comma)
+    )
+    // 和括号表达式中的‘)'重复了，但是不影响逻辑逻辑正确性
     this.registerInfixParselet(
       TokenType.RightParen,
       new NonFirstOperatorParselet(rightParen)
