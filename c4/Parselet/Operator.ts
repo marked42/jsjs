@@ -131,3 +131,48 @@ export class BinaryOperator extends PrecedentialOperator {
     return this.associativity === 'left' ? this.precedence + 1 : this.precedence
   }
 }
+
+export abstract class AutoPrecedentialOperator extends Operator {
+  private hasPrecedingOperand = false
+  private hasFollowingOperand = false
+  private isFirstOperator = true
+  private isLastOperator = true
+  private expressionStartWithOperand = false
+  private associativity = 'left'
+
+  constructor(protected readonly precedence: number) {
+    super()
+  }
+
+  leftBindingPower() {
+    if (!this.hasPrecedingOperand) {
+      throw new Error('operator has no left binding power')
+    }
+
+    if (this.isFirstOperator) {
+      return this.precedence
+    }
+
+    return -1
+  }
+
+  rightBindingPower() {
+    if (!this.hasFollowingOperand) {
+      throw new Error('operator has no right binding power')
+    }
+
+    if (!this.isLastOperator) {
+      return 0
+    }
+
+    if (!this.expressionStartWithOperand) {
+      return this.precedence
+    }
+
+    if (this.associativity === 'right') {
+      return this.precedence
+    }
+
+    return this.precedence + 1
+  }
+}
