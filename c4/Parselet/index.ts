@@ -10,7 +10,7 @@ import {
 import { PrefixOperatorParselet } from './PrefixOperatorParselet'
 import { BinaryOperatorParselet } from './BinaryOperatorParselet'
 import { PostfixOperatorParselet } from './PostfixOperatorParselet'
-import { EndTokenParselet } from './EndTokenParselet'
+import { NonFirstOperatorParselet } from './NonFirstOperatorParselet'
 import {
   ConditionalExpression,
   Expression,
@@ -24,8 +24,7 @@ import {
   BinaryOperator,
   PostfixOperator,
   PrefixOperator,
-  FirstOperator,
-  LastOperator,
+  AutoPrecedentialOperator,
 } from './Operator'
 
 export class Parser extends ParseletParser {
@@ -77,8 +76,20 @@ export class Parser extends ParseletParser {
 
   registerIndexOperators() {
     // 索引表达式a[b]
-    const leftSquare = new FirstOperator(14, true)
-    const rightSquare = new LastOperator(14, false)
+    const leftSquare = new AutoPrecedentialOperator(14, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: true,
+      isFirstOperator: true,
+      isLastOperator: false,
+      expressionStartWithOperand: true,
+    })
+    const rightSquare = new AutoPrecedentialOperator(14, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: false,
+      isFirstOperator: false,
+      isLastOperator: true,
+      expressionStartWithOperand: true,
+    })
 
     this.registerInfixParselet(TokenType.LeftSquare, {
       parse(parser: ParseletParser, result: Expression, token: Token) {
@@ -93,12 +104,27 @@ export class Parser extends ParseletParser {
       },
     })
 
-    this.registerInfixParselet(TokenType.RightSquare, new EndTokenParselet())
+    this.registerInfixParselet(
+      TokenType.RightSquare,
+      new NonFirstOperatorParselet(rightSquare)
+    )
   }
 
   registerParenthesis() {
-    const leftParen = new FirstOperator(15, false)
-    const rightParen = new LastOperator(15, false)
+    const leftParen = new AutoPrecedentialOperator(15, {
+      hasPrecedingOperand: false,
+      hasFollowingOperand: true,
+      isFirstOperator: true,
+      isLastOperator: false,
+      expressionStartWithOperand: false,
+    })
+    const rightParen = new AutoPrecedentialOperator(15, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: false,
+      isFirstOperator: false,
+      isLastOperator: true,
+      expressionStartWithOperand: false,
+    })
     // 括号表达式
     this.registerPrefixParselet(TokenType.LeftParen, {
       parse(parser: ParseletParser, token: Token) {
@@ -110,12 +136,28 @@ export class Parser extends ParseletParser {
         return expr
       },
     })
-    this.registerInfixParselet(TokenType.RightParen, new EndTokenParselet())
+    this.registerInfixParselet(
+      TokenType.RightParen,
+      new NonFirstOperatorParselet(rightParen)
+    )
   }
 
   registerConditionalOperators() {
-    const question = new FirstOperator(3, true)
-    const colon = new LastOperator(3, true)
+    const question = new AutoPrecedentialOperator(3, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: true,
+      isFirstOperator: true,
+      isLastOperator: false,
+      expressionStartWithOperand: true,
+    })
+    const colon = new AutoPrecedentialOperator(3, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: true,
+      isFirstOperator: false,
+      isLastOperator: true,
+      expressionStartWithOperand: true,
+      associativity: 'right',
+    })
 
     this.registerInfixParselet(TokenType.Question, {
       parse(
@@ -134,7 +176,10 @@ export class Parser extends ParseletParser {
       },
     })
 
-    this.registerInfixParselet(TokenType.Colon, new EndTokenParselet())
+    this.registerInfixParselet(
+      TokenType.Colon,
+      new NonFirstOperatorParselet(colon)
+    )
   }
 
   registerPrefixOperators() {
