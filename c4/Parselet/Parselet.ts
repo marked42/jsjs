@@ -8,5 +8,5 @@ export interface PrefixParselet {
 
 export interface InfixParselet {
   parse(parser: ParseletParser, result: Expression, token: Token): Expression
-  getPrecedence(): number
+  leftBindingPower(): number
 }

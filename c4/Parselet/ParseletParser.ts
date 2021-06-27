@@ -51,7 +51,7 @@ export class ParseletParser {
         throw new Error('unexpected token ' + token)
       }
 
-      if (parselet.getPrecedence() < minPrecedence) {
+      if (parselet.leftBindingPower() < minPrecedence) {
         break
       }
 

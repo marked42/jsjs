@@ -11,7 +11,7 @@ export class PostfixOperatorParselet implements InfixParselet {
     return new UnaryExpression(result, token.source, false)
   }
 
-  getPrecedence() {
+  leftBindingPower() {
     return this.op.leftBindingPower()
   }
 }

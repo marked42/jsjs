@@ -13,7 +13,7 @@ export class NonFirstOperatorParselet implements InfixParselet {
     )
   }
 
-  getPrecedence() {
+  leftBindingPower() {
     return this.op.leftBindingPower()
   }
 }

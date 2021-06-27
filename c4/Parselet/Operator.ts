@@ -9,7 +9,7 @@ export type OperatorAssociativity = 'left' | 'right'
  * decide operator left binding power and right binding power according to
  * whether operator has left or right operand and operation position in expression.
  */
-export class AutoPrecedentialOperator implements Operator {
+export class PrecedentialOperator implements Operator {
   private hasPrecedingOperand = true
   private hasFollowingOperand = true
   private isFirstOperator = false
@@ -80,7 +80,7 @@ export class AutoPrecedentialOperator implements Operator {
 /**
  * 前缀操作符
  */
-export class PrefixOperator extends AutoPrecedentialOperator {
+export class PrefixOperator extends PrecedentialOperator {
   constructor(precedence: number) {
     super(precedence, {
       hasPrecedingOperand: false,
@@ -95,7 +95,7 @@ export class PrefixOperator extends AutoPrecedentialOperator {
 /**
  * 后缀操作符
  */
-export class PostfixOperator extends AutoPrecedentialOperator {
+export class PostfixOperator extends PrecedentialOperator {
   constructor(precedence: number) {
     super(precedence, {
       hasPrecedingOperand: true,
@@ -112,7 +112,7 @@ export class PostfixOperator extends AutoPrecedentialOperator {
  * 1. ':' in 'a ? b : c'，':'后边有操作数，有结合
  * 1. 'op2' in 'op1 b op2 c'，'op2'后边有操作数，但是没有结合性
  */
-export class LastAssociativeOperator extends AutoPrecedentialOperator {
+export class LastAssociativeOperator extends PrecedentialOperator {
   constructor(precedence: number, associativity: OperatorAssociativity) {
     super(precedence, {
       hasPrecedingOperand: true,
@@ -129,7 +129,7 @@ export class LastAssociativeOperator extends AutoPrecedentialOperator {
  * 有至少三个操作符的表达式，中间的操作符
  * 1. 'a op1 b op2 c op3' 中间的 'op2'
  */
-export class MiddleOperator extends AutoPrecedentialOperator {
+export class MiddleOperator extends PrecedentialOperator {
   constructor(precedence: number) {
     super(precedence, {
       hasPrecedingOperand: true,
@@ -145,7 +145,7 @@ export class MiddleOperator extends AutoPrecedentialOperator {
 /**
  * 二元操作符
  */
-export class BinaryOperator extends AutoPrecedentialOperator {
+export class BinaryOperator extends PrecedentialOperator {
   constructor(precedence: number, associativity: OperatorAssociativity) {
     super(precedence, {
       hasPrecedingOperand: true,

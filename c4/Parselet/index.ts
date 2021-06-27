@@ -24,7 +24,7 @@ import {
   BinaryOperator,
   PostfixOperator,
   PrefixOperator,
-  AutoPrecedentialOperator,
+  PrecedentialOperator,
 } from './Operator'
 
 export class Parser extends ParseletParser {
@@ -76,14 +76,14 @@ export class Parser extends ParseletParser {
 
   registerIndexOperators() {
     // 索引表达式a[b]
-    const leftSquare = new AutoPrecedentialOperator(14, {
+    const leftSquare = new PrecedentialOperator(14, {
       hasPrecedingOperand: true,
       hasFollowingOperand: true,
       isFirstOperator: true,
       isLastOperator: false,
       expressionStartWithOperand: true,
     })
-    const rightSquare = new AutoPrecedentialOperator(14, {
+    const rightSquare = new PrecedentialOperator(14, {
       hasPrecedingOperand: true,
       hasFollowingOperand: false,
       isFirstOperator: false,
@@ -99,7 +99,7 @@ export class Parser extends ParseletParser {
         return new MemberExpression(result, property, true)
       },
 
-      getPrecedence() {
+      leftBindingPower() {
         return leftSquare.leftBindingPower()
       },
     })
@@ -111,14 +111,14 @@ export class Parser extends ParseletParser {
   }
 
   registerParenthesis() {
-    const leftParen = new AutoPrecedentialOperator(15, {
+    const leftParen = new PrecedentialOperator(15, {
       hasPrecedingOperand: false,
       hasFollowingOperand: true,
       isFirstOperator: true,
       isLastOperator: false,
       expressionStartWithOperand: false,
     })
-    const rightParen = new AutoPrecedentialOperator(15, {
+    const rightParen = new PrecedentialOperator(15, {
       hasPrecedingOperand: true,
       hasFollowingOperand: false,
       isFirstOperator: false,
@@ -143,14 +143,14 @@ export class Parser extends ParseletParser {
   }
 
   registerConditionalOperators() {
-    const question = new AutoPrecedentialOperator(3, {
+    const question = new PrecedentialOperator(3, {
       hasPrecedingOperand: true,
       hasFollowingOperand: true,
       isFirstOperator: true,
       isLastOperator: false,
       expressionStartWithOperand: true,
     })
-    const colon = new AutoPrecedentialOperator(3, {
+    const colon = new PrecedentialOperator(3, {
       hasPrecedingOperand: true,
       hasFollowingOperand: true,
       isFirstOperator: false,
@@ -165,13 +165,13 @@ export class Parser extends ParseletParser {
         result: Expression,
         token: Token
       ): Expression {
-        const consequent = parser.expression(this.getPrecedence())
+        const consequent = parser.expression(this.leftBindingPower())
         parser.consume(TokenType.Colon)
         const alternate = parser.expression(colon.rightBindingPower())
 
         return new ConditionalExpression(result, consequent, alternate)
       },
-      getPrecedence(): number {
+      leftBindingPower(): number {
         return question.leftBindingPower()
       },
     })

@@ -27,7 +27,7 @@ export class BinaryOperatorParselet implements InfixParselet {
     return compose(result, right, token)
   }
 
-  getPrecedence() {
+  leftBindingPower() {
     return this.op.leftBindingPower()
   }
 }
