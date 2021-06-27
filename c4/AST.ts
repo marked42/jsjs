@@ -9,6 +9,8 @@ export enum ASTNodeType {
   MemberExpression = 'MemberExpression',
   ConditionalExpression = 'ConditionalExpression',
 
+  CallExpression = 'CallExpression',
+
   VariableDeclaration = 'VariableDeclaration',
   VariableDeclarator = 'VariableDeclarator',
 }
@@ -69,6 +71,12 @@ export class ConditionalExpression extends Expression {
     public alternate: Expression
   ) {
     super(ASTNodeType.ConditionalExpression)
+  }
+}
+
+export class CallExpression extends Expression {
+  constructor(public callee: Expression, public params: Expression[]) {
+    super(ASTNodeType.CallExpression)
   }
 }
 

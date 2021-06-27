@@ -1,5 +1,6 @@
 import {
   BinaryExpression,
+  CallExpression,
   ConditionalExpression,
   Expression,
   Identifier,
@@ -87,7 +88,6 @@ export class Parser {
 
         const newLp = associativity === 'left' ? precedence + 1 : precedence
         const right = this.expression(newLp)
-        // TODO: binary operator type warning
         if (token.type === TokenType.Dot) {
           result = new MemberExpression(result, right)
         } else {
@@ -106,7 +106,6 @@ export class Parser {
         if (precedence > minPrecedence) {
           result = new UnaryExpression(result, token.source, false)
           this.lexer.consume()
-          // TODO: 也可以使用peek操作， peek和prev是实现同样功能的两种方式，都需要token缓冲区支持
         }
         break
       }
@@ -156,6 +155,31 @@ export class Parser {
       }
 
       if (token.type === TokenType.Colon) {
+        break
+      }
+
+      if (token.type === TokenType.LeftParen) {
+        const {
+          precedence,
+          associativity,
+        } = getInfixOperatorPrecedenceAssociativity(token.source)
+
+        if (precedence < minPrecedence) {
+          break
+        }
+        this.lexer.consume()
+
+        const params = [this.expression(0)]
+        while (this.lexer.lookahead(0).type !== TokenType.RightParen) {
+          this.lexer.consume(TokenType.Comma)
+          params.push(this.expression(0))
+        }
+        this.lexer.consume(TokenType.RightParen)
+        result = new CallExpression(result, params)
+        continue
+      }
+
+      if ([TokenType.Comma, TokenType.RightParen].includes(token.type)) {
         break
       }
 

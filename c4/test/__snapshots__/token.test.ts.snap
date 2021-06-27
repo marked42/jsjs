@@ -13,7 +13,7 @@ Array [
   },
   Object {
     "source": "int",
-    "type": 7,
+    "type": "int",
   },
   Object {
     "source": " ",
@@ -30,7 +30,7 @@ Array [
   },
   Object {
     "source": "=",
-    "type": 34,
+    "type": "=",
   },
   Object {
     "source": " ",
@@ -43,7 +43,7 @@ Array [
   },
   Object {
     "source": ";",
-    "type": 52,
+    "type": ";",
   },
   Object {
     "source": "
@@ -70,11 +70,11 @@ Array [
   },
   Object {
     "source": "char",
-    "type": 8,
+    "type": "char",
   },
   Object {
     "source": "*",
-    "type": 19,
+    "type": "*",
   },
   Object {
     "source": " ",
@@ -91,7 +91,7 @@ Array [
   },
   Object {
     "source": "=",
-    "type": 34,
+    "type": "=",
   },
   Object {
     "source": " ",
@@ -104,7 +104,7 @@ Array [
   },
   Object {
     "source": ";",
-    "type": 52,
+    "type": ";",
   },
   Object {
     "source": "
@@ -122,7 +122,7 @@ Array [
   },
   Object {
     "source": "int",
-    "type": 7,
+    "type": "int",
   },
   Object {
     "source": " ",
@@ -139,7 +139,7 @@ Array [
   },
   Object {
     "source": "=",
-    "type": 34,
+    "type": "=",
   },
   Object {
     "source": " ",
@@ -156,7 +156,7 @@ Array [
   },
   Object {
     "source": "==",
-    "type": 35,
+    "type": "==",
   },
   Object {
     "source": " ",
@@ -169,7 +169,7 @@ Array [
   },
   Object {
     "source": ";",
-    "type": 52,
+    "type": ";",
   },
   Object {
     "source": "
