@@ -26,6 +26,7 @@ import { PrefixOperator } from './PrefixOperator'
 import { PostfixOperator } from './PostfixOperator'
 import { BinaryOperator } from './BinaryOperator'
 import { MiddleOperator } from './MiddleOperator'
+import { OperatorInfixParselet } from './Parselet'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {
@@ -91,18 +92,17 @@ export class Parser extends ParseletParser {
       expressionStartWithOperand: true,
     })
 
-    this.registerInfixParselet(TokenType.LeftSquare, {
-      parse(parser: ParseletParser, result: Expression, token: Token) {
-        const property = parser.expression(leftSquare.rightBindingPower())
-        parser.consume(TokenType.RightSquare)
+    this.registerInfixParselet(
+      TokenType.LeftSquare,
+      new (class extends OperatorInfixParselet {
+        parse(parser: ParseletParser, result: Expression, token: Token) {
+          const property = parser.expression(leftSquare.rightBindingPower())
+          parser.consume(TokenType.RightSquare)
 
-        return new MemberExpression(result, property, true)
-      },
-
-      leftBindingPower() {
-        return leftSquare.leftBindingPower()
-      },
-    })
+          return new MemberExpression(result, property, true)
+        }
+      })(leftSquare)
+    )
 
     this.registerInfixParselet(
       TokenType.RightSquare,
@@ -160,22 +160,22 @@ export class Parser extends ParseletParser {
     })
 
     // 括号表达式中'('是前缀操作符，这里括号'('是中缀操作符。
-    this.registerInfixParselet(TokenType.LeftParen, {
-      parse(parser: ParseletParser, result: Expression, token: Token) {
-        const params = [parser.expression(leftParen.rightBindingPower())]
+    this.registerInfixParselet(
+      TokenType.LeftParen,
+      new (class extends OperatorInfixParselet {
+        parse(parser: ParseletParser, result: Expression, token: Token) {
+          const params = [parser.expression(leftParen.rightBindingPower())]
 
-        while (parser.lookahead(0).type !== TokenType.RightParen) {
-          parser.consume(TokenType.Comma)
-          params.push(parser.expression(leftParen.rightBindingPower()))
+          while (parser.lookahead(0).type !== TokenType.RightParen) {
+            parser.consume(TokenType.Comma)
+            params.push(parser.expression(leftParen.rightBindingPower()))
+          }
+          parser.consume(TokenType.RightParen)
+
+          return new CallExpression(result, params)
         }
-        parser.consume(TokenType.RightParen)
-
-        return new CallExpression(result, params)
-      },
-      leftBindingPower() {
-        return leftParen.leftBindingPower()
-      },
-    })
+      })(leftParen)
+    )
     this.registerInfixParselet(
       TokenType.Comma,
       new NonFirstOperatorParselet(comma)
@@ -204,22 +204,22 @@ export class Parser extends ParseletParser {
       associativity: 'right',
     })
 
-    this.registerInfixParselet(TokenType.Question, {
-      parse(
-        parser: ParseletParser,
-        result: Expression,
-        token: Token
-      ): Expression {
-        const consequent = parser.expression(this.leftBindingPower())
-        parser.consume(TokenType.Colon)
-        const alternate = parser.expression(colon.rightBindingPower())
+    this.registerInfixParselet(
+      TokenType.Question,
+      new (class extends OperatorInfixParselet {
+        parse(
+          parser: ParseletParser,
+          result: Expression,
+          token: Token
+        ): Expression {
+          const consequent = parser.expression(this.leftBindingPower())
+          parser.consume(TokenType.Colon)
+          const alternate = parser.expression(colon.rightBindingPower())
 
-        return new ConditionalExpression(result, consequent, alternate)
-      },
-      leftBindingPower(): number {
-        return question.leftBindingPower()
-      },
-    })
+          return new ConditionalExpression(result, consequent, alternate)
+        }
+      })(question)
+    )
 
     this.registerInfixParselet(
       TokenType.Colon,

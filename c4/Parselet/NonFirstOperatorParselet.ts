@@ -1,19 +1,17 @@
 import { Expression } from '../AST'
 import { Token } from '../Token'
 import { Operator } from './Operator'
-import { InfixParselet } from './Parselet'
+import { OperatorInfixParselet } from './Parselet'
 import { ParseletParser } from './ParseletParser'
 
-export class NonFirstOperatorParselet implements InfixParselet {
-  constructor(private op: Operator) {}
+export class NonFirstOperatorParselet extends OperatorInfixParselet {
+  constructor(op: Operator) {
+    super(op)
+  }
 
   parse(parser: ParseletParser, result: Expression, token: Token): Expression {
     throw new Error(
       'parse method of non-first operator parselet should not get called.'
     )
-  }
-
-  leftBindingPower() {
-    return this.op.leftBindingPower()
   }
 }

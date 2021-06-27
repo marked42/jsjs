@@ -1,18 +1,20 @@
-import type { InfixParselet } from './Parselet'
+import { OperatorInfixParselet } from './Parselet'
 import type { ParseletParser } from './ParseletParser'
 import { BinaryExpression, Expression } from '../AST'
 import type { Token } from '../Token'
 import { BinaryOperator } from './BinaryOperator'
 
-export class BinaryOperatorParselet implements InfixParselet {
+export class BinaryOperatorParselet extends OperatorInfixParselet {
   constructor(
-    private op: BinaryOperator,
+    op: BinaryOperator,
     private compose?: (
       left: Expression,
       right: Expression,
       token: Token
     ) => Expression
-  ) {}
+  ) {
+    super(op)
+  }
 
   parse(parser: ParseletParser, result: Expression, token: Token) {
     const right = parser.expression(this.op.rightBindingPower())
@@ -25,9 +27,5 @@ export class BinaryOperatorParselet implements InfixParselet {
     ) => new BinaryExpression(left, right, token.source as any)
     const compose = this.compose || defaultCompose
     return compose(result, right, token)
-  }
-
-  leftBindingPower() {
-    return this.op.leftBindingPower()
   }
 }
