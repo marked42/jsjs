@@ -114,6 +114,70 @@ ConditionalExpression {
 }
 `;
 
+exports[`expression should parse conditional operators with correct precedence relative to post + 1`] = `
+BinaryExpression {
+  "left": ConditionalExpression {
+    "alternate": Identifier {
+      "name": "c",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "consequent": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "test": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "ConditionalExpression",
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": Identifier {
+    "name": "d",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`expression should parse conditional operators with correct precedence relative to post . 1`] = `
+ConditionalExpression {
+  "alternate": MemberExpression {
+    "computed": false,
+    "object": Identifier {
+      "name": "c",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "property": Identifier {
+      "name": "d",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "MemberExpression",
+  },
+  "consequent": Identifier {
+    "name": "b",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "parenthesized": false,
+  "test": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "type": "ConditionalExpression",
+}
+`;
+
 exports[`expression should parse conditional operators with right associativity 1`] = `
 ConditionalExpression {
   "alternate": ConditionalExpression {
