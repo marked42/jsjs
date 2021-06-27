@@ -20,11 +20,9 @@ import {
   StringLiteral,
 } from '../AST'
 import { AtomParselet } from './AtomParselet'
-import {
-  PostfixOperator,
-  PrefixOperator,
-  PrecedentialOperator,
-} from './Operator'
+import { PrecedentialOperator } from './PrecedentialOperator'
+import { PrefixOperator } from './PrefixOperator'
+import { PostfixOperator } from './PostfixOperator'
 import { BinaryOperator } from './BinaryOperator'
 
 export class Parser extends ParseletParser {

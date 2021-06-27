@@ -1,4 +1,4 @@
-import { PrecedentialOperator } from './Operator'
+import { PrecedentialOperator } from './PrecedentialOperator'
 
 /**
  * 有至少三个操作符的表达式，中间的操作符
