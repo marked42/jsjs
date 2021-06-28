@@ -33,6 +33,20 @@ import {
   LastAssociativeOperator,
 } from './Operator'
 
+const enum ExpressionPrecedence {
+  PlusMinus = 1,
+  StarDiv = 2,
+  StarStar = 3,
+  Conditional = 3,
+  MemberExpression = 14,
+  IndexExpression = 14,
+  PrefixMinusPlus = 14,
+  Increment = 15,
+  Decrement = 15,
+  Parenthesis = 15,
+  CallExpression = 15,
+}
+
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {
     super(lexer)
@@ -73,7 +87,7 @@ export class Parser extends ParseletParser {
     this.registerInfixParselet(
       TokenType.Dot,
       new BinaryOperatorParselet(
-        new BinaryOperator(14, 'left'),
+        new BinaryOperator(ExpressionPrecedence.MemberExpression, 'left'),
         (left: Expression, right: Expression, token: Token) =>
           new MemberExpression(left, right, false)
       )
@@ -82,20 +96,26 @@ export class Parser extends ParseletParser {
 
   registerIndexOperators() {
     // 索引表达式a[b]
-    const leftSquare = new PrecedentialOperator(14, {
-      hasPrecedingOperand: true,
-      hasFollowingOperand: true,
-      isFirstOperator: true,
-      isLastOperator: false,
-      expressionStartWithOperand: true,
-    })
-    const rightSquare = new PrecedentialOperator(14, {
-      hasPrecedingOperand: true,
-      hasFollowingOperand: false,
-      isFirstOperator: false,
-      isLastOperator: true,
-      expressionStartWithOperand: true,
-    })
+    const leftSquare = new PrecedentialOperator(
+      ExpressionPrecedence.IndexExpression,
+      {
+        hasPrecedingOperand: true,
+        hasFollowingOperand: true,
+        isFirstOperator: true,
+        isLastOperator: false,
+        expressionStartWithOperand: true,
+      }
+    )
+    const rightSquare = new PrecedentialOperator(
+      ExpressionPrecedence.IndexExpression,
+      {
+        hasPrecedingOperand: true,
+        hasFollowingOperand: false,
+        isFirstOperator: false,
+        isLastOperator: true,
+        expressionStartWithOperand: true,
+      }
+    )
 
     this.registerInfixParselet(
       TokenType.LeftSquare,
@@ -116,20 +136,26 @@ export class Parser extends ParseletParser {
   }
 
   registerParenthesis() {
-    const leftParen = new PrecedentialOperator(15, {
-      hasPrecedingOperand: false,
-      hasFollowingOperand: true,
-      isFirstOperator: true,
-      isLastOperator: false,
-      expressionStartWithOperand: false,
-    })
-    const rightParen = new PrecedentialOperator(15, {
-      hasPrecedingOperand: true,
-      hasFollowingOperand: false,
-      isFirstOperator: false,
-      isLastOperator: true,
-      expressionStartWithOperand: false,
-    })
+    const leftParen = new PrecedentialOperator(
+      ExpressionPrecedence.Parenthesis,
+      {
+        hasPrecedingOperand: false,
+        hasFollowingOperand: true,
+        isFirstOperator: true,
+        isLastOperator: false,
+        expressionStartWithOperand: false,
+      }
+    )
+    const rightParen = new PrecedentialOperator(
+      ExpressionPrecedence.Parenthesis,
+      {
+        hasPrecedingOperand: true,
+        hasFollowingOperand: false,
+        isFirstOperator: false,
+        isLastOperator: true,
+        expressionStartWithOperand: false,
+      }
+    )
     // 括号表达式
     this.registerPrefixParselet(TokenType.LeftParen, {
       parse(parser: ParseletParser, token: Token) {
@@ -148,21 +174,27 @@ export class Parser extends ParseletParser {
   }
 
   registerCallExpression() {
-    const leftParen = new PrecedentialOperator(15, {
-      hasPrecedingOperand: true,
-      hasFollowingOperand: true,
-      isFirstOperator: true,
-      isLastOperator: false,
-      expressionStartWithOperand: true,
-    })
-    const comma = new MiddleOperator(15)
-    const rightParen = new PrecedentialOperator(15, {
-      hasPrecedingOperand: true,
-      hasFollowingOperand: false,
-      isFirstOperator: false,
-      isLastOperator: true,
-      expressionStartWithOperand: false,
-    })
+    const leftParen = new PrecedentialOperator(
+      ExpressionPrecedence.CallExpression,
+      {
+        hasPrecedingOperand: true,
+        hasFollowingOperand: true,
+        isFirstOperator: true,
+        isLastOperator: false,
+        expressionStartWithOperand: true,
+      }
+    )
+    const comma = new MiddleOperator(ExpressionPrecedence.CallExpression)
+    const rightParen = new PrecedentialOperator(
+      ExpressionPrecedence.CallExpression,
+      {
+        hasPrecedingOperand: true,
+        hasFollowingOperand: false,
+        isFirstOperator: false,
+        isLastOperator: true,
+        expressionStartWithOperand: false,
+      }
+    )
 
     // 括号表达式中'('是前缀操作符，这里括号'('是中缀操作符。
     this.registerInfixParselet(
@@ -193,14 +225,20 @@ export class Parser extends ParseletParser {
   }
 
   registerConditionalOperators() {
-    const question = new PrecedentialOperator(3, {
-      hasPrecedingOperand: true,
-      hasFollowingOperand: true,
-      isFirstOperator: true,
-      isLastOperator: false,
-      expressionStartWithOperand: true,
-    })
-    const colon = new LastAssociativeOperator(3, 'right')
+    const question = new PrecedentialOperator(
+      ExpressionPrecedence.Conditional,
+      {
+        hasPrecedingOperand: true,
+        hasFollowingOperand: true,
+        isFirstOperator: true,
+        isLastOperator: false,
+        expressionStartWithOperand: true,
+      }
+    )
+    const colon = new LastAssociativeOperator(
+      ExpressionPrecedence.Conditional,
+      'right'
+    )
 
     this.registerInfixParselet(
       TokenType.Question,
@@ -227,8 +265,14 @@ export class Parser extends ParseletParser {
 
   registerPrefixOperators() {
     const operators = [
-      [TokenType.Minus, new PrefixOperator(14)],
-      [TokenType.Plus, new PrefixOperator(14)],
+      [
+        TokenType.Minus,
+        new PrefixOperator(ExpressionPrecedence.PrefixMinusPlus),
+      ],
+      [
+        TokenType.Plus,
+        new PrefixOperator(ExpressionPrecedence.PrefixMinusPlus),
+      ],
     ] as const
     operators.forEach(([type, op]) => {
       this.registerPrefixParselet(type, new PrefixOperatorParselet(op))
@@ -247,11 +291,23 @@ export class Parser extends ParseletParser {
 
   registerBinaryOperators() {
     const operators = [
-      [TokenType.Plus, new BinaryOperator(1, 'left')],
-      [TokenType.Minus, new BinaryOperator(1, 'left')],
-      [TokenType.Star, new BinaryOperator(2, 'left')],
-      [TokenType.Div, new BinaryOperator(2, 'left')],
-      [TokenType.StarStar, new BinaryOperator(3, 'right')],
+      [
+        TokenType.Plus,
+        new BinaryOperator(ExpressionPrecedence.PlusMinus, 'left'),
+      ],
+      [
+        TokenType.Minus,
+        new BinaryOperator(ExpressionPrecedence.PlusMinus, 'left'),
+      ],
+      [
+        TokenType.Star,
+        new BinaryOperator(ExpressionPrecedence.StarDiv, 'left'),
+      ],
+      [TokenType.Div, new BinaryOperator(ExpressionPrecedence.StarDiv, 'left')],
+      [
+        TokenType.StarStar,
+        new BinaryOperator(ExpressionPrecedence.StarStar, 'right'),
+      ],
     ] as const
     operators.forEach(([type, op]) => {
       this.registerInfixParselet(type, new BinaryOperatorParselet(op))
