@@ -14,6 +14,9 @@ export class PrecedentialOperator implements Operator {
   protected associativity?: OperatorAssociativity
 
   private precedence: OperatorPrecedence
+  private lbp?: OperatorPrecedence
+  private rbp?: OperatorPrecedence
+
   constructor(
     precedence: number,
     options: {
@@ -48,6 +51,13 @@ export class PrecedentialOperator implements Operator {
   }
 
   leftBindingPower() {
+    if (typeof this.lbp === 'undefined') {
+      this.lbp = this._leftBindingPower()
+    }
+    return this.lbp
+  }
+
+  private _leftBindingPower() {
     if (!this.hasPrecedingOperand) {
       throw new Error('operator has no left binding power')
     }
@@ -60,6 +70,13 @@ export class PrecedentialOperator implements Operator {
   }
 
   rightBindingPower() {
+    if (typeof this.rbp === 'undefined') {
+      this.rbp = this._rightBindingPower()
+    }
+    return this.rbp
+  }
+
+  private _rightBindingPower() {
     if (!this.hasFollowingOperand) {
       throw new Error('operator has no right binding power')
     }
