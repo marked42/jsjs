@@ -1,6 +1,6 @@
 import { Expression } from '../AST'
 import { Token } from '../Token'
-import { Operator } from './Operator'
+import { Operator } from './Operator/Operator'
 import { OperatorInfixParselet } from './OperatorInfixParselet'
 import { ParseletParser } from './ParseletParser'
 

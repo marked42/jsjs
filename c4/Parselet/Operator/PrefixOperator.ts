@@ -1,17 +1,16 @@
 import { PrecedentialOperator } from './PrecedentialOperator'
 
 /**
- * 后缀操作符
+ * 前缀操作符
  */
-
-export class PostfixOperator extends PrecedentialOperator {
+export class PrefixOperator extends PrecedentialOperator {
   constructor(precedence: number) {
     super(precedence, {
-      hasPrecedingOperand: true,
-      hasFollowingOperand: false,
+      hasPrecedingOperand: false,
+      hasFollowingOperand: true,
       isFirstOperator: true,
       isLastOperator: true,
-      expressionStartWithOperand: true,
+      expressionStartWithOperand: false,
     })
   }
 }

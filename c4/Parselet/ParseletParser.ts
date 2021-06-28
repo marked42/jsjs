@@ -2,7 +2,7 @@ import { Lexer } from '../Lexer'
 import { Expression } from '../AST'
 import { TokenType } from '../Token'
 import { InfixParselet, PrefixParselet } from './Parselet'
-import { OperatorPrecedence } from './OperatorPrecedence'
+import { OperatorPrecedence } from './Operator/OperatorPrecedence'
 
 export class ParseletParser {
   private readonly prefixParselets = new Map<TokenType, PrefixParselet>()

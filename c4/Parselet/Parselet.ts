@@ -1,7 +1,7 @@
 import { ParseletParser } from './ParseletParser'
 import { Expression } from '../AST'
 import { Token } from '../Token'
-import { OperatorPrecedence } from './OperatorPrecedence'
+import { OperatorPrecedence } from './Operator/OperatorPrecedence'
 
 export interface PrefixParselet {
   parse(parser: ParseletParser, token: Token): Expression

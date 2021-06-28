@@ -21,13 +21,13 @@ import {
   CallExpression,
 } from '../AST'
 import { AtomParselet } from './AtomParselet'
-import { PrecedentialOperator } from './PrecedentialOperator'
-import { PrefixOperator } from './PrefixOperator'
-import { PostfixOperator } from './PostfixOperator'
-import { BinaryOperator } from './BinaryOperator'
-import { MiddleOperator } from './MiddleOperator'
+import { PrecedentialOperator } from './Operator/PrecedentialOperator'
+import { PrefixOperator } from './Operator/PrefixOperator'
+import { PostfixOperator } from './Operator/PostfixOperator'
+import { BinaryOperator } from './Operator/BinaryOperator'
+import { MiddleOperator } from './Operator/MiddleOperator'
 import { OperatorInfixParselet } from './OperatorInfixParselet'
-import { LastAssociativeOperator } from './LastAssociativeOperator'
+import { LastAssociativeOperator } from './Operator/LastAssociativeOperator'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {

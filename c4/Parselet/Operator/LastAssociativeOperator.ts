@@ -6,7 +6,6 @@ import { PrecedentialOperator } from './PrecedentialOperator'
  * 1. ':' in 'a ? b : c'，':'后边有操作数，有结合
  * 1. 'op2' in 'op1 b op2 c'，'op2'后边有操作数，但是没有结合性
  */
-
 export class LastAssociativeOperator extends PrecedentialOperator {
   constructor(precedence: number, associativity: OperatorAssociativity) {
     super(precedence, {

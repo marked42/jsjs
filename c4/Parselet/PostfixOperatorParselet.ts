@@ -1,6 +1,6 @@
 import { Expression, UnaryExpression } from '../AST'
 import { TokenWithSource } from '../Token'
-import { PostfixOperator } from './PostfixOperator'
+import { PostfixOperator } from './Operator/PostfixOperator'
 import { InfixParselet } from './Parselet'
 import { ParseletParser } from './ParseletParser'
 
