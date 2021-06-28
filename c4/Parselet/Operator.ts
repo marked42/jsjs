@@ -1,6 +1,8 @@
+import { OperatorPrecedence } from './OperatorPrecedence'
+
 export interface Operator {
-  leftBindingPower(): number
-  rightBindingPower(): number
+  leftBindingPower(): OperatorPrecedence
+  rightBindingPower(): OperatorPrecedence
 }
 
 export type OperatorAssociativity = 'left' | 'right'

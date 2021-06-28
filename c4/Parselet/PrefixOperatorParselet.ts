@@ -1,6 +1,6 @@
 import { UnaryExpression } from '../AST'
 import { TokenWithSource } from '../Token'
-import { PrefixOperator } from "./PrefixOperator"
+import { PrefixOperator } from './PrefixOperator'
 import { PrefixParselet } from './Parselet'
 import { ParseletParser } from './ParseletParser'
 

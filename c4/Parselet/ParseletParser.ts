@@ -2,6 +2,7 @@ import { Lexer } from '../Lexer'
 import { Expression } from '../AST'
 import { TokenType } from '../Token'
 import { InfixParselet, PrefixParselet } from './Parselet'
+import { OperatorPrecedence } from './OperatorPrecedence'
 
 export class ParseletParser {
   private readonly prefixParselets = new Map<TokenType, PrefixParselet>()
@@ -29,7 +30,9 @@ export class ParseletParser {
     return this.lexer.consume(type)
   }
 
-  expression(minPrecedence = 0): Expression {
+  expression(
+    minBp: OperatorPrecedence = OperatorPrecedence.start()
+  ): Expression {
     const token = this.lexer.consume()
 
     if (token.type === TokenType.EOF) {
@@ -55,7 +58,7 @@ export class ParseletParser {
         throw new Error('unexpected token ' + token)
       }
 
-      if (parselet.leftBindingPower() < minPrecedence) {
+      if (parselet.leftBindingPower().compare(minBp) === -1) {
         break
       }
 
