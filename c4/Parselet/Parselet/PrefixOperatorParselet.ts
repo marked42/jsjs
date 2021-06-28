@@ -1,8 +1,8 @@
-import { UnaryExpression } from '../AST'
-import { TokenWithSource } from '../Token'
-import { PrefixOperator } from './Operator/PrefixOperator'
+import { UnaryExpression } from '../../AST'
+import { TokenWithSource } from '../../Token'
+import { PrefixOperator } from '../Operator/PrefixOperator'
 import { PrefixParselet } from './Parselet'
-import { ParseletParser } from './ParseletParser'
+import { ParseletParser } from '../ParseletParser'
 
 export class PrefixOperatorParselet implements PrefixParselet {
   constructor(private op: PrefixOperator) {}

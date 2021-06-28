@@ -1,8 +1,8 @@
-import { Expression, UnaryExpression } from '../AST'
-import { TokenWithSource } from '../Token'
-import { PostfixOperator } from './Operator/PostfixOperator'
+import { Expression, UnaryExpression } from '../../AST'
+import { TokenWithSource } from '../../Token'
+import { PostfixOperator } from '../Operator/PostfixOperator'
 import { InfixParselet } from './Parselet'
-import { ParseletParser } from './ParseletParser'
+import { ParseletParser } from '../ParseletParser'
 
 export class PostfixOperatorParselet implements InfixParselet {
   constructor(private op: PostfixOperator) {}

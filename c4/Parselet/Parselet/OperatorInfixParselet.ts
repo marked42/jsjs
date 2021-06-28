@@ -1,7 +1,7 @@
-import { ParseletParser } from './ParseletParser'
-import { Expression } from '../AST'
-import { Token } from '../Token'
-import { Operator } from './Operator/Operator'
+import { ParseletParser } from '../ParseletParser'
+import { Expression } from '../../AST'
+import { Token } from '../../Token'
+import { Operator } from '../Operator/Operator'
 import { InfixParselet } from './Parselet'
 
 export abstract class OperatorInfixParselet implements InfixParselet {

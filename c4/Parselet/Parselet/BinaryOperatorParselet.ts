@@ -1,8 +1,8 @@
 import { OperatorInfixParselet } from './OperatorInfixParselet'
-import type { ParseletParser } from './ParseletParser'
-import { BinaryExpression, Expression } from '../AST'
-import type { Token } from '../Token'
-import { BinaryOperator } from './Operator/BinaryOperator'
+import type { ParseletParser } from '../ParseletParser'
+import { BinaryExpression, Expression } from '../../AST'
+import type { Token } from '../../Token'
+import { BinaryOperator } from '../Operator/BinaryOperator'
 
 export class BinaryOperatorParselet extends OperatorInfixParselet {
   constructor(

@@ -7,10 +7,14 @@ import {
   Token,
   TokenType,
 } from '../Token'
-import { PrefixOperatorParselet } from './PrefixOperatorParselet'
-import { BinaryOperatorParselet } from './BinaryOperatorParselet'
-import { PostfixOperatorParselet } from './PostfixOperatorParselet'
-import { NonFirstOperatorParselet } from './NonFirstOperatorParselet'
+import {
+  PrefixOperatorParselet,
+  BinaryOperatorParselet,
+  PostfixOperatorParselet,
+  NonFirstOperatorParselet,
+  AtomParselet,
+  OperatorInfixParselet,
+} from './Parselet'
 import {
   ConditionalExpression,
   Expression,
@@ -20,14 +24,14 @@ import {
   StringLiteral,
   CallExpression,
 } from '../AST'
-import { AtomParselet } from './AtomParselet'
-import { PrecedentialOperator } from './Operator/PrecedentialOperator'
-import { PrefixOperator } from './Operator/PrefixOperator'
-import { PostfixOperator } from './Operator/PostfixOperator'
-import { BinaryOperator } from './Operator/BinaryOperator'
-import { MiddleOperator } from './Operator/MiddleOperator'
-import { OperatorInfixParselet } from './OperatorInfixParselet'
-import { LastAssociativeOperator } from './Operator/LastAssociativeOperator'
+import {
+  PrecedentialOperator,
+  PrefixOperator,
+  PostfixOperator,
+  BinaryOperator,
+  MiddleOperator,
+  LastAssociativeOperator,
+} from './Operator'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {
