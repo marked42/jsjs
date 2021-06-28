@@ -4,6 +4,9 @@ import { Operator } from './Operator'
 import { OperatorInfixParselet } from './OperatorInfixParselet'
 import { ParseletParser } from './ParseletParser'
 
+/**
+ * 除了第一个操作符，其他操作符对应的parselet
+ */
 export class NonFirstOperatorParselet extends OperatorInfixParselet {
   constructor(op: Operator) {
     super(op)

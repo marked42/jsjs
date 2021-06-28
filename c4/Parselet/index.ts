@@ -27,6 +27,7 @@ import { PostfixOperator } from './PostfixOperator'
 import { BinaryOperator } from './BinaryOperator'
 import { MiddleOperator } from './MiddleOperator'
 import { OperatorInfixParselet } from './OperatorInfixParselet'
+import { LastAssociativeOperator } from './LastAssociativeOperator'
 
 export class Parser extends ParseletParser {
   constructor(lexer: Lexer) {
@@ -195,14 +196,7 @@ export class Parser extends ParseletParser {
       isLastOperator: false,
       expressionStartWithOperand: true,
     })
-    const colon = new PrecedentialOperator(3, {
-      hasPrecedingOperand: true,
-      hasFollowingOperand: true,
-      isFirstOperator: false,
-      isLastOperator: true,
-      expressionStartWithOperand: true,
-      associativity: 'right',
-    })
+    const colon = new LastAssociativeOperator(3, 'right')
 
     this.registerInfixParselet(
       TokenType.Question,
