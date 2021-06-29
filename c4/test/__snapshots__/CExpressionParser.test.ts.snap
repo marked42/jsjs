@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CExpressionParser should parse comma expression priority 15 1`] = `
+SequenceExpression {
+  "expressions": Array [
+    Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 1,
+    },
+    Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+  ],
+  "parenthesized": false,
+  "type": "SequenceExpression",
+}
+`;
