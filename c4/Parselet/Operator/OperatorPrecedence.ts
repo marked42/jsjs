@@ -121,4 +121,4 @@ function getOperatorPrecedenceClass(type: 'increasing' | 'decreasing') {
 /**
  * switch to IncreasingOperatorPrecedence if needed
  */
-export const OperatorPrecedence = getOperatorPrecedenceClass('increasing')
+export const OperatorPrecedence = getOperatorPrecedenceClass('decreasing')

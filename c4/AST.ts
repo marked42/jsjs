@@ -13,6 +13,8 @@ export enum ASTNodeType {
 
   VariableDeclaration = 'VariableDeclaration',
   VariableDeclarator = 'VariableDeclarator',
+
+  SequenceExpression = 'SequenceExpression',
 }
 
 export abstract class ASTNode {
@@ -130,5 +132,11 @@ export class LogicalExpression extends Expression {
     public op: LogicalOperator
   ) {
     super(ASTNodeType.LogicalExpression)
+  }
+}
+
+export class SequenceExpression extends Expression {
+  constructor(public expressions: Expression[]) {
+    super(ASTNodeType.SequenceExpression)
   }
 }
