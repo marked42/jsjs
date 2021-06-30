@@ -159,7 +159,7 @@ export class CParser extends ParseletParser {
     this.registerPostfixOperators()
     this.registerBinaryOperators()
     this.registerSequenceExpression()
-    // this.registerParenthesis()
+    this.registerParenthesis()
     this.registerIndexOperators()
     this.registerConditionalOperators()
     this.registerCallExpression()
@@ -185,17 +185,6 @@ export class CParser extends ParseletParser {
       )
     )
   }
-
-  // registerDot() {
-  //   this.registerInfixParselet(
-  //     Precedence.MemberAccess,
-  //     new BinaryOperatorParselet(
-  //       new BinaryOperator(ExpressionPrecedence.MemberExpression, 'left'),
-  //       (left: Expression, right: Expression, token: Token) =>
-  //         new MemberExpression(left, right, false)
-  //     )
-  //   )
-  // }
 
   registerIndexOperators() {
     // 索引表达式a[b]
@@ -233,16 +222,13 @@ export class CParser extends ParseletParser {
   }
 
   registerParenthesis() {
-    const leftParen = new PrecedentialOperator(
-      ExpressionPrecedence.Parenthesis,
-      {
-        hasPrecedingOperand: false,
-        hasFollowingOperand: true,
-        isFirstOperator: true,
-        isLastOperator: false,
-        expressionStartWithOperand: false,
-      }
-    )
+    const leftParen = new PrecedentialOperator(Precedence.Cast, {
+      hasPrecedingOperand: false,
+      hasFollowingOperand: true,
+      isFirstOperator: true,
+      isLastOperator: false,
+      expressionStartWithOperand: false,
+    })
     const rightParen = new PrecedentialOperator(
       ExpressionPrecedence.Parenthesis,
       {
