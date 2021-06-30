@@ -189,3 +189,31 @@ AssignmentExpression {
   "type": "AssignmentExpression",
 }
 `;
+
+exports[`logical expression should parse logical expression 1`] = `
+LogicalExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "||",
+  "parenthesized": false,
+  "right": LogicalExpression {
+    "left": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "&&",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "c",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "LogicalExpression",
+  },
+  "type": "LogicalExpression",
+}
+`;

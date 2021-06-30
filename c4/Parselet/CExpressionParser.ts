@@ -25,6 +25,7 @@ import {
   CallExpression,
   SequenceExpression,
   AssignmentExpression,
+  LogicalExpression,
 } from '../AST'
 import {
   PrecedentialOperator,
@@ -405,6 +406,20 @@ export class CParser extends ParseletParser {
         new BinaryOperatorParselet(op, (left, right, token) => {
           // @ts-ignore TODO:
           return new AssignmentExpression(left, right, token.source)
+        })
+      )
+    })
+
+    const logicalOperators = [
+      [TokenType.OrOr, new BinaryOperator(Precedence.LogicalOr, 'left')],
+      [TokenType.AndAnd, new BinaryOperator(Precedence.LogicalAnd, 'left')],
+    ] as const
+    logicalOperators.forEach(([type, op]) => {
+      this.registerInfixParselet(
+        type,
+        new BinaryOperatorParselet(op, (left, right, token) => {
+          // @ts-ignore TODO:
+          return new LogicalExpression(left, right, token.source)
         })
       )
     })

@@ -43,3 +43,12 @@ describe('conditional expression', () => {
     expect(parser.expression()).toMatchSnapshot()
   })
 })
+
+describe('logical expression', () => {
+  it('should parse logical expression', () => {
+    const input = 'a || b && c'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+})
