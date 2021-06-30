@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`array subscripting operator should parse [] 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": MemberExpression {
+    "computed": true,
+    "object": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "property": Identifier {
+      "name": "c",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "MemberExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
 exports[`assignment expression should parse assignment expression 1`] = `
 AssignmentExpression {
   "left": Identifier {

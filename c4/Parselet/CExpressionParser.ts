@@ -159,7 +159,7 @@ export class CParser extends ParseletParser {
     this.registerBinaryOperators()
     this.registerSequenceExpression()
     // this.registerParenthesis()
-    // this.registerIndexOperators()
+    this.registerIndexOperators()
     this.registerConditionalOperators()
     // this.registerDot()
     // this.registerCallExpression()
@@ -199,26 +199,20 @@ export class CParser extends ParseletParser {
 
   registerIndexOperators() {
     // 索引表达式a[b]
-    const leftSquare = new PrecedentialOperator(
-      ExpressionPrecedence.IndexExpression,
-      {
-        hasPrecedingOperand: true,
-        hasFollowingOperand: true,
-        isFirstOperator: true,
-        isLastOperator: false,
-        expressionStartWithOperand: true,
-      }
-    )
-    const rightSquare = new PrecedentialOperator(
-      ExpressionPrecedence.IndexExpression,
-      {
-        hasPrecedingOperand: true,
-        hasFollowingOperand: false,
-        isFirstOperator: false,
-        isLastOperator: true,
-        expressionStartWithOperand: true,
-      }
-    )
+    const leftSquare = new PrecedentialOperator(Precedence.ArraySubscripting, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: true,
+      isFirstOperator: true,
+      isLastOperator: false,
+      expressionStartWithOperand: true,
+    })
+    const rightSquare = new PrecedentialOperator(Precedence.ArraySubscripting, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: false,
+      isFirstOperator: false,
+      isLastOperator: true,
+      expressionStartWithOperand: true,
+    })
 
     this.registerInfixParselet(
       TokenType.LeftSquare,

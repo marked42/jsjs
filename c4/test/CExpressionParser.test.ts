@@ -107,3 +107,12 @@ describe('postfix operators', () => {
     expect(parser.expression()).toMatchSnapshot()
   })
 })
+
+describe('array subscripting operator', () => {
+  it('should parse []', () => {
+    const input = 'a + b[c]'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+})
