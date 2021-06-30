@@ -8,6 +8,7 @@ export enum ASTNodeType {
   AssignmentExpression = 'AssignmentExpression',
 
   MemberExpression = 'MemberExpression',
+  PointerMemberExpression = 'PointerMemberExpression',
   ConditionalExpression = 'ConditionalExpression',
 
   CallExpression = 'CallExpression',
@@ -114,6 +115,12 @@ export class MemberExpression extends Expression {
     public computed = false
   ) {
     super(ASTNodeType.MemberExpression)
+  }
+}
+
+export class PointerMemberExpression extends Expression {
+  constructor(public object: Expression, public property: Expression) {
+    super(ASTNodeType.PointerMemberExpression)
   }
 }
 

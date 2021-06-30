@@ -26,6 +26,7 @@ import {
   SequenceExpression,
   AssignmentExpression,
   LogicalExpression,
+  PointerMemberExpression,
 } from '../AST'
 import {
   PrecedentialOperator,
@@ -186,16 +187,16 @@ export class CParser extends ParseletParser {
     )
   }
 
-  registerDot() {
-    this.registerInfixParselet(
-      TokenType.Dot,
-      new BinaryOperatorParselet(
-        new BinaryOperator(ExpressionPrecedence.MemberExpression, 'left'),
-        (left: Expression, right: Expression, token: Token) =>
-          new MemberExpression(left, right, false)
-      )
-    )
-  }
+  // registerDot() {
+  //   this.registerInfixParselet(
+  //     Precedence.MemberAccess,
+  //     new BinaryOperatorParselet(
+  //       new BinaryOperator(ExpressionPrecedence.MemberExpression, 'left'),
+  //       (left: Expression, right: Expression, token: Token) =>
+  //         new MemberExpression(left, right, false)
+  //     )
+  //   )
+  // }
 
   registerIndexOperators() {
     // 索引表达式a[b]
@@ -430,6 +431,27 @@ export class CParser extends ParseletParser {
         })
       )
     })
+
+    this.registerInfixParselet(
+      TokenType.Dot,
+      new BinaryOperatorParselet(
+        new BinaryOperator(Precedence.MemberAccess, 'left'),
+        (left, right) => {
+          // @ts-ignore TODO:
+          return new MemberExpression(left, right, false)
+        }
+      )
+    )
+    this.registerInfixParselet(
+      TokenType.PointerMember,
+      new BinaryOperatorParselet(
+        new BinaryOperator(Precedence.PointerMemberAccess, 'left'),
+        (left, right) => {
+          // @ts-ignore TODO:
+          return new PointerMemberExpression(left, right)
+        }
+      )
+    )
 
     const operators = [
       [TokenType.Or, new BinaryOperator(Precedence.BitwiseOr, 'left')],

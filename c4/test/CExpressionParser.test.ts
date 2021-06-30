@@ -81,6 +81,13 @@ describe('binary expression', () => {
 
     expect(parser.expression()).toMatchSnapshot()
   })
+
+  it('should parse member expression', () => {
+    const input = '2*a.b->c+1'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
 })
 
 describe('prefix operators', () => {
