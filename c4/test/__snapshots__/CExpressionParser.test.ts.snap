@@ -111,3 +111,81 @@ SequenceExpression {
   "type": "SequenceExpression",
 }
 `;
+
+exports[`conditional expression should parse conditional expression 1`] = `
+ConditionalExpression {
+  "alternate": ConditionalExpression {
+    "alternate": Identifier {
+      "name": "f",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "consequent": Identifier {
+      "name": "e",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "test": Identifier {
+      "name": "d",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "ConditionalExpression",
+  },
+  "consequent": Identifier {
+    "name": "b",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "parenthesized": false,
+  "test": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "type": "ConditionalExpression",
+}
+`;
+
+exports[`conditional expression should parse conditional expression with correct precedence 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "=",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": ConditionalExpression {
+      "alternate": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "consequent": Identifier {
+        "name": "b",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "test": NumericLiteral {
+        "parenthesized": false,
+        "type": "NumericLiteral",
+        "value": 1,
+      },
+      "type": "ConditionalExpression",
+    },
+    "op": "=",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "d",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;

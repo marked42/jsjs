@@ -27,3 +27,19 @@ describe('assignment expression', () => {
     expect(parser.expression()).toMatchSnapshot()
   })
 })
+
+describe('conditional expression', () => {
+  it('should parse conditional expression', () => {
+    const input = 'a ? b : d ? e : f'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+
+  it('should parse conditional expression with correct precedence', () => {
+    const input = 'a = 1 ? b : c = d'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+})

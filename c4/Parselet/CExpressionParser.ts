@@ -159,7 +159,7 @@ export class CParser extends ParseletParser {
     this.registerSequenceExpression()
     // this.registerParenthesis()
     // this.registerIndexOperators()
-    // this.registerConditionalOperators()
+    this.registerConditionalOperators()
     // this.registerDot()
     // this.registerCallExpression()
   }
@@ -326,20 +326,14 @@ export class CParser extends ParseletParser {
   }
 
   registerConditionalOperators() {
-    const question = new PrecedentialOperator(
-      ExpressionPrecedence.Conditional,
-      {
-        hasPrecedingOperand: true,
-        hasFollowingOperand: true,
-        isFirstOperator: true,
-        isLastOperator: false,
-        expressionStartWithOperand: true,
-      }
-    )
-    const colon = new LastAssociativeOperator(
-      ExpressionPrecedence.Conditional,
-      'right'
-    )
+    const question = new PrecedentialOperator(Precedence.Conditional, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: true,
+      isFirstOperator: true,
+      isLastOperator: false,
+      expressionStartWithOperand: true,
+    })
+    const colon = new LastAssociativeOperator(Precedence.Conditional, 'right')
 
     this.registerInfixParselet(
       TokenType.Question,
