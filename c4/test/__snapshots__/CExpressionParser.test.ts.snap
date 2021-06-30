@@ -1,6 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CExpressionParser should parse comma expression priority 15 1`] = `
+exports[`assignment expression should parse assignment expression 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "=",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "+=",
+    "parenthesized": false,
+    "right": BinaryExpression {
+      "left": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "op": "-=",
+      "parenthesized": false,
+      "right": BinaryExpression {
+        "left": Identifier {
+          "name": "d",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "op": "*=",
+        "parenthesized": false,
+        "right": BinaryExpression {
+          "left": Identifier {
+            "name": "e",
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "op": "/=",
+          "parenthesized": false,
+          "right": BinaryExpression {
+            "left": Identifier {
+              "name": "f",
+              "parenthesized": false,
+              "type": "Identifier",
+            },
+            "op": "&=",
+            "parenthesized": false,
+            "right": BinaryExpression {
+              "left": Identifier {
+                "name": "g",
+                "parenthesized": false,
+                "type": "Identifier",
+              },
+              "op": "|=",
+              "parenthesized": false,
+              "right": BinaryExpression {
+                "left": Identifier {
+                  "name": "h",
+                  "parenthesized": false,
+                  "type": "Identifier",
+                },
+                "op": "^=",
+                "parenthesized": false,
+                "right": Identifier {
+                  "name": "i",
+                  "parenthesized": false,
+                  "type": "Identifier",
+                },
+                "type": "BinaryExpression",
+              },
+              "type": "BinaryExpression",
+            },
+            "type": "BinaryExpression",
+          },
+          "type": "BinaryExpression",
+        },
+        "type": "BinaryExpression",
+      },
+      "type": "BinaryExpression",
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`comma expression should parse comma expression priority 15 1`] = `
 SequenceExpression {
   "expressions": Array [
     Identifier {

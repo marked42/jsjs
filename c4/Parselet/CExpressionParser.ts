@@ -392,9 +392,20 @@ export class CParser extends ParseletParser {
 
   registerBinaryOperators() {
     const operators = [
-      [TokenType.Assign, new BinaryOperator(Precedence.Assignment, 'right')],
-    ] as const
-    operators.forEach(([type, op]) => {
+      TokenType.Assign,
+      TokenType.PlusAssign,
+      TokenType.MinusAssign,
+      TokenType.StarAssign,
+      TokenType.DivAssign,
+      TokenType.ModulusAssign,
+      TokenType.AndAssign,
+      TokenType.OrAssign,
+      TokenType.XorAssign,
+      TokenType.LeftShiftAssign,
+      TokenType.RightShiftAssign,
+    ]
+    const op = new BinaryOperator(Precedence.Assignment, 'right')
+    operators.forEach((type) => {
       this.registerInfixParselet(type, new BinaryOperatorParselet(op))
     })
   }
