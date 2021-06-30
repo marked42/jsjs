@@ -109,15 +109,25 @@ BinaryExpression {
   "parenthesized": false,
   "right": BinaryExpression {
     "left": BinaryExpression {
-      "left": Identifier {
-        "name": "c",
+      "left": BinaryExpression {
+        "left": Identifier {
+          "name": "c",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "op": "*",
         "parenthesized": false,
-        "type": "Identifier",
+        "right": Identifier {
+          "name": "d",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "type": "BinaryExpression",
       },
-      "op": "*",
+      "op": "/",
       "parenthesized": false,
       "right": Identifier {
-        "name": "d",
+        "name": "e",
         "parenthesized": false,
         "type": "Identifier",
       },
@@ -126,47 +136,9 @@ BinaryExpression {
     "op": "%",
     "parenthesized": false,
     "right": Identifier {
-      "name": "e",
+      "name": "f",
       "parenthesized": false,
       "type": "Identifier",
-    },
-    "type": "BinaryExpression",
-  },
-  "type": "BinaryExpression",
-}
-`;
-
-exports[`binary expression should parse binary expression 1`] = `
-BinaryExpression {
-  "left": Identifier {
-    "name": "a",
-    "parenthesized": false,
-    "type": "Identifier",
-  },
-  "op": "|",
-  "parenthesized": false,
-  "right": BinaryExpression {
-    "left": Identifier {
-      "name": "b",
-      "parenthesized": false,
-      "type": "Identifier",
-    },
-    "op": "^",
-    "parenthesized": false,
-    "right": BinaryExpression {
-      "left": Identifier {
-        "name": "c",
-        "parenthesized": false,
-        "type": "Identifier",
-      },
-      "op": "&",
-      "parenthesized": false,
-      "right": Identifier {
-        "name": "d",
-        "parenthesized": false,
-        "type": "Identifier",
-      },
-      "type": "BinaryExpression",
     },
     "type": "BinaryExpression",
   },

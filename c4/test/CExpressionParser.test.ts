@@ -76,7 +76,7 @@ describe('binary expression', () => {
   })
 
   it('should parse arithmetic binary expression', () => {
-    const input = 'a + b - c * d % e'
+    const input = 'a + b - c * d / e % f'
     const parser = parserForInput(input)
 
     expect(parser.expression()).toMatchSnapshot()
