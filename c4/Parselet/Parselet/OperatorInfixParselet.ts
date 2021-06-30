@@ -1,11 +1,11 @@
 import { ParseletParser } from '../ParseletParser'
 import { Expression } from '../../AST'
 import { Token } from '../../Token'
-import { Operator } from '../Operator/Operator'
+import { Bindable } from '../Operator/Bindable'
 import { InfixParselet } from './Parselet'
 
 export abstract class OperatorInfixParselet implements InfixParselet {
-  constructor(protected op: Operator) {}
+  constructor(protected op: Bindable) {}
 
   abstract parse(
     parser: ParseletParser,
