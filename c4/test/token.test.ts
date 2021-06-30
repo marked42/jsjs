@@ -431,6 +431,8 @@ describe('Operator and Punctuation', () => {
       ['*=', TokenType.StarAssign],
       ['/', TokenType.Div],
       ['/=', TokenType.DivAssign],
+      ['%', TokenType.Modulus],
+      ['%=', TokenType.ModulusAssign],
       ['~', TokenType.Tilde],
       ['&', TokenType.And],
       ['&=', TokenType.AndAssign],

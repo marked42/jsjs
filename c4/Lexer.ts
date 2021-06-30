@@ -397,6 +397,15 @@ export class Lexer {
         } else {
           this.ungetChar()
         }
+      } else if (charCodeIs(this.charCode, '%')) {
+        type = TokenType.Modulus
+        this.getChar()
+
+        if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.ModulusAssign
+        } else {
+          this.ungetChar()
+        }
       } else if (charCodeIs(this.charCode, '|')) {
         type = TokenType.Or
         this.getChar()
