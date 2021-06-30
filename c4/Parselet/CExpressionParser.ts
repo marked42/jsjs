@@ -154,7 +154,7 @@ export class CParser extends ParseletParser {
     super(lexer)
 
     this.registerAtoms()
-    // this.registerPrefixOperators()
+    this.registerPrefixOperators()
     // this.registerPostfixOperators()
     this.registerBinaryOperators()
     this.registerSequenceExpression()
@@ -361,14 +361,21 @@ export class CParser extends ParseletParser {
 
   registerPrefixOperators() {
     const operators = [
+      [TokenType.Minus, new PrefixOperator(Precedence.UnaryPlusMinus)],
+      [TokenType.Plus, new PrefixOperator(Precedence.UnaryPlusMinus)],
       [
-        TokenType.Minus,
-        new PrefixOperator(ExpressionPrecedence.PrefixMinusPlus),
+        TokenType.Increment,
+        new PrefixOperator(Precedence.PrefixIncrementDecrement),
       ],
       [
-        TokenType.Plus,
-        new PrefixOperator(ExpressionPrecedence.PrefixMinusPlus),
+        TokenType.Decrement,
+        new PrefixOperator(Precedence.PrefixIncrementDecrement),
       ],
+      [TokenType.Negate, new PrefixOperator(Precedence.LogicalNot)],
+      [TokenType.Tilde, new PrefixOperator(Precedence.BitwiseOr)],
+      [TokenType.Star, new PrefixOperator(Precedence.Dereference)],
+      [TokenType.And, new PrefixOperator(Precedence.BitwiseAnd)],
+      [TokenType.Sizeof, new PrefixOperator(Precedence.Sizeof)],
     ] as const
     operators.forEach(([type, op]) => {
       this.registerPrefixParselet(type, new PrefixOperatorParselet(op))

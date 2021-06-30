@@ -409,3 +409,111 @@ LogicalExpression {
   "type": "LogicalExpression",
 }
 `;
+
+exports[`prefix operators should parse prefix expression 1`] = `
+SequenceExpression {
+  "expressions": Array [
+    UnaryExpression {
+      "op": "++",
+      "operand": Identifier {
+        "name": "a",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": true,
+      "type": "UnaryExpression",
+    },
+    UnaryExpression {
+      "op": "--",
+      "operand": Identifier {
+        "name": "b",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": true,
+      "type": "UnaryExpression",
+    },
+    UnaryExpression {
+      "op": "+",
+      "operand": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": true,
+      "type": "UnaryExpression",
+    },
+    UnaryExpression {
+      "op": "-",
+      "operand": Identifier {
+        "name": "d",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": true,
+      "type": "UnaryExpression",
+    },
+    UnaryExpression {
+      "op": "!",
+      "operand": Identifier {
+        "name": "e",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": true,
+      "type": "UnaryExpression",
+    },
+    UnaryExpression {
+      "op": "~",
+      "operand": Identifier {
+        "name": "f",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": true,
+      "type": "UnaryExpression",
+    },
+    UnaryExpression {
+      "op": "*",
+      "operand": Identifier {
+        "name": "g",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": true,
+      "type": "UnaryExpression",
+    },
+    UnaryExpression {
+      "op": "&",
+      "operand": Identifier {
+        "name": "h",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": true,
+      "type": "UnaryExpression",
+    },
+    UnaryExpression {
+      "op": "sizeof",
+      "operand": Identifier {
+        "name": "i",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": true,
+      "type": "UnaryExpression",
+    },
+  ],
+  "parenthesized": false,
+  "type": "SequenceExpression",
+}
+`;

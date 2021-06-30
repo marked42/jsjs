@@ -82,3 +82,12 @@ describe('binary expression', () => {
     expect(parser.expression()).toMatchSnapshot()
   })
 })
+
+describe('prefix operators', () => {
+  it('should parse prefix expression', () => {
+    const input = '++a, --b, +c, -d, !e, ~f, *g, &h, sizeof i'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+})
