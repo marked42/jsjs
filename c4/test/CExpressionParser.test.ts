@@ -52,3 +52,33 @@ describe('logical expression', () => {
     expect(parser.expression()).toMatchSnapshot()
   })
 })
+
+describe('binary expression', () => {
+  it('should parse bitwise binary expression', () => {
+    const input = 'a | b ^ c & d'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+
+  it('should parse relational binary expression', () => {
+    const input = 'a == b != c < d <= f >= e > g'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+
+  it('should parse bitwise shift binary expression', () => {
+    const input = 'a << b >> c'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+
+  it('should parse arithmetic binary expression', () => {
+    const input = 'a + b - c * d % e'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+})

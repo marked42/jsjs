@@ -386,7 +386,7 @@ export class CParser extends ParseletParser {
   }
 
   registerBinaryOperators() {
-    const operators = [
+    const assignmentOperators = [
       TokenType.Assign,
       TokenType.PlusAssign,
       TokenType.MinusAssign,
@@ -400,7 +400,7 @@ export class CParser extends ParseletParser {
       TokenType.RightShiftAssign,
     ]
     const op = new BinaryOperator(Precedence.Assignment, 'right')
-    operators.forEach((type) => {
+    assignmentOperators.forEach((type) => {
       this.registerInfixParselet(
         type,
         new BinaryOperatorParselet(op, (left, right, token) => {
@@ -422,6 +422,50 @@ export class CParser extends ParseletParser {
           return new LogicalExpression(left, right, token.source)
         })
       )
+    })
+
+    const operators = [
+      [TokenType.Or, new BinaryOperator(Precedence.BitwiseOr, 'left')],
+      [TokenType.Xor, new BinaryOperator(Precedence.BitwiseXor, 'left')],
+      [TokenType.And, new BinaryOperator(Precedence.BitwiseAnd, 'left')],
+      [TokenType.Equal, new BinaryOperator(Precedence.EqNq, 'left')],
+      [TokenType.NotEqual, new BinaryOperator(Precedence.EqNq, 'left')],
+      [TokenType.Less, new BinaryOperator(Precedence.LtLeGtGe, 'left')],
+      [TokenType.LessEqual, new BinaryOperator(Precedence.LtLeGtGe, 'left')],
+      [TokenType.Greater, new BinaryOperator(Precedence.LtLeGtGe, 'left')],
+      [TokenType.GreaterEqual, new BinaryOperator(Precedence.LtLeGtGe, 'left')],
+      [
+        TokenType.LeftShift,
+        new BinaryOperator(Precedence.BitwiseShift, 'left'),
+      ],
+      [
+        TokenType.RightShift,
+        new BinaryOperator(Precedence.BitwiseShift, 'left'),
+      ],
+      [
+        TokenType.Plus,
+        new BinaryOperator(Precedence.AdditionSubtraction, 'left'),
+      ],
+      [
+        TokenType.Minus,
+        new BinaryOperator(Precedence.AdditionSubtraction, 'left'),
+      ],
+      [
+        TokenType.Star,
+        new BinaryOperator(Precedence.MultiplicationDivisionRemainder, 'left'),
+      ],
+      [
+        TokenType.Div,
+        new BinaryOperator(Precedence.MultiplicationDivisionRemainder, 'left'),
+      ],
+      [
+        TokenType.Modulus,
+        new BinaryOperator(Precedence.MultiplicationDivisionRemainder, 'left'),
+      ],
+    ] as const
+
+    operators.forEach(([type, op]) => {
+      this.registerInfixParselet(type, new BinaryOperatorParselet(op))
     })
   }
 

@@ -88,6 +88,226 @@ AssignmentExpression {
 }
 `;
 
+exports[`binary expression should parse arithmetic binary expression 1`] = `
+BinaryExpression {
+  "left": BinaryExpression {
+    "left": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "+",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "op": "-",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": BinaryExpression {
+      "left": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "op": "*",
+      "parenthesized": false,
+      "right": Identifier {
+        "name": "d",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "type": "BinaryExpression",
+    },
+    "op": "%",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "e",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`binary expression should parse binary expression 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "|",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "^",
+    "parenthesized": false,
+    "right": BinaryExpression {
+      "left": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "op": "&",
+      "parenthesized": false,
+      "right": Identifier {
+        "name": "d",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "type": "BinaryExpression",
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`binary expression should parse bitwise binary expression 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "|",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "^",
+    "parenthesized": false,
+    "right": BinaryExpression {
+      "left": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "op": "&",
+      "parenthesized": false,
+      "right": Identifier {
+        "name": "d",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "type": "BinaryExpression",
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`binary expression should parse bitwise shift binary expression 1`] = `
+BinaryExpression {
+  "left": BinaryExpression {
+    "left": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "<<",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "op": ">>",
+  "parenthesized": false,
+  "right": Identifier {
+    "name": "c",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`binary expression should parse relational binary expression 1`] = `
+BinaryExpression {
+  "left": BinaryExpression {
+    "left": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "==",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "op": "!=",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": BinaryExpression {
+      "left": BinaryExpression {
+        "left": BinaryExpression {
+          "left": Identifier {
+            "name": "c",
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "op": "<",
+          "parenthesized": false,
+          "right": Identifier {
+            "name": "d",
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "type": "BinaryExpression",
+        },
+        "op": "<=",
+        "parenthesized": false,
+        "right": Identifier {
+          "name": "f",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "type": "BinaryExpression",
+      },
+      "op": ">=",
+      "parenthesized": false,
+      "right": Identifier {
+        "name": "e",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "type": "BinaryExpression",
+    },
+    "op": ">",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "g",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
 exports[`comma expression should parse comma expression priority 15 1`] = `
 SequenceExpression {
   "expressions": Array [
