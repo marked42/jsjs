@@ -1,6 +1,6 @@
 import { Expression } from '../../AST'
 import { Token } from '../../Token'
-import { Operator } from '../Operator/Operator'
+import { Bindable } from '../Operator/Bindable'
 import { OperatorInfixParselet } from './OperatorInfixParselet'
 import { ParseletParser } from '../ParseletParser'
 
@@ -8,7 +8,7 @@ import { ParseletParser } from '../ParseletParser'
  * 除了第一个操作符，其他操作符对应的parselet
  */
 export class NonFirstOperatorParselet extends OperatorInfixParselet {
-  constructor(op: Operator) {
+  constructor(op: Bindable) {
     super(op)
   }
 
