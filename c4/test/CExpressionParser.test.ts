@@ -91,3 +91,19 @@ describe('prefix operators', () => {
     expect(parser.expression()).toMatchSnapshot()
   })
 })
+
+describe('postfix operators', () => {
+  it('should parse postfix expression', () => {
+    const input = 'a--, b++'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+
+  it('should parse postfix expression with correct precedence', () => {
+    const input = '++a--'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+})

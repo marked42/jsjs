@@ -410,6 +410,57 @@ LogicalExpression {
 }
 `;
 
+exports[`postfix operators should parse postfix expression 1`] = `
+SequenceExpression {
+  "expressions": Array [
+    UnaryExpression {
+      "op": "--",
+      "operand": Identifier {
+        "name": "a",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": false,
+      "type": "UnaryExpression",
+    },
+    UnaryExpression {
+      "op": "++",
+      "operand": Identifier {
+        "name": "b",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "prefix": false,
+      "type": "UnaryExpression",
+    },
+  ],
+  "parenthesized": false,
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`postfix operators should parse postfix expression with correct precedence 1`] = `
+UnaryExpression {
+  "op": "++",
+  "operand": UnaryExpression {
+    "op": "--",
+    "operand": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "prefix": false,
+    "type": "UnaryExpression",
+  },
+  "parenthesized": false,
+  "prefix": true,
+  "type": "UnaryExpression",
+}
+`;
+
 exports[`prefix operators should parse prefix expression 1`] = `
 SequenceExpression {
   "expressions": Array [

@@ -155,7 +155,7 @@ export class CParser extends ParseletParser {
 
     this.registerAtoms()
     this.registerPrefixOperators()
-    // this.registerPostfixOperators()
+    this.registerPostfixOperators()
     this.registerBinaryOperators()
     this.registerSequenceExpression()
     // this.registerParenthesis()
@@ -384,8 +384,14 @@ export class CParser extends ParseletParser {
 
   registerPostfixOperators() {
     const operators = [
-      [TokenType.Increment, new PostfixOperator(15)],
-      [TokenType.Decrement, new PostfixOperator(15)],
+      [
+        TokenType.Increment,
+        new PostfixOperator(Precedence.PostfixIncrementDecrement),
+      ],
+      [
+        TokenType.Decrement,
+        new PostfixOperator(Precedence.PostfixIncrementDecrement),
+      ],
     ] as const
     operators.forEach(([type, op]) => {
       this.registerInfixParselet(type, new PostfixOperatorParselet(op))
