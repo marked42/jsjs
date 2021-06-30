@@ -392,6 +392,8 @@ export class Lexer {
 
         if (charCodeIs(this.charCode, '&')) {
           type = TokenType.AndAnd
+        } else if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.AndAssign
         } else {
           this.ungetChar()
         }
@@ -401,12 +403,20 @@ export class Lexer {
 
         if (charCodeIs(this.charCode, '|')) {
           type = TokenType.OrOr
+        } else if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.OrAssign
         } else {
           this.ungetChar()
         }
       } else if (charCodeIs(this.charCode, '^')) {
         type = TokenType.Xor
         this.getChar()
+
+        if (charCodeIs(this.charCode, '=')) {
+          type = TokenType.XorAssign
+        } else {
+          this.ungetChar()
+        }
       } else if (charCodeIs(this.charCode, '=')) {
         type = TokenType.Assign
         this.getChar()
@@ -424,6 +434,12 @@ export class Lexer {
           type = TokenType.GreaterEqual
         } else if (charCodeIs(this.charCode, '>')) {
           type = TokenType.RightShift
+          this.getChar()
+          if (charCodeIs(this.charCode, '=')) {
+            type = TokenType.RightShiftAssign
+          } else {
+            this.ungetChar()
+          }
         } else {
           this.ungetChar()
         }
@@ -435,6 +451,12 @@ export class Lexer {
           type = TokenType.LessEqual
         } else if (charCodeIs(this.charCode, '<')) {
           type = TokenType.LeftShift
+          this.getChar()
+          if (charCodeIs(this.charCode, '=')) {
+            type = TokenType.LeftShiftAssign
+          } else {
+            this.ungetChar()
+          }
         } else {
           this.ungetChar()
         }
