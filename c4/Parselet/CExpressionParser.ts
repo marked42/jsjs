@@ -24,7 +24,7 @@ import {
   StringLiteral,
   CallExpression,
   SequenceExpression,
-  ASTNodeType,
+  AssignmentExpression,
 } from '../AST'
 import {
   PrecedentialOperator,
@@ -400,7 +400,13 @@ export class CParser extends ParseletParser {
     ]
     const op = new BinaryOperator(Precedence.Assignment, 'right')
     operators.forEach((type) => {
-      this.registerInfixParselet(type, new BinaryOperatorParselet(op))
+      this.registerInfixParselet(
+        type,
+        new BinaryOperatorParselet(op, (left, right, token) => {
+          // @ts-ignore TODO:
+          return new AssignmentExpression(left, right, token.source)
+        })
+      )
     })
   }
 
