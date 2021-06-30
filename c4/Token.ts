@@ -65,6 +65,7 @@ export enum TokenType {
   Comma = ',',
   SemiColon = ';',
   Dot = '.',
+  PointerMember = '->',
 }
 
 export type Keyword =

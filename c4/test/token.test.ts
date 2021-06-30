@@ -466,6 +466,7 @@ describe('Operator and Punctuation', () => {
       [',', TokenType.Comma],
       [';', TokenType.SemiColon],
       ['.', TokenType.Dot],
+      ['->', TokenType.PointerMember],
     ] as const
 
     keywords.forEach((option) => {

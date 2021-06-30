@@ -359,6 +359,8 @@ export class Lexer {
           type = TokenType.Decrement
         } else if (charCodeIs(this.charCode, '=')) {
           type = TokenType.MinusAssign
+        } else if (charCodeIs(this.charCode, '>')) {
+          type = TokenType.PointerMember
         } else {
           this.ungetChar()
         }
