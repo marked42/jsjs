@@ -162,8 +162,7 @@ export class CParser extends ParseletParser {
     // this.registerParenthesis()
     this.registerIndexOperators()
     this.registerConditionalOperators()
-    // this.registerDot()
-    // this.registerCallExpression()
+    this.registerCallExpression()
   }
 
   registerAtoms() {
@@ -272,27 +271,21 @@ export class CParser extends ParseletParser {
   }
 
   registerCallExpression() {
-    const leftParen = new PrecedentialOperator(
-      ExpressionPrecedence.CallExpression,
-      {
-        hasPrecedingOperand: true,
-        hasFollowingOperand: true,
-        isFirstOperator: true,
-        isLastOperator: false,
-        expressionStartWithOperand: true,
-      }
-    )
+    const leftParen = new PrecedentialOperator(Precedence.FunctionCall, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: true,
+      isFirstOperator: true,
+      isLastOperator: false,
+      expressionStartWithOperand: true,
+    })
     const comma = new MiddleOperator(ExpressionPrecedence.CallExpression)
-    const rightParen = new PrecedentialOperator(
-      ExpressionPrecedence.CallExpression,
-      {
-        hasPrecedingOperand: true,
-        hasFollowingOperand: false,
-        isFirstOperator: false,
-        isLastOperator: true,
-        expressionStartWithOperand: false,
-      }
-    )
+    const rightParen = new PrecedentialOperator(Precedence.FunctionCall, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: false,
+      isFirstOperator: false,
+      isLastOperator: true,
+      expressionStartWithOperand: false,
+    })
 
     this.registerInfixParselet(
       TokenType.LeftParen,

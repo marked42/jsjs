@@ -123,3 +123,12 @@ describe('array subscripting operator', () => {
     expect(parser.expression()).toMatchSnapshot()
   })
 })
+
+describe('function call', () => {
+  it('should parse function call', () => {
+    const input = 'a(b, c)'
+    const parser = parserForInput(input)
+
+    expect(parser.expression()).toMatchSnapshot()
+  })
+})
