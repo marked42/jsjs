@@ -38,20 +38,6 @@ import {
   OperatorPrecedence,
 } from './Operator'
 
-const enum ExpressionPrecedence {
-  PlusMinus = 1,
-  StarDiv = 2,
-  StarStar = 3,
-  Conditional = 3,
-  MemberExpression = 14,
-  IndexExpression = 14,
-  PrefixMinusPlus = 14,
-  Increment = 15,
-  Decrement = 15,
-  Parenthesis = 15,
-  CallExpression = 15,
-}
-
 const enum Precedence {
   /**
    * a++, a--
@@ -229,19 +215,17 @@ export class CParser extends ParseletParser {
       isLastOperator: false,
       expressionStartWithOperand: false,
     })
-    const rightParen = new PrecedentialOperator(
-      ExpressionPrecedence.Parenthesis,
-      {
-        hasPrecedingOperand: true,
-        hasFollowingOperand: false,
-        isFirstOperator: false,
-        isLastOperator: true,
-        expressionStartWithOperand: false,
-      }
-    )
+    const rightParen = new PrecedentialOperator(Precedence.Cast, {
+      hasPrecedingOperand: true,
+      hasFollowingOperand: false,
+      isFirstOperator: false,
+      isLastOperator: true,
+      expressionStartWithOperand: false,
+    })
     // 括号表达式
     this.registerPrefixParselet(TokenType.LeftParen, {
       parse(parser: ParseletParser, token: Token) {
+        // TODO: compound literal and cast expression
         const expr = parser.expression(leftParen.rightBindingPower())
 
         expr.parenthesized = true
@@ -264,7 +248,7 @@ export class CParser extends ParseletParser {
       isLastOperator: false,
       expressionStartWithOperand: true,
     })
-    const comma = new MiddleOperator(ExpressionPrecedence.CallExpression)
+    const comma = new MiddleOperator(Precedence.FunctionCall)
     const rightParen = new PrecedentialOperator(Precedence.FunctionCall, {
       hasPrecedingOperand: true,
       hasFollowingOperand: false,
