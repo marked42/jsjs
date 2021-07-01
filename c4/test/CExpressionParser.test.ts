@@ -1,4 +1,4 @@
-import { CParser } from '../Parselet/CExpressionParser'
+import { CParser } from '../Parselet/CParser'
 import { Lexer } from '../Lexer'
 import { CharacterStream } from '../CharacterStream'
 
@@ -130,5 +130,19 @@ describe('function call', () => {
     const parser = parserForInput(input)
 
     expect(parser.expression()).toMatchSnapshot()
+  })
+})
+
+describe('EnumDeclaration', () => {
+  it('should parse enum declaration', () => {
+    const input = `
+    enum Dir {
+      Left = 1,
+      Right,
+      Down
+    }
+    `
+    const parser = parserForInput(input)
+    expect(parser.program()).toMatchSnapshot()
   })
 })

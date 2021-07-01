@@ -513,4 +513,60 @@ export class CParser extends ParseletParser {
   //     },
   //   })
   // }
+
+  program() {
+    const declarations: any[] = []
+    do {
+      declarations.push(this.globalDeclaration())
+    } while (this.lookahead(0).type !== TokenType.EOF)
+
+    return {
+      type: 'Program',
+      declarations,
+    }
+  }
+
+  globalDeclaration() {
+    if (this.lookahead(0).type === TokenType.Enum) {
+      return this.enumDeclaration()
+    }
+  }
+
+  enumDeclaration() {
+    this.consume(TokenType.Enum)
+    let name
+    if (this.lookahead(0).type === TokenType.Identifier) {
+      name = this.consume(TokenType.Identifier)
+    }
+    this.consume(TokenType.LeftBracket)
+
+    const members = [this.enumMember()]
+    while (this.lookahead(0).type !== TokenType.RightBracket) {
+      this.consume(TokenType.Comma)
+      members.push(this.enumMember())
+    }
+    this.consume(TokenType.RightBracket)
+
+    return {
+      type: 'enumDeclaration',
+      name,
+      members,
+    }
+  }
+
+  enumMember() {
+    const name = this.consume(TokenType.Identifier)
+    let initializer
+    if (this.lookahead(0).type === TokenType.Assign) {
+      this.consume(TokenType.Assign)
+      initializer = this.consume(TokenType.NumericLiteral)
+    }
+
+    return {
+      type: 'EnumMember',
+      // @ts-ignore
+      name: new Identifier(name.value),
+      initializer,
+    }
+  }
 }

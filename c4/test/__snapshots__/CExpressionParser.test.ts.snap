@@ -1,5 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`EnumDeclaration should parse enum declaration 1`] = `
+Object {
+  "declarations": Array [
+    Object {
+      "members": Array [
+        Object {
+          "initializer": Object {
+            "source": "1",
+            "type": 2,
+            "value": 1,
+          },
+          "name": Identifier {
+            "name": undefined,
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "type": "EnumMember",
+        },
+        Object {
+          "initializer": undefined,
+          "name": Identifier {
+            "name": undefined,
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "type": "EnumMember",
+        },
+        Object {
+          "initializer": undefined,
+          "name": Identifier {
+            "name": undefined,
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "type": "EnumMember",
+        },
+      ],
+      "name": Object {
+        "name": "Dir",
+        "source": "Dir",
+        "type": 1,
+      },
+      "type": "enumDeclaration",
+    },
+  ],
+  "type": "Program",
+}
+`;
+
 exports[`array subscripting operator should parse [] 1`] = `
 BinaryExpression {
   "left": Identifier {

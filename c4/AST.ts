@@ -175,3 +175,11 @@ export class SequenceExpression extends Expression {
     super(ASTNodeType.SequenceExpression)
   }
 }
+
+export class Declaration {}
+
+export class EnumDeclaration extends Declaration {}
+
+export class VariableDeclaration extends Declaration {}
+
+export class FunctionDeclaration extends Declaration {}
