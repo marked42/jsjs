@@ -13,6 +13,9 @@ export class ListLexer extends Lexer {
       } else if ('['.charCodeAt(0) === this.char) {
         this.consume()
         return new Token(TokenType.LeftBracket, '[')
+      } else if ('='.charCodeAt(0) === this.char) {
+        this.consume()
+        return new Token(TokenType.Equal, '=')
       } else if (']'.charCodeAt(0) === this.char) {
         this.consume()
         return new Token(TokenType.RightBracket, ']')

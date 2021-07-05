@@ -7,6 +7,7 @@ export enum TokenType {
   EOF = 'eof',
   Name = 'name',
   Comma = 'comma',
+  Equal = 'equal',
   LeftBracket = 'leftBracket',
   RightBracket = 'rightBracket',
 }
