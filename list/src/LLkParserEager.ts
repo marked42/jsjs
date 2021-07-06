@@ -1,16 +1,24 @@
 import { Lexer } from './Lexer'
 import { Token, TokenType } from './Token'
 
-export class LLkParser {
+/**
+ * 支持多个预看符号，使用大小的环形缓冲区，在初始化时就缓冲K个预看符号，然后每消耗一个预看符号，consume都会补充一个预看符号，
+ * 始终保持缓冲K个预看符号。
+ * 解析结束时缓冲区内有K个EOF预看符号。
+ */
+export class LLkParserEager {
   private lookaheadTokens!: Token[]
   private index = 0
-  private lookaheadCount = 0
 
   constructor(private input: Lexer, private size: number) {
     if (size < 1) {
       throw new Error('lookahead size must be an integer bigger than 0 ')
     }
     this.lookaheadTokens = new Array<Token>(size)
+
+    for (let i = 0; i < this.size; i++) {
+      this.lookaheadTokens[i] = this.input.nextToken()
+    }
   }
 
   private lookaheadIndex(i: number) {
@@ -23,19 +31,7 @@ export class LLkParser {
         `try to lookahead next ${i} token, but max lookahead is ${this.size}`
       )
     }
-    if (this.lookaheadCount >= i) {
-      return this.lookaheadTokens[this.lookaheadIndex(i)]
-    }
-    this.fill(i)
-
     return this.lookaheadTokens[this.lookaheadIndex(i)]
-  }
-
-  private fill(i: number) {
-    for (let j = this.lookaheadCount + 1; j <= i; j++) {
-      this.lookaheadTokens[this.lookaheadIndex(j)] = this.input.nextToken()
-    }
-    this.lookaheadCount = i
   }
 
   match(type: TokenType) {
@@ -49,9 +45,9 @@ export class LLkParser {
   }
 
   consume() {
+    this.lookaheadTokens[this.index] = this.input.nextToken()
     // 前进到下一个位置
     this.index = this.lookaheadIndex(2)
-    this.lookaheadCount--
   }
 
   list() {
