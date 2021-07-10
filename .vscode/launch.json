@@ -6,6 +6,27 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch AstPrinter",
+      "request": "launch",
+      "mainClass": "com.kos.language.AstPrinter",
+      "projectName": "jlox"
+    },
+    {
+      "type": "java",
+      "name": "Launch GenerateAst",
+      "request": "launch",
+      "mainClass": "com.kos.tool.GenerateAst",
+      "projectName": "jlox"
+    },
+    {
+      "type": "java",
+      "name": "Launch Lox",
+      "request": "launch",
+      "mainClass": "com.kos.language.Lox",
+      "projectName": "jlox"
+    },
+    {
+      "type": "java",
       "name": "Launch App",
       "request": "launch",
       "mainClass": "com.kos.language.App",
