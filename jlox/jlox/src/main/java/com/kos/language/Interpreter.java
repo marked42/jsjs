@@ -9,6 +9,7 @@ import com.kos.language.Expr.Literal;
 import com.kos.language.Expr.Unary;
 import com.kos.language.Expr.Variable;
 import com.kos.language.Stmt.Block;
+import com.kos.language.Stmt.Condition;
 import com.kos.language.Stmt.Expression;
 import com.kos.language.Stmt.Print;
 import com.kos.language.Stmt.Var;
@@ -198,5 +199,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         } finally {
             this.environment = previous;
         }
+    }
+
+    @Override
+    public Void visitConditionStmt(Condition stmt) {
+        boolean condition = isTruthy(evaluate(stmt.condition));
+        if (condition) {
+            execute(stmt.thenBranch);
+        } else {
+            execute(stmt.elseBranch);
+        }
+        return null;
     }
 }

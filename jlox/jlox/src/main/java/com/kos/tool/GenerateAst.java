@@ -26,7 +26,8 @@ public class GenerateAst {
             "Expression : Expr expression",
             "Print      : Expr expression",
             "Var        : Token name, Expr initializer",
-            "Block      : List<Stmt> statements"
+            "Block      : List<Stmt> statements",
+            "Condition  : Expr condition, Stmt thenBranch, Stmt elseBranch"
         ));
     }
 

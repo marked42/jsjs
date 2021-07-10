@@ -57,11 +57,29 @@ abstract class Stmt {
         final List<Stmt> statements;
     }
 
+    static class Condition extends Stmt {
+        Condition(Expr condition, Stmt thenBranch, Stmt elseBranch) {
+            this.condition = condition;
+            this.thenBranch = thenBranch;
+            this.elseBranch = elseBranch;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitConditionStmt(this);
+        }
+
+        final Expr condition;
+        final Stmt thenBranch;
+        final Stmt elseBranch;
+    }
+
     interface Visitor<R> {
         R visitExpressionStmt(Expression stmt);
         R visitPrintStmt(Print stmt);
         R visitVarStmt(Var stmt);
         R visitBlockStmt(Block stmt);
+        R visitConditionStmt(Condition stmt);
     }
 
     abstract <R> R accept(Visitor<R> visitor);
