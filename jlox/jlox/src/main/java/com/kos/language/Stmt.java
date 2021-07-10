@@ -89,6 +89,28 @@ abstract class Stmt {
         final Stmt body;
     }
 
+    static class Break extends Stmt {
+        Break() {
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitBreakStmt(this);
+        }
+
+    }
+
+    static class Continue extends Stmt {
+        Continue() {
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitContinueStmt(this);
+        }
+
+    }
+
     interface Visitor<R> {
         R visitExpressionStmt(Expression stmt);
         R visitPrintStmt(Print stmt);
@@ -96,6 +118,8 @@ abstract class Stmt {
         R visitBlockStmt(Block stmt);
         R visitConditionStmt(Condition stmt);
         R visitWhileStmt(While stmt);
+        R visitBreakStmt(Break stmt);
+        R visitContinueStmt(Continue stmt);
     }
 
     abstract <R> R accept(Visitor<R> visitor);

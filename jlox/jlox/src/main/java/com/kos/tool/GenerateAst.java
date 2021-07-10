@@ -29,7 +29,9 @@ public class GenerateAst {
             "Var        : Token name, Expr initializer",
             "Block      : List<Stmt> statements",
             "Condition  : Expr condition, Stmt thenBranch, Stmt elseBranch",
-            "While      : Expr condition, Stmt body"
+            "While      : Expr condition, Stmt body",
+            "Break      : ",
+            "Continue   : "
         ));
     }
 
@@ -46,6 +48,7 @@ public class GenerateAst {
         for (String type : types) {
             String className = type.split(":")[0].trim();
             String fields = type.split(":")[1].trim();
+            System.out.println("className: " + className + " fields: '" + fields + "'");
             defineType(writer, baseName, className, fields);
         }
 
@@ -61,9 +64,12 @@ public class GenerateAst {
 
         writer.println("        " + className + "(" + fieldString + ") {");
         String[] fields = fieldString.split(", ");
-        for (String field: fields) {
-            String name = field.split(" ")[1];
-            writer.println("            this." + name + " = " + name + ";");
+        System.out.println("fieldString: " + fieldString + " fields: '" + fields[0] + "'");
+        if (!fieldString.equals("")) {
+            for (String field: fields) {
+                String name = field.split(" ")[1];
+                writer.println("            this." + name + " = " + name + ";");
+            }
         }
         writer.println("        }");
 
@@ -77,8 +83,11 @@ public class GenerateAst {
 
         // Fields
         writer.println();
-        for (String field: fields) {
-            writer.println("        final " + field + ";");
+
+        if (!fieldString.equals("")) {
+            for (String field: fields) {
+                writer.println("        final " + field + ";");
+            }
         }
         writer.println("    }");
         writer.println();

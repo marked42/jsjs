@@ -10,7 +10,9 @@ import com.kos.language.Expr.Logical;
 import com.kos.language.Expr.Unary;
 import com.kos.language.Expr.Variable;
 import com.kos.language.Stmt.Block;
+import com.kos.language.Stmt.Break;
 import com.kos.language.Stmt.Condition;
+import com.kos.language.Stmt.Continue;
 import com.kos.language.Stmt.Expression;
 import com.kos.language.Stmt.Print;
 import com.kos.language.Stmt.Var;
@@ -209,7 +211,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (condition) {
             execute(stmt.thenBranch);
         } else {
-            execute(stmt.elseBranch);
+            if (stmt.elseBranch != null) {
+                execute(stmt.elseBranch);
+            }
         }
         return null;
     }
@@ -230,8 +234,30 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitWhileStmt(While stmt) {
         while (isTruthy(evaluate(stmt.condition))) {
-            execute(stmt.body);
+            try {
+                execute(stmt.body);
+            } catch (RuntimeException e) {
+                if (e == BREAK_EXCEPTION) {
+                    break;
+                }
+                else if (e == CONTINUE_EXCEPTION) {
+                    continue;
+                }
+            }
         }
         return null;
+    }
+
+    static final RuntimeException BREAK_EXCEPTION = new RuntimeException("break");
+    static final RuntimeException CONTINUE_EXCEPTION = new RuntimeException("continue");
+
+    @Override
+    public Void visitBreakStmt(Break stmt) {
+        throw BREAK_EXCEPTION;
+    }
+
+    @Override
+    public Void visitContinueStmt(Continue stmt) {
+        throw CONTINUE_EXCEPTION;
     }
 }

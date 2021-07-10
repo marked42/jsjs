@@ -30,7 +30,6 @@ public class Parser {
         return assignment();
     }
 
-
     private Expr or() {
         Expr left = and();
 
@@ -99,8 +98,26 @@ public class Parser {
         if (match(IF)) return ifStatement();
         if (match(WHILE)) return whileStatement();
         if (match(FOR)) return forStatement();
+        if (match(BREAK)) return breakStatement();
+        if (match(CONTINUE)) return continueStatement();
 
         return expressionStatement();
+    }
+
+    /**
+     * breakStatement通过抛出异常实现
+     */
+    private Stmt breakStatement() {
+        consume(SEMICOLON, "Expect ';' after break.");
+        return new Stmt.Break();
+    }
+
+    /**
+     * continueStatement 通过抛出异常实现的话需要 forStatement 有专门的类型定义，而不是转换成while的语法糖
+     */
+    private Stmt continueStatement() {
+        consume(SEMICOLON, "Expect ';' after continue.");
+        return new Stmt.Continue();
     }
 
     private Stmt forStatement() {
