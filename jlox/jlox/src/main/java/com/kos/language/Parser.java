@@ -1,6 +1,7 @@
 package com.kos.language;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.kos.language.TokenType.*;
@@ -97,8 +98,54 @@ public class Parser {
         if (match(LEFT_BRACE)) return new Stmt.Block(block());
         if (match(IF)) return ifStatement();
         if (match(WHILE)) return whileStatement();
+        if (match(FOR)) return forStatement();
 
         return expressionStatement();
+    }
+
+    private Stmt forStatement() {
+        consume(LEFT_PAREN, "Expect '(' after for.");
+
+        Stmt initializer;
+        if (match(SEMICOLON)) {
+            initializer = null;
+        } else if (match(VAR)) {
+            initializer = varDeclaration();
+        } else {
+            initializer = expressionStatement();
+        }
+
+        Expr condition;
+        if (match(SEMICOLON)) {
+            condition = null;
+        } else {
+            condition = expression();
+        }
+        consume(SEMICOLON, "Expect ';' after for condition.");
+
+        Expr increment;
+        if (match(RIGHT_PAREN)) {
+            increment = null;
+        } else {
+            increment = expression();
+        }
+        consume(RIGHT_PAREN, "Expect ')' after for increment.");
+
+        Stmt body = statement();
+
+        // execute increment after for body
+        body = new Stmt.Block(Arrays.asList(body, new Stmt.Expression(increment)));
+
+        condition = condition == null ? new Expr.Literal(true) : condition;
+
+        // transform for to while loop with proper condition
+        body = new Stmt.While(condition, body);
+
+        if (initializer != null) {
+            body = new Stmt.Block(Arrays.asList( initializer, body));
+        }
+
+        return body;
     }
 
     private Stmt whileStatement() {
