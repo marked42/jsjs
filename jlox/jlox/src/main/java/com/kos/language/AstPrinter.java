@@ -1,9 +1,11 @@
 package com.kos.language;
 
+import com.kos.language.Expr.Assign;
 import com.kos.language.Expr.Binary;
 import com.kos.language.Expr.Grouping;
 import com.kos.language.Expr.Literal;
 import com.kos.language.Expr.Unary;
+import com.kos.language.Expr.Variable;
 
 public class AstPrinter implements Expr.Visitor<String> {
     String print(Expr expr) {
@@ -51,5 +53,17 @@ public class AstPrinter implements Expr.Visitor<String> {
         );
 
         System.out.println(new AstPrinter().print(expression));
+    }
+
+    @Override
+    public String visitVariableExpr(Variable expr) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String visitAssignExpr(Assign expr) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

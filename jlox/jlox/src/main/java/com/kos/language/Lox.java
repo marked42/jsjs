@@ -91,7 +91,7 @@ public final class Lox {
         List<Token> tokens = scanner.scanTokens();
 
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         if (hadError) {
             System.exit(65);
@@ -101,7 +101,7 @@ public final class Lox {
             System.exit(70);
         }
 
-        interpreter.interpret(expression);
+        interpreter.interpret(statements);
 
         // System.out.println(new AstPrinter().print(expression));
     }

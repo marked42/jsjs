@@ -1,5 +1,6 @@
 package com.kos.language;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.kos.language.TokenType.*;
@@ -22,15 +23,84 @@ public class Parser {
      * primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" ;
      */
     private Expr expression() {
-        return equality();
+        return assignment();
     }
 
-    Expr parse() {
+    private Expr assignment() {
+        Expr expr = equality();
+
+        if (match(EQUAL)) {
+            Token equals = previous();
+            Expr value = assignment();
+
+            if (expr instanceof Expr.Variable) {
+                Token name = ((Expr.Variable)expr).name;
+                return new Expr.Assign(name, value);
+            }
+
+            error(equals, "Invalid assignment target.");
+        }
+
+        return expr;
+    }
+
+    List<Stmt> parse() {
         try {
-            return expression();
+            List<Stmt> statements = new ArrayList<>();
+            while (!isAtEnd()) {
+                statements.add(declaration());
+            }
+            return statements;
         } catch (ParseError error) {
             return null;
         }
+    }
+
+    private Stmt statement() {
+        if (match(PRINT)) return printStatement();
+
+        return expressionStatement();
+    }
+
+    private Stmt declaration() {
+        try {
+            if (match(VAR)) return varDeclaration();
+
+            return statement();
+        } catch (ParseError error) {
+            synchronize();
+            return null;
+        }
+    }
+
+    private Stmt varDeclaration() {
+        Token name = consume(IDENTIFIER, "Expect variable name");
+
+        Expr initializer = null;
+        if (match(EQUAL)) {
+            initializer = expression();
+        }
+
+        consume(SEMICOLON, "Expect ';' after variable declaration.");
+        return new Stmt.Var(name, initializer);
+    }
+
+
+    // TODO:
+    private void synchronize() {
+
+    }
+
+    private Stmt.Print printStatement() {
+        Expr expression = expression();
+        consume(SEMICOLON, "Expect ';' after value.");
+        return new Stmt.Print(expression);
+    }
+
+    private Stmt.Expression expressionStatement() {
+        Expr expression = expression();
+        consume(SEMICOLON, "Expect ';' after expression.");
+        return new Stmt.Expression(expression);
     }
 
     private Expr equality() {
@@ -126,6 +196,7 @@ public class Parser {
         if (match(FALSE)) return new Expr.Literal(false);
         if (match(TRUE)) return new Expr.Literal(true);
         if (match(NIL)) return new Expr.Literal(null);
+        if (match(IDENTIFIER)) return new Expr.Variable(previous());
 
         if (match(NUMBER, STRING)) {
             return new Expr.Literal(previous().literal);
