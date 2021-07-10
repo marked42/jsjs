@@ -26,6 +26,13 @@ public final class Lox {
         }
     }
 
+    static boolean hadRuntimeError = false;
+
+    static void runtimeError(RuntimeError error) {
+        System.err.println(error.getMessage() + "\n[line " + error.token.line + "]");
+        hadRuntimeError = true;
+    }
+
     private static void report(int line, String where, String message) {
         System.err.println("[line " + line + "] Error " + where + ": " + message);
         hadError = true;
@@ -71,7 +78,13 @@ public final class Lox {
         if (hadError) {
             System.exit(65);
         }
+
+        if (hadRuntimeError) {
+            System.exit(70);
+        }
     }
+
+    private static final Interpreter interpreter = new Interpreter();
 
     private static void run(String source) {
         Scanner scanner = new Scanner(source);
@@ -80,8 +93,16 @@ public final class Lox {
         Parser parser = new Parser(tokens);
         Expr expression = parser.parse();
 
-        if (hadError) { return ;}
+        if (hadError) {
+            System.exit(65);
+        }
 
-        System.out.println(new AstPrinter().print(expression));
+        if (hadRuntimeError) {
+            System.exit(70);
+        }
+
+        interpreter.interpret(expression);
+
+        // System.out.println(new AstPrinter().print(expression));
     }
 }
