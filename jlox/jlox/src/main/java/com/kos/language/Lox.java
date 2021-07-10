@@ -12,15 +12,23 @@ import java.util.List;
  * Hello world!
  */
 public final class Lox {
-    static boolean hasError = false;
+    static boolean hadError = false;
 
     static void error(int line, String message) {
         report(line, "", message);
     }
 
+    static void error(Token token, String message) {
+        if (token.type == TokenType.EOF) {
+            report(token.line, " at end", message);
+        } else {
+            report(token.line, " at '" + token.lexeme + "'", message);
+        }
+    }
+
     private static void report(int line, String where, String message) {
         System.err.println("[line " + line + "] Error " + where + ": " + message);
-        hasError = true;
+        hadError = true;
     }
 
     private Lox() {
@@ -52,7 +60,7 @@ public final class Lox {
             String line = reader.readLine();
             if (line == null) {break;}
             run(line);
-            hasError = false;
+            hadError = false;
         }
     }
 
@@ -60,7 +68,7 @@ public final class Lox {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
         run(new String(bytes, Charset.defaultCharset()));
 
-        if (hasError) {
+        if (hadError) {
             System.exit(65);
         }
     }
@@ -69,8 +77,11 @@ public final class Lox {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
-        for (Token token: tokens) {
-            System.out.println(token);
-        }
+        Parser parser = new Parser(tokens);
+        Expr expression = parser.parse();
+
+        if (hadError) { return ;}
+
+        System.out.println(new AstPrinter().print(expression));
     }
 }
