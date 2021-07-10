@@ -14,6 +14,7 @@ import com.kos.language.Stmt.Condition;
 import com.kos.language.Stmt.Expression;
 import com.kos.language.Stmt.Print;
 import com.kos.language.Stmt.Var;
+import com.kos.language.Stmt.While;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     private Environment environment = new Environment();
@@ -224,5 +225,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
 
         return evaluate(expr.right);
+    }
+
+    @Override
+    public Void visitWhileStmt(While stmt) {
+        while (isTruthy(evaluate(stmt.condition))) {
+            execute(stmt.body);
+        }
+        return null;
     }
 }

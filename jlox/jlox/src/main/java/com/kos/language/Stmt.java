@@ -74,12 +74,28 @@ abstract class Stmt {
         final Stmt elseBranch;
     }
 
+    static class While extends Stmt {
+        While(Expr condition, Stmt body) {
+            this.condition = condition;
+            this.body = body;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitWhileStmt(this);
+        }
+
+        final Expr condition;
+        final Stmt body;
+    }
+
     interface Visitor<R> {
         R visitExpressionStmt(Expression stmt);
         R visitPrintStmt(Print stmt);
         R visitVarStmt(Var stmt);
         R visitBlockStmt(Block stmt);
         R visitConditionStmt(Condition stmt);
+        R visitWhileStmt(While stmt);
     }
 
     abstract <R> R accept(Visitor<R> visitor);
