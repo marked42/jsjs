@@ -6,6 +6,7 @@ import com.kos.language.Expr.Assign;
 import com.kos.language.Expr.Binary;
 import com.kos.language.Expr.Grouping;
 import com.kos.language.Expr.Literal;
+import com.kos.language.Expr.Logical;
 import com.kos.language.Expr.Unary;
 import com.kos.language.Expr.Variable;
 import com.kos.language.Stmt.Block;
@@ -210,5 +211,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             execute(stmt.elseBranch);
         }
         return null;
+    }
+
+    @Override
+    public Object visitLogicalExpr(Logical expr) {
+        Object left = evaluate(expr.left);
+
+        if (expr.operator.type == TokenType.OR) {
+            if (isTruthy(left)) { return left; }
+        } else {
+            if (!isTruthy(left)) return left;
+        }
+
+        return evaluate(expr.right);
     }
 }

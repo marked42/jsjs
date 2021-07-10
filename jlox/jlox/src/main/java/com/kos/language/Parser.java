@@ -14,7 +14,10 @@ public class Parser {
     }
 
     /**
-     * expression     → equality ;
+     * expression     → assignment ;
+     * assignment     → IDENTIFIER "=" assignment | logic_or ;
+     * logic_or       → logic_and ( "or" logic_and )* ;
+     * logic_and      → equality ( "and" equality )* ;
      * equality       → comparison ( ( "!=" | "==" ) comparison )* ;
      * comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
      * term           → factor ( ( "-" | "+" ) factor )* ;
@@ -26,8 +29,33 @@ public class Parser {
         return assignment();
     }
 
+
+    private Expr or() {
+        Expr left = and();
+
+        while (match(TokenType.OR)) {
+            Token operator = previous();
+            Expr right = and();
+            left = new Expr.Logical(left, operator, right);
+        }
+
+        return left;
+    }
+
+    private Expr and() {
+        Expr left = equality();
+
+        while (match(TokenType.AND)) {
+            Token operator = previous();
+            Expr right = equality();
+            left = new Expr.Logical(left, operator, right);
+        }
+
+        return left;
+    }
+
     private Expr assignment() {
-        Expr expr = equality();
+        Expr expr = or();
 
         if (match(EQUAL)) {
             Token equals = previous();
