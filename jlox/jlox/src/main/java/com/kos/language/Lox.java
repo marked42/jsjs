@@ -48,16 +48,18 @@ public final class Lox {
      */
     public static void main(String[] args) throws IOException {
         // String source = "class Bacon { eat() { print \"test\"; } } print Bacon().eat();";
-        // run(source);
+        String source = "class Cake { taste() { var adjective = \"delicious\"; print \"The \" + this.flavor + \" cake is \" + adjective + \"!\"; } } var cake = Cake(); cake.flavor = \"German chocolate\"; cake.taste(); ";
 
-        if (args.length > 1) {
-            System.out.println("Usage: jlox [script]");
-            System.exit(64);
-        } else if (args.length == 1) {
-            runFile(args[0]);
-        } else {
-            runPrompt();
-        }
+        run(source);
+
+        // if (args.length > 1) {
+        //     System.out.println("Usage: jlox [script]");
+        //     System.exit(64);
+        // } else if (args.length == 1) {
+        //     runFile(args[0]);
+        // } else {
+        //     runPrompt();
+        // }
     }
 
     private static void runPrompt() throws IOException {

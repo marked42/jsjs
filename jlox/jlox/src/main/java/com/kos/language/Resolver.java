@@ -13,6 +13,7 @@ import com.kos.language.Expr.Grouping;
 import com.kos.language.Expr.Literal;
 import com.kos.language.Expr.Logical;
 import com.kos.language.Expr.Set;
+import com.kos.language.Expr.This;
 import com.kos.language.Expr.Unary;
 import com.kos.language.Expr.Variable;
 import com.kos.language.Stmt.Block;
@@ -250,10 +251,15 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         declare(stmt.name);
         define(stmt.name);
 
+        beginScope();
+        scopes.peek().put("this", true);
+
         for (Stmt.Function method : stmt.methods) {
             FunctionType type = FunctionType.METHOD;
             resolveFunction(method, type);
         }
+
+        endScope();
 
         return null;
     }
@@ -268,6 +274,12 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     public Void visitSetExpr(Set expr) {
         resolve(expr.object);
         resolve(expr.value);
+        return null;
+    }
+
+    @Override
+    public Void visitThisExpr(This expr) {
+        resolveLocal(expr, expr.keyword);
         return null;
     }
 }

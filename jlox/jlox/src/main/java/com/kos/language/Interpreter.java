@@ -13,6 +13,7 @@ import com.kos.language.Expr.Grouping;
 import com.kos.language.Expr.Literal;
 import com.kos.language.Expr.Logical;
 import com.kos.language.Expr.Set;
+import com.kos.language.Expr.This;
 import com.kos.language.Expr.Unary;
 import com.kos.language.Expr.Variable;
 import com.kos.language.Stmt.Block;
@@ -387,5 +388,10 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         ((LoxInstance)object).set(expr.name, value);
 
         return value;
+    }
+
+    @Override
+    public Object visitThisExpr(This expr) {
+        return lookUpVariable(expr.keyword, expr);
     }
 }
