@@ -18,6 +18,7 @@ import com.kos.language.Stmt.Continue;
 import com.kos.language.Stmt.Expression;
 import com.kos.language.Stmt.Function;
 import com.kos.language.Stmt.Print;
+import com.kos.language.Stmt.Return;
 import com.kos.language.Stmt.Var;
 import com.kos.language.Stmt.While;
 
@@ -311,5 +312,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         LoxFunction function = new LoxFunction(stmt);
         environment.define(stmt.name.lexeme, function);
         return null;
+    }
+
+    @Override
+    public Void visitReturnStmt(Return stmt) {
+        Object value = null;
+
+        if (stmt.value != null) {
+            value = evaluate(stmt.value);
+        }
+        throw new ReturnException(value);
     }
 }

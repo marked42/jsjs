@@ -89,6 +89,7 @@ public class Parser {
      *              | ifStmt
      *              | printStmt
      *              | whileStmt
+     *              | returnStmt
      *              | block ;
      * whileStmt    → "while" "(" expression ")" statement ;
      */
@@ -100,8 +101,19 @@ public class Parser {
         if (match(FOR)) return forStatement();
         if (match(BREAK)) return breakStatement();
         if (match(CONTINUE)) return continueStatement();
+        if (match(RETURN)) return returnStatement();
 
         return expressionStatement();
+    }
+
+    private Stmt.Return returnStatement() {
+        Expr value = null;
+        if (!check(SEMICOLON)) {
+            value = expression();
+        }
+
+        consume(SEMICOLON, "Expect ';' after at the end of return statement;");
+        return new Stmt.Return(previous(), value);
     }
 
     /**
