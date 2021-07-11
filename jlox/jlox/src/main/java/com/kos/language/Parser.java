@@ -102,8 +102,23 @@ public class Parser {
         if (match(BREAK)) return breakStatement();
         if (match(CONTINUE)) return continueStatement();
         if (match(RETURN)) return returnStatement();
+        if (match(CLASS)) return classDeclaration();
 
         return expressionStatement();
+    }
+
+    private Stmt.Class classDeclaration() {
+        Token name = consume(IDENTIFIER, "Expect class name");
+
+        List<Stmt.Function> methods = new ArrayList<>();
+        consume(LEFT_BRACE, "Expect '{' after class name");
+        while (!check(TokenType.RIGHT_BRACE) && !isAtEnd()) {
+            methods.add(function("method"));
+        }
+
+        consume(RIGHT_BRACE, "Expect '}' after class body");
+
+        return new Stmt.Class(name, methods);
     }
 
     private Stmt.Return returnStatement() {

@@ -15,6 +15,7 @@ import com.kos.language.Expr.Unary;
 import com.kos.language.Expr.Variable;
 import com.kos.language.Stmt.Block;
 import com.kos.language.Stmt.Break;
+import com.kos.language.Stmt.Class;
 import com.kos.language.Stmt.Condition;
 import com.kos.language.Stmt.Continue;
 import com.kos.language.Stmt.Expression;
@@ -238,6 +239,13 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         for (Expr argument : expr.arguments) {
             resolve(argument);
         }
+        return null;
+    }
+
+    @Override
+    public Void visitClassStmt(Class stmt) {
+        declare(stmt.name);
+        define(stmt.name);
         return null;
     }
 }

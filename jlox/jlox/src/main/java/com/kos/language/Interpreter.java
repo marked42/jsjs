@@ -15,6 +15,7 @@ import com.kos.language.Expr.Unary;
 import com.kos.language.Expr.Variable;
 import com.kos.language.Stmt.Block;
 import com.kos.language.Stmt.Break;
+import com.kos.language.Stmt.Class;
 import com.kos.language.Stmt.Condition;
 import com.kos.language.Stmt.Continue;
 import com.kos.language.Stmt.Expression;
@@ -344,5 +345,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             value = evaluate(stmt.value);
         }
         throw new ReturnException(value);
+    }
+
+    @Override
+    public Void visitClassStmt(Class stmt) {
+        environment.define(stmt.name.lexeme, null);
+        LoxClass klass = new LoxClass(stmt.name.lexeme);
+        environment.assign(stmt.name, klass);
+        return null;
     }
 }
