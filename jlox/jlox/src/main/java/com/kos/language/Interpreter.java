@@ -229,7 +229,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         Integer distance = locals.get(expr);
         if (distance != null) {
-            environment.assignAt(distance, expr.name, value);
+            environment.assignAt(distance, expr.name.lexeme, value);
         } else {
             globals.assign(expr.name, value);
         }
@@ -335,7 +335,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitFunctionStmt(Function stmt) {
-        LoxFunction function = new LoxFunction(stmt, environment);
+        LoxFunction function = new LoxFunction(stmt, environment, false);
         environment.define(stmt.name.lexeme, function);
         return null;
     }
@@ -356,7 +356,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         Map<String, LoxFunction> methods = new HashMap<>();
         for (Stmt.Function method : stmt.methods) {
-            methods.put(method.name.lexeme, new LoxFunction(method, environment));
+            methods.put(method.name.lexeme, new LoxFunction(method, environment, method.name.lexeme.equals("init")));
         }
 
         LoxClass klass = new LoxClass(stmt.name.lexeme, methods);
