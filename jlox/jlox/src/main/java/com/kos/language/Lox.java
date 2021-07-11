@@ -101,6 +101,8 @@ public final class Lox {
             System.exit(70);
         }
 
+        Resolver resolver = new Resolver(interpreter);
+        resolver.resolve(statements);
         interpreter.interpret(statements);
 
         // System.out.println(new AstPrinter().print(expression));
