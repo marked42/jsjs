@@ -8,9 +8,11 @@ import java.util.List;
 import com.kos.language.Expr.Assign;
 import com.kos.language.Expr.Binary;
 import com.kos.language.Expr.Call;
+import com.kos.language.Expr.Get;
 import com.kos.language.Expr.Grouping;
 import com.kos.language.Expr.Literal;
 import com.kos.language.Expr.Logical;
+import com.kos.language.Expr.Set;
 import com.kos.language.Expr.Unary;
 import com.kos.language.Expr.Variable;
 import com.kos.language.Stmt.Block;
@@ -350,8 +352,40 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitClassStmt(Class stmt) {
         environment.define(stmt.name.lexeme, null);
-        LoxClass klass = new LoxClass(stmt.name.lexeme);
+
+        Map<String, LoxFunction> methods = new HashMap<>();
+        for (Stmt.Function method : stmt.methods) {
+            methods.put(method.name.lexeme, new LoxFunction(method, environment));
+        }
+
+        LoxClass klass = new LoxClass(stmt.name.lexeme, methods);
         environment.assign(stmt.name, klass);
+
         return null;
+    }
+
+    @Override
+    public Object visitGetExpr(Get expr) {
+        Object object = evaluate(expr.object);
+        if (object instanceof LoxInstance) {
+            return ((LoxInstance) object).get(expr.name);
+        }
+
+        throw new RuntimeError(expr.name, "Only instances have properties.");
+    }
+
+    @Override
+    public Object visitSetExpr(Set expr) {
+        Object object = evaluate(expr.object);
+
+        if (!(object instanceof LoxInstance)) {
+            throw new RuntimeError(expr.name, "Only instances have fields.");
+        }
+
+        Object value = evaluate(expr.value);
+
+        ((LoxInstance)object).set(expr.name, value);
+
+        return value;
     }
 }

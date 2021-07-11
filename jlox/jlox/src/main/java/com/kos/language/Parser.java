@@ -64,6 +64,9 @@ public class Parser {
             if (expr instanceof Expr.Variable) {
                 Token name = ((Expr.Variable)expr).name;
                 return new Expr.Assign(name, value);
+            } else if (expr instanceof Expr.Get) {
+                Expr.Get get = (Expr.Get)expr;
+                return new Expr.Set(get.object, get.name, value);
             }
 
             error(equals, "Invalid assignment target.");
@@ -399,7 +402,7 @@ public class Parser {
 
     /**
      * unary          → ( "!" | "-" ) unary | call ;
-     * call           → primary ( "(" arguments? ")" )* ;
+     * call           → primary ( "(" arguments? ")" | "." IDENTIFIER )* ;
      */
     private Expr call() {
         Expr expr = primary();
@@ -407,6 +410,8 @@ public class Parser {
         while (true) {
             if (match(LEFT_PAREN)) {
                 expr = finishCallExpr(expr);
+            } else if (match(DOT)) {
+                expr = finishGetExpr(expr);
             } else {
                 break;
             }
@@ -427,6 +432,12 @@ public class Parser {
         Token paren = consume(RIGHT_PAREN, "Expect ')' after arguments.");
 
         return new Expr.Call(expr, paren, arguments);
+    }
+
+    private Expr finishGetExpr(Expr object) {
+        Token name = consume(IDENTIFIER, "Expect an identifier.");
+
+        return new Expr.Get(object, name);
     }
 
     private Expr primary() {

@@ -8,9 +8,11 @@ import java.util.Map;
 import com.kos.language.Expr.Assign;
 import com.kos.language.Expr.Binary;
 import com.kos.language.Expr.Call;
+import com.kos.language.Expr.Get;
 import com.kos.language.Expr.Grouping;
 import com.kos.language.Expr.Literal;
 import com.kos.language.Expr.Logical;
+import com.kos.language.Expr.Set;
 import com.kos.language.Expr.Unary;
 import com.kos.language.Expr.Variable;
 import com.kos.language.Stmt.Block;
@@ -43,6 +45,7 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     private enum FunctionType {
         NONE,
         FUNCTION,
+        METHOD,
     }
 
     @Override
@@ -246,6 +249,25 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     public Void visitClassStmt(Class stmt) {
         declare(stmt.name);
         define(stmt.name);
+
+        for (Stmt.Function method : stmt.methods) {
+            FunctionType type = FunctionType.METHOD;
+            resolveFunction(method, type);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Void visitGetExpr(Get expr) {
+        resolve(expr.object);
+        return null;
+    }
+
+    @Override
+    public Void visitSetExpr(Set expr) {
+        resolve(expr.object);
+        resolve(expr.value);
         return null;
     }
 }

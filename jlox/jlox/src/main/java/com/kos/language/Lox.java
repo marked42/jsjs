@@ -47,6 +47,9 @@ public final class Lox {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) throws IOException {
+        // String source = "class Bacon { eat() { print \"test\"; } } print Bacon().eat();";
+        // run(source);
+
         if (args.length > 1) {
             System.out.println("Usage: jlox [script]");
             System.exit(64);
@@ -55,7 +58,6 @@ public final class Lox {
         } else {
             runPrompt();
         }
-
     }
 
     private static void runPrompt() throws IOException {
