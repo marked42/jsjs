@@ -103,6 +103,11 @@ public final class Lox {
 
         Resolver resolver = new Resolver(interpreter);
         resolver.resolve(statements);
+
+        if (hadError) {
+            return;
+        }
+
         interpreter.interpret(statements);
 
         // System.out.println(new AstPrinter().print(expression));

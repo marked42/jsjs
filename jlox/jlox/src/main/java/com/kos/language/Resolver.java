@@ -37,6 +37,13 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         this.interpreter = interpreter;
     }
 
+    private FunctionType currentFunction = FunctionType.NONE;
+
+    private enum FunctionType {
+        NONE,
+        FUNCTION,
+    }
+
     @Override
     public Void visitExpressionStmt(Expression stmt) {
         resolve(stmt.expression);
@@ -137,11 +144,17 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         declare(stmt.name);
         define(stmt.name);
 
-        resolveFunction(stmt);
+        resolveFunction(stmt, FunctionType.FUNCTION);
         return null;
     }
 
-    private void resolveFunction(Function stmt) {
+    /**
+     * TODO: guard 的模式
+     */
+    private void resolveFunction(Function stmt, FunctionType type) {
+        FunctionType enclosingFunction = currentFunction;
+        currentFunction = type;
+
         beginScope();
         for (Token param : stmt.params) {
             declare(param);
@@ -149,10 +162,15 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         }
         resolve(stmt.body);
         endScope();
+
+        currentFunction = enclosingFunction;
     }
 
     @Override
     public Void visitReturnStmt(Return stmt) {
+        if (currentFunction == FunctionType.NONE) {
+            Lox.error(stmt.keyword, "Can't return from top-level code.");
+        }
         if (stmt.value != null) { resolve(stmt.value); }
         return null;
     }
