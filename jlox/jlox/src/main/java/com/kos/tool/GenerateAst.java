@@ -20,7 +20,8 @@ public class GenerateAst {
             "Unary      : Token operator, Expr right",
             "Variable   : Token name",
             "Assign     : Token name, Expr value",
-            "Logical    : Expr left, Token operator, Expr right"
+            "Logical    : Expr left, Token operator, Expr right",
+            "Call       : Expr callee, Token paren, List<Expr> arguments"
         ));
 
         defineAst(outputDir, "Stmt", Arrays.asList(
@@ -31,7 +32,8 @@ public class GenerateAst {
             "Condition  : Expr condition, Stmt thenBranch, Stmt elseBranch",
             "While      : Expr condition, Stmt body",
             "Break      : ",
-            "Continue   : "
+            "Continue   : ",
+            "Function   : Token name, List<Token> params, List<Stmt> body"
         ));
     }
 
@@ -48,7 +50,6 @@ public class GenerateAst {
         for (String type : types) {
             String className = type.split(":")[0].trim();
             String fields = type.split(":")[1].trim();
-            System.out.println("className: " + className + " fields: '" + fields + "'");
             defineType(writer, baseName, className, fields);
         }
 
@@ -64,7 +65,6 @@ public class GenerateAst {
 
         writer.println("        " + className + "(" + fieldString + ") {");
         String[] fields = fieldString.split(", ");
-        System.out.println("fieldString: " + fieldString + " fields: '" + fields[0] + "'");
         if (!fieldString.equals("")) {
             for (String field: fields) {
                 String name = field.split(" ")[1];

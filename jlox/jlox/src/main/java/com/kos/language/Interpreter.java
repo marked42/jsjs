@@ -1,9 +1,11 @@
 package com.kos.language;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kos.language.Expr.Assign;
 import com.kos.language.Expr.Binary;
+import com.kos.language.Expr.Call;
 import com.kos.language.Expr.Grouping;
 import com.kos.language.Expr.Literal;
 import com.kos.language.Expr.Logical;
@@ -14,12 +16,33 @@ import com.kos.language.Stmt.Break;
 import com.kos.language.Stmt.Condition;
 import com.kos.language.Stmt.Continue;
 import com.kos.language.Stmt.Expression;
+import com.kos.language.Stmt.Function;
 import com.kos.language.Stmt.Print;
 import com.kos.language.Stmt.Var;
 import com.kos.language.Stmt.While;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
-    private Environment environment = new Environment();
+    final Environment globals = new Environment();
+    private Environment environment = globals;
+
+    Interpreter() {
+        globals.define("clock", new LoxCallable(){
+            @Override
+            public int arity() {
+                return 0;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                return (double) System.currentTimeMillis() / 1000.0;
+            }
+
+            @Override
+            public String toString() {
+                return "<native fn>";
+            }
+        });
+    }
 
     void interpret(List<Stmt> statements) {
         try {
@@ -259,5 +282,34 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitContinueStmt(Continue stmt) {
         throw CONTINUE_EXCEPTION;
+    }
+
+    @Override
+    public Object visitCallExpr(Call expr) {
+        Object callee = evaluate(expr.callee);
+
+        if (!(callee instanceof LoxCallable)) {
+            throw new RuntimeError(expr.paren, "Can only call functions and classes");
+        }
+
+        LoxCallable callable = (LoxCallable) callee;
+
+        if (callable.arity() != expr.arguments.size()) {
+            throw new RuntimeError(expr.paren, "Expected " + callable.arity() + " arguments but got " + expr.arguments.size() + ".");
+        }
+
+        List<Object> arguments = new ArrayList<>();
+        for (Expr argument: expr.arguments) {
+            arguments.add(evaluate(argument));
+        }
+
+        return callable.call(this, arguments);
+    }
+
+    @Override
+    public Void visitFunctionStmt(Function stmt) {
+        LoxFunction function = new LoxFunction(stmt);
+        environment.define(stmt.name.lexeme, function);
+        return null;
     }
 }

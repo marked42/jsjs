@@ -198,15 +198,56 @@ public class Parser {
         return statements;
     }
 
+    /**
+     *
+     * declaration    → funDecl | varDecl | statement ;
+     * funDecl        → "fun" function ;
+     * function       → IDENTIFIER "(" parameters? ")" block ;
+     * parameters     → IDENTIFIER ( "," IDENTIFIER )* ;
+     */
     private Stmt declaration() {
         try {
             if (match(VAR)) return varDeclaration();
+            if (match(FUN)) return function("function");
 
             return statement();
         } catch (ParseError error) {
             synchronize();
             return null;
         }
+    }
+
+    private Stmt.Function function(String kind) {
+        Token name = consume(TokenType.IDENTIFIER, "Expect " + kind + " name");
+        consume(TokenType.LEFT_PAREN, "Expect '(' after " + kind + " name");
+
+        List<Token> params = parameters();
+
+        consume(LEFT_BRACE, "Expect '{' before " + kind + " body.");
+        List<Stmt> body = block();
+
+        return new Stmt.Function(name, params, body);
+    }
+
+    private void checkParametersLimit(int count) {
+        if (count >= 255) {
+            error(peek(), "Can't have more than 255 parameters.");
+        }
+    }
+
+    private List<Token> parameters() {
+        List<Token> params = new ArrayList<>();
+
+        if (!match(RIGHT_PAREN)) {
+            do {
+                this.checkParametersLimit(params.size());
+
+                params.add(consume(IDENTIFIER, "Expect parameter name."));
+            } while (match(COMMA));
+            consume(RIGHT_PAREN, "Expect ')' after parameters.");
+        }
+
+        return params;
     }
 
     private Stmt varDeclaration() {
@@ -325,7 +366,39 @@ public class Parser {
             return new Expr.Unary(operator, right);
         }
 
-        return primary();
+        return call();
+    }
+
+    /**
+     * unary          → ( "!" | "-" ) unary | call ;
+     * call           → primary ( "(" arguments? ")" )* ;
+     */
+    private Expr call() {
+        Expr expr = primary();
+
+        while (true) {
+            if (match(LEFT_PAREN)) {
+                expr = finishCallExpr(expr);
+            } else {
+                break;
+            }
+        }
+
+        return expr;
+    }
+
+    private Expr finishCallExpr(Expr expr) {
+        List<Expr> arguments = new ArrayList<>();
+        if (!check(RIGHT_PAREN)) {
+            do {
+                this.checkParametersLimit(arguments.size());
+
+                arguments.add(expression());
+            } while (match(COMMA));
+        }
+        Token paren = consume(RIGHT_PAREN, "Expect ')' after arguments.");
+
+        return new Expr.Call(expr, paren, arguments);
     }
 
     private Expr primary() {
