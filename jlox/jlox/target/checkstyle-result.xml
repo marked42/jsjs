@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.29">
+<file name="/Users/zhangpenghui/code/jsjs/jlox/jlox/src/main/java/com/kos/language/App.java">
+<error line="24" column="25" severity="error" message="&apos;64&apos; 是一个魔术数字（直接常数）。" source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+</file>
+</checkstyle>
