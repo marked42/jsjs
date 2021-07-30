@@ -6,6 +6,7 @@
   "scripts": {
     "repl": "ts-node src/Repl.ts",
     "test": "jest",
+    "test:browser": "jest --watch --testPathPattern=browser",
     "test:watch": "jest --watch"
   },
   "keywords": [],
