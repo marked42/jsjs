@@ -5,6 +5,6 @@ describe('parse html', () => {
     const input = `
 			<div test="a">hello</div>
 		`
-    console.log(parseHTML(input))
+    expect(parseHTML(input)).toMatchSnapshot()
   })
 })
