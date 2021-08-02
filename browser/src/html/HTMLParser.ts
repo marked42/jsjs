@@ -1,38 +1,11 @@
 import { NodeType, Node, ElementNode, TextNode, NodeAttributeMap } from './Node'
+import { BasicParser } from '../BasicParser'
 
 function isHTMLElement(node: Node): node is ElementNode {
   return node.type === NodeType.Element && (node as ElementNode).tag === 'html'
 }
 
-export default class HTMLParser {
-  private index = 0
-  constructor(private input: string) {}
-
-  char() {
-    return this.input[this.index]
-  }
-
-  next(len?: number) {
-    len = len || 1
-    this.index += len
-  }
-
-  eat(char?: string) {
-    if (typeof char === 'string') {
-      this.assert(char)
-    }
-
-    const text = char ? char : this.char()
-    this.next(text ? text.length : 1)
-    return text
-  }
-
-  assert(char: string) {
-    if (!this.input.substring(this.index).startsWith(char)) {
-      throw new Error(`unexpected char ${char}`)
-    }
-  }
-
+export default class HTMLParser extends BasicParser {
   parseHTML(): ElementNode {
     const nodes = this.parseNodes()
 
@@ -45,24 +18,6 @@ export default class HTMLParser {
     }
 
     return new ElementNode('html', {}, nodes)
-  }
-
-  consumeWhitespace() {
-    const whitespace = /[\t|\r|\n| ]/
-    const startIndex = this.index
-    while (whitespace.test(this.char())) {
-      this.eat()
-    }
-
-    return this.input.substring(startIndex, this.index)
-  }
-
-  startsWith(input: string) {
-    return this.input.substring(this.index).indexOf(input) === 0
-  }
-
-  end() {
-    return this.index >= this.input.length
   }
 
   parseNodes(): Node[] {
@@ -104,7 +59,7 @@ export default class HTMLParser {
   }
 
   parseTagName() {
-    return this.consumeCharsWhile((char) => /[a-zA-Z0-9]/.test(char))
+    return this.parseIdentifier()
   }
 
   parseTagAttributes() {
@@ -144,19 +99,11 @@ export default class HTMLParser {
         this.next()
         break
       }
-      value += this.eat()
+      value += this.char()
+      this.next()
     }
 
     return value
-  }
-
-  consumeCharsWhile(predicate: (char: string) => boolean) {
-    let text = ''
-    while (predicate(this.char()) && !this.end()) {
-      text += this.eat()
-    }
-
-    return text
   }
 
   parseTextNode() {

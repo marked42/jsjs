@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parse css should parse css 1`] = `
+StyleSheet {
+  "rules": Array [
+    Rule {
+      "declarations": Array [
+        Declaration {
+          "name": "font-size",
+          "value": DeclarationValueLength {
+            "type": 1,
+            "unit": 0,
+            "value": 14,
+          },
+        },
+        Declaration {
+          "name": "font-color",
+          "value": DeclarationValueColor {
+            "type": 2,
+            "value": Object {
+              "a": 255,
+              "b": 255,
+              "g": 255,
+              "r": 255,
+            },
+          },
+        },
+        Declaration {
+          "name": "font-weight",
+          "value": DeclarationValueKeyword {
+            "type": 0,
+            "value": "bold",
+          },
+        },
+      ],
+      "selectors": Array [
+        Selector {
+          "classes": Array [
+            "first",
+          ],
+          "id": "test",
+          "tagName": "div",
+        },
+        Selector {
+          "classes": Array [],
+          "id": undefined,
+          "tagName": "test",
+        },
+      ],
+    },
+    Rule {
+      "declarations": Array [
+        Declaration {
+          "name": "font-size",
+          "value": DeclarationValueLength {
+            "type": 1,
+            "unit": 0,
+            "value": 14,
+          },
+        },
+        Declaration {
+          "name": "font-color",
+          "value": DeclarationValueColor {
+            "type": 2,
+            "value": Object {
+              "a": 255,
+              "b": 255,
+              "g": 255,
+              "r": 255,
+            },
+          },
+        },
+        Declaration {
+          "name": "font-weight",
+          "value": DeclarationValueKeyword {
+            "type": 0,
+            "value": "bold",
+          },
+        },
+      ],
+      "selectors": Array [
+        Selector {
+          "classes": Array [],
+          "id": undefined,
+          "tagName": "first",
+        },
+        Selector {
+          "classes": Array [],
+          "id": undefined,
+          "tagName": "test",
+        },
+      ],
+    },
+  ],
+}
+`;

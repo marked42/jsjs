@@ -23,7 +23,7 @@ export class TextNode extends Node {
 
 export class ElementNode extends Node {
   constructor(
-    public tag: string,
+    public name: string,
     public attributes: NodeAttributeMap,
     public children: Node[]
   ) {

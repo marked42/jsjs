@@ -7,9 +7,4 @@ describe('parse html', () => {
 		`
     expect(parseHTML(input)).toMatchSnapshot()
   })
-
-  it('should parse html', () => {
-    const input = `<html><body>Hello, world!</body></html>`
-    expect(parseHTML(input)).toMatchSnapshot()
-  })
 })
