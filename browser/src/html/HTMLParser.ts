@@ -59,7 +59,7 @@ export default class HTMLParser extends BasicParser {
   }
 
   parseTagName() {
-    return this.consumeCharsWhile((char) => /[a-zA-Z0-9]/.test(char))
+    return this.parseIdentifier()
   }
 
   parseTagAttributes() {

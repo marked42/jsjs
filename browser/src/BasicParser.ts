@@ -53,4 +53,27 @@ export class BasicParser {
 
     return text
   }
+
+  isValidIdentifierStart() {
+    const char = this.char()
+    return (
+      typeof char === 'string' && char.length === 1 && /[a-zA-Z0-9]/.test(char)
+    )
+  }
+
+  parseIdentifier() {
+    return this.consumeCharsWhile((char) => /[a-zA-Z0-9]/.test(char))
+  }
+
+  isDigit() {
+    const char = this.char()
+    return typeof char === 'string' && char.length === 1 && /[0-9]/.test(char)
+  }
+
+  isHexDigit() {
+    const char = this.char()
+    return (
+      typeof char === 'string' && char.length === 1 && /[0-9a-fA-F]/.test(char)
+    )
+  }
 }
