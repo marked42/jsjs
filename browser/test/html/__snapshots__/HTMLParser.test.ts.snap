@@ -5,9 +5,9 @@ ElementNode {
   "attributes": Object {},
   "children": Array [
     TextNode {
-      "textContent": "
-			",
       "type": 1,
+      "value": "
+			",
     },
     ElementNode {
       "attributes": Object {
@@ -15,17 +15,17 @@ ElementNode {
       },
       "children": Array [
         TextNode {
-          "textContent": "hello",
           "type": 1,
+          "value": "hello",
         },
       ],
       "name": "div",
       "type": 0,
     },
     TextNode {
-      "textContent": "
-		",
       "type": 1,
+      "value": "
+		",
     },
   ],
   "name": "html",

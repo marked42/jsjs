@@ -22,3 +22,9 @@
 1. 对于文字节点等无法声明样式的节点，其样式属性继承父节点属性
 1. [specified, computed, actual values](https://www.w3.org/TR/CSS2/cascade.html#value-stages)
 1. 内联样式
+
+## Layout
+
+盒子生成算法
+https://www.w3.org/TR/CSS2/visuren.html#box-gen
+StyleNodeTree -> LayoutTree

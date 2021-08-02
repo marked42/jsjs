@@ -1,25 +1,12 @@
 import { BasicParser } from '../BasicParser'
+import { Rule } from './Rule'
+import { Selector } from './Selector'
 
 export class StyleSheet {
   constructor(public rules: Rule[]) {}
 }
 
-class Rule {
-  constructor(
-    public selectors: Selector[],
-    public declarations: Declaration[]
-  ) {}
-}
-
-class Selector {
-  constructor(
-    public classes: string[],
-    public tagName?: string,
-    public id?: string
-  ) {}
-}
-
-class Declaration {
+export class Declaration {
   constructor(public name: string, public value: DeclarationValue) {}
 }
 

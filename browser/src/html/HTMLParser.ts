@@ -2,7 +2,7 @@ import { NodeType, Node, ElementNode, TextNode, NodeAttributeMap } from './Node'
 import { BasicParser } from '../BasicParser'
 
 function isHTMLElement(node: Node): node is ElementNode {
-  return node.type === NodeType.Element && (node as ElementNode).tag === 'html'
+  return node.type === NodeType.Element && (node as ElementNode).name === 'html'
 }
 
 export default class HTMLParser extends BasicParser {
