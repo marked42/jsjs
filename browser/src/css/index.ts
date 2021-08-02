@@ -1,6 +1,6 @@
 import { BasicParser } from '../BasicParser'
 
-class StyleSheet {
+export class StyleSheet {
   constructor(public rules: Rule[]) {}
 }
 
@@ -29,7 +29,7 @@ enum DeclarationValueType {
   Color,
 }
 
-class DeclarationValue {
+export class DeclarationValue {
   constructor(public type: DeclarationValueType) {}
 }
 
