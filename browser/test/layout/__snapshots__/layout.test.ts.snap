@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`box generation should generate anonymous boxes 1`] = `
+LayoutBox {
+  "boxType": 0,
+  "children": Array [
+    LayoutBox {
+      "boxType": 0,
+      "children": Array [],
+      "dimensions": Dimensions {
+        "border": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "content": Rect {
+          "height": 0,
+          "width": 0,
+          "x": 0,
+          "y": 0,
+        },
+        "margin": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "padding": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+      },
+    },
+    LayoutBox {
+      "boxType": 2,
+      "children": Array [
+        LayoutBox {
+          "boxType": 1,
+          "children": Array [],
+          "dimensions": Dimensions {
+            "border": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+            "content": Rect {
+              "height": 0,
+              "width": 0,
+              "x": 0,
+              "y": 0,
+            },
+            "margin": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+            "padding": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+          },
+        },
+        LayoutBox {
+          "boxType": 1,
+          "children": Array [],
+          "dimensions": Dimensions {
+            "border": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+            "content": Rect {
+              "height": 0,
+              "width": 0,
+              "x": 0,
+              "y": 0,
+            },
+            "margin": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+            "padding": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+          },
+        },
+      ],
+      "dimensions": Dimensions {
+        "border": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "content": Rect {
+          "height": 0,
+          "width": 0,
+          "x": 0,
+          "y": 0,
+        },
+        "margin": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "padding": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+      },
+    },
+    LayoutBox {
+      "boxType": 0,
+      "children": Array [],
+      "dimensions": Dimensions {
+        "border": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "content": Rect {
+          "height": 0,
+          "width": 0,
+          "x": 0,
+          "y": 0,
+        },
+        "margin": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "padding": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+      },
+    },
+  ],
+  "dimensions": Dimensions {
+    "border": EdgeSize {
+      "bottom": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+    },
+    "content": Rect {
+      "height": 0,
+      "width": 0,
+      "x": 0,
+      "y": 0,
+    },
+    "margin": EdgeSize {
+      "bottom": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+    },
+    "padding": EdgeSize {
+      "bottom": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+    },
+  },
+}
+`;

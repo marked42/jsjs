@@ -1,6 +1,7 @@
 # Browser
 
 [Parsing HTML](https://html.spec.whatwg.org/multipage/parsing.html#parse-state)
+[html5 parsing test](https://github.com/html5lib/html5lib-tests)
 
 ## Style
 
@@ -28,3 +29,10 @@
 盒子生成算法
 https://www.w3.org/TR/CSS2/visuren.html#box-gen
 StyleNodeTree -> LayoutTree
+
+正方形
+
+https://spin.atomicobject.com/2015/07/14/css-responsive-square/
+https://stackoverflow.com/questions/1495407/maintain-the-aspect-ratio-of-a-div-with-css
+
+子节点的宽度取决于父节点的宽度，父节点的高度取决于子节点的高度

@@ -10,7 +10,7 @@ export class Declaration {
   constructor(public name: string, public value: DeclarationValue) {}
 }
 
-enum DeclarationValueType {
+export enum DeclarationValueType {
   Keyword,
   Length,
   Color,
@@ -20,13 +20,13 @@ export class DeclarationValue {
   constructor(public type: DeclarationValueType) {}
 }
 
-class DeclarationValueKeyword extends DeclarationValue {
+export class DeclarationValueKeyword extends DeclarationValue {
   constructor(public value: string) {
     super(DeclarationValueType.Keyword)
   }
 }
 
-class DeclarationValueLength extends DeclarationValue {
+export class DeclarationValueLength extends DeclarationValue {
   constructor(public value: number, public unit: Unit) {
     super(DeclarationValueType.Length)
   }
