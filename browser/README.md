@@ -26,9 +26,19 @@
 
 ## Layout
 
+visual formatting model
+
 盒子生成算法
 https://www.w3.org/TR/CSS2/visuren.html#box-gen
 StyleNodeTree -> LayoutTree
+
+https://developer.mozilla.org/zh-CN/docs/Web/CSS/Visual_formatting_model
+
+width 计算规则
+
+1. 如果 width: auto
+   1. 则优先将剩余空间分配给 width，其余 margin-left/margin-right 的 auto 相当于 0
+   1. 没有剩余空间时
 
 正方形
 

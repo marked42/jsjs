@@ -16,6 +16,14 @@ export class StyleNode {
     public specifiedValues: PropertyMap,
     public children: StyleNode[]
   ) {}
+
+  lookup(name: string, name2: string, fallback: DeclarationValue) {
+    return this.specifiedValues[name] || this.specifiedValues[name2] || fallback
+  }
+
+  value(name: string) {
+    return this.specifiedValues[name]
+  }
 }
 
 export function createStyleTree(html: string, css: string) {

@@ -21,8 +21,21 @@ export class DeclarationValue {
 }
 
 export class DeclarationValueKeyword extends DeclarationValue {
-  constructor(public value: string) {
+  private constructor(public value: string) {
     super(DeclarationValueType.Keyword)
+  }
+
+  private static cached = new Map<string, DeclarationValueKeyword>()
+  public static of(name: string): DeclarationValueKeyword {
+    let value = DeclarationValueKeyword.cached.get(name)
+    if (value) {
+      return value
+    }
+
+    value = new DeclarationValueKeyword(name)
+    DeclarationValueKeyword.cached.set(name, value)
+
+    return value
   }
 }
 
@@ -32,7 +45,7 @@ export class DeclarationValueLength extends DeclarationValue {
   }
 }
 
-enum Unit {
+export enum Unit {
   Px,
 }
 
@@ -159,7 +172,13 @@ export class CSSParser extends BasicParser {
       return this.parseColor()
     }
 
-    return new DeclarationValueKeyword(this.parseIdentifier())
+    const name = this.parseIdentifier()
+
+    if (name === undefined) {
+      throw new Error('expect identifer')
+    }
+
+    return DeclarationValueKeyword.of(name)
   }
 
   parseColor() {
