@@ -34,6 +34,13 @@ StyleNodeTree -> LayoutTree
 
 https://developer.mozilla.org/zh-CN/docs/Web/CSS/Visual_formatting_model
 
+介绍浏览器原理
+https://mp.weixin.qq.com/s?__biz=MzI0ODA2ODU2NQ==&mid=2651131609&idx=2&sn=3df598084177675024492b6a2b3fb9b5&chksm=f257ce63c520477590331c84a849f4d1df328a98e6cd54799227ca03b4697a8d5b35535d02cc&scene=21#wechat_redirect
+
+布局
+
+https://zhuanlan.zhihu.com/p/104927765
+
 width 计算规则
 
 1. 如果 width: auto
