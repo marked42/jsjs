@@ -17,4 +17,20 @@ export class Dimensions {
       EdgeSize.default()
     )
   }
+
+  contentBox() {
+    return this.content
+  }
+
+  paddingBox() {
+    return this.contentBox().expand(this.padding)
+  }
+
+  borderBox() {
+    return this.paddingBox().expand(this.border)
+  }
+
+  marginBox() {
+    return this.borderBox().expand(this.margin)
+  }
 }

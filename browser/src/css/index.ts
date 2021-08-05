@@ -18,6 +18,18 @@ export enum DeclarationValueType {
 
 export class DeclarationValue {
   constructor(public type: DeclarationValueType) {}
+
+  toPix() {
+    if (this instanceof DeclarationValueLength) {
+      return this.value
+    }
+
+    if (this instanceof DeclarationValueKeyword && this.value === 'auto') {
+      return 0
+    }
+
+    throw new Error(`unexpected value ${this.type}`)
+  }
 }
 
 export class DeclarationValueKeyword extends DeclarationValue {
