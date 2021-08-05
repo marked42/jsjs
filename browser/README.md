@@ -24,6 +24,23 @@
 1. [specified, computed, actual values](https://www.w3.org/TR/CSS2/cascade.html#value-stages)
 1. 内联样式
 
+## 盒子模型 Box Model
+
+margin
+
+1. margin 部分背景色永远是透明的，视觉效果上显示 containing block 的 content area 颜色
+1. 盒子的宽度取决于包围盒宽度，盒子高度取决于内部盒子高度
+1. margin 的百分比值相对于包围盒的宽度计算 content width
+1. 竖直方向的 margin 存在[边距收缩](https://www.w3.org/TR/CSS2/box.html#collapsing-margins)
+1. margin-top/margin-bottom 对于对于非替换的行内元素（文字）but vertical margins will not have any effect on non-replaced inline elements
+1. margin 对于 table display 的元素不起作用（除了 table-caption 和 inline-table）
+1. margin 值可以是负值
+
+padding
+
+1. 适用范围 all elements except table-row-group, table-header-group, table-footer-group, table-row, table-column-group and table-column
+1. 不能为负值
+
 ## Layout
 
 visual formatting model
