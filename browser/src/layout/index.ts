@@ -57,7 +57,7 @@ export class LayoutBox {
     const node = this.getStyleNode()
 
     const auto = DeclarationValueKeyword.of('auto')
-    const width = node.value('width') || auto
+    let width = node.value('width') || auto
 
     const zero = new DeclarationValueLength(0, Unit.Px)
     let marginLeft = node.lookup('margin-left', 'margin', zero)
@@ -91,30 +91,52 @@ export class LayoutBox {
       return acc + toPx(value)
     }, 0)
 
-    // overflow
-    if (width !== auto && totalWidth > containingBlock.content.width) {
-      if (marginLeft === auto) {
-        this.dimensions.margin.left = 0
-      }
-      if (marginRight === auto) {
-        this.dimensions.margin.right = 0
-      }
-      return
-    }
-
     const underflow = containingBlock.content.width - totalWidth
 
-    // underflow 的8种情况
-    if (width !== auto) {
-      if (marginLeft === auto && marginRight === auto) {
-        this.dimensions.margin.left = this.dimensions.margin.right =
-          underflow / 2
-        // marginLeft = marginRight = new DeclarationValueLength(
-
-        //   Unit.Px
-        // )
+    // 把auto值转换为固定长度值
+    // overflow
+    if (underflow < 0) {
+      if (marginLeft === auto) {
+        marginLeft = new DeclarationValueLength(0, Unit.Px)
+      }
+      if (marginRight === auto) {
+        marginRight = new DeclarationValueLength(0, Unit.Px)
+      }
+      if (width === auto) {
+        width = new DeclarationValueLength(0, Unit.Px)
+      } else {
+        marginRight = new DeclarationValueLength(
+          toPx(marginRight) + underflow,
+          Unit.Px
+        )
       }
     } else {
+      // underflow 的8种情况
+      if (width !== auto) {
+        if (marginLeft === auto && marginRight === auto) {
+          marginLeft = marginRight = new DeclarationValueLength(
+            0.5 * underflow,
+            Unit.Px
+          )
+        } else if (marginLeft === auto && marginRight !== auto) {
+          marginLeft = new DeclarationValueLength(underflow, Unit.Px)
+        } else if (marginLeft !== auto && marginRight === auto) {
+          marginRight = new DeclarationValueLength(underflow, Unit.Px)
+        } else if (marginLeft !== auto && marginRight !== auto) {
+          marginRight = new DeclarationValueLength(
+            toPx(marginRight) + underflow,
+            Unit.Px
+          )
+        }
+      } else {
+        width = new DeclarationValueLength(underflow, Unit.Px)
+        if (marginLeft === auto) {
+          marginLeft = new DeclarationValueLength(0, Unit.Px)
+        }
+        if (marginRight === auto) {
+          marginRight = new DeclarationValueLength(0, Unit.Px)
+        }
+      }
     }
   }
 
