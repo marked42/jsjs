@@ -58,13 +58,16 @@ https://mp.weixin.qq.com/s?__biz=MzI0ODA2ODU2NQ==&mid=2651131609&idx=2&sn=3df598
 
 https://zhuanlan.zhihu.com/p/104927765
 
-width 计算规则
+width/margin-left/margin-right auto 关键字的计算规则
 
-1. 如果 width: auto
-   1. 则优先将剩余空间分配给 width，其余 margin-left/margin-right 的 auto 相当于 0
-   1. 没有剩余空间时
+padding/border 不接受 auto 关键字
 
-正方形
+1. overflow 的情况下，没有剩余空间可以分配
+   1. width: auto 等于 0，其余的 auto 值也为 0，但是 margin-right 要重新计算值使得约束成立
+   1. width 不是 auto 的情况，因为 width 本身造成了 overflow，其余 auto 为 0，不需要重新计算使约束成立
+1. underflow 的情况下，存在剩余空间可以分配
+   1. width: auto 占据全部剩余空间，其余 auto 为 0
+   1. width: 不是 auto 的情况，margin-left/margin-right 有一个 auto 时占据剩余空间，两个都是 auto 时评分剩余空间，都不是 auto 时剩余空间分配给 margin-right。
 
 https://spin.atomicobject.com/2015/07/14/css-responsive-square/
 https://stackoverflow.com/questions/1495407/maintain-the-aspect-ratio-of-a-div-with-css
