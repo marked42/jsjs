@@ -61,14 +61,14 @@ export enum Unit {
   Px,
 }
 
-interface Color {
+export interface Color {
   r: number
   g: number
   b: number
   a: number
 }
 
-class DeclarationValueColor extends DeclarationValue {
+export class DeclarationValueColor extends DeclarationValue {
   constructor(public value: Color) {
     super(DeclarationValueType.Color)
   }
@@ -200,7 +200,7 @@ export class CSSParser extends BasicParser {
       r: this.parseHexPair(),
       g: this.parseHexPair(),
       b: this.parseHexPair(),
-      a: this.parseHexPair(),
+      a: 255,
     })
   }
 
