@@ -124,11 +124,15 @@ interface CanvasData {
   height: number
 }
 
-export function drawLayoutBoxAsCanvasData(layoutBox: LayoutBox, bounds: Rect) {
+export function drawLayoutBoxAsCanvasData(
+  layoutBox: LayoutBox,
+  borderBox: Rect
+) {
+  // const borderBox = layoutBox.dimensions.borderBox()
   const canvasData = {
-    data: new Uint8ClampedArray(4 * bounds.width * bounds.height),
-    width: bounds.width,
-    height: bounds.height,
+    data: new Uint8ClampedArray(4 * borderBox.width * borderBox.height),
+    width: borderBox.width,
+    height: borderBox.height,
   }
 
   const displayCommandList = buildDisplayList(layoutBox)
@@ -146,12 +150,17 @@ function applyCommandToCanvasData(
   command: DisplayCommandSolidColor,
   canvasData: CanvasData
 ) {
-  for (let row = 0; row < canvasData.height; row++) {
-    for (let col = 0; col < canvasData.width; col++) {
-      canvasData.data[row * canvasData.width + col] = command.color.r
-      canvasData.data[row * canvasData.width + col + 1] = command.color.g
-      canvasData.data[row * canvasData.width + col + 2] = command.color.b
-      canvasData.data[row * canvasData.width + col + 3] = command.color.a
+  const { rect } = command
+  const x0 = rect.x
+  const x1 = rect.x + rect.width
+  const y0 = rect.y
+  const y1 = rect.y + rect.height
+  for (let x = x0; x < x1; x++) {
+    for (let y = y0; y < y1; y++) {
+      canvasData.data[(x + rect.width * y) * 4] = command.color.r
+      canvasData.data[(x + rect.width * y) * 4 + 1] = command.color.g
+      canvasData.data[(x + rect.width * y) * 4 + 2] = command.color.b
+      canvasData.data[(x + rect.width * y) * 4 + 3] = command.color.a
     }
   }
 }

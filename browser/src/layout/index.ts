@@ -176,6 +176,7 @@ export class LayoutBox {
       this.dimensions.padding.left +
       this.dimensions.border.left
 
+    // Block Layout竖直方向排列
     this.dimensions.content.y =
       // box layout 的竖直方向排列
       containingBlock.content.height +
@@ -187,7 +188,7 @@ export class LayoutBox {
 
   layoutBlockChildren() {
     this.children.forEach((child) => {
-      child.layoutBlock(this.dimensions)
+      child.layout(this.dimensions)
       // 每个子盒子高度确定后，重新撑开父盒子，更新其高度
       this.dimensions.content.height += child.dimensions.marginBox().height
     })
