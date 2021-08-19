@@ -5,14 +5,18 @@ export enum ASTNodeType {
   UnaryExpression = 'UnaryExpression',
   BinaryExpression = 'BinaryExpression',
   LogicalExpression = 'LogicalExpression',
+  AssignmentExpression = 'AssignmentExpression',
 
   MemberExpression = 'MemberExpression',
+  PointerMemberExpression = 'PointerMemberExpression',
   ConditionalExpression = 'ConditionalExpression',
 
   CallExpression = 'CallExpression',
 
   VariableDeclaration = 'VariableDeclaration',
   VariableDeclarator = 'VariableDeclarator',
+
+  SequenceExpression = 'SequenceExpression',
 }
 
 export abstract class ASTNode {
@@ -80,7 +84,7 @@ export class CallExpression extends Expression {
   }
 }
 
-export type BinaryOperator =
+export type BaseBinaryOperator =
   | '='
   | '+'
   | '-'
@@ -95,11 +99,14 @@ export type BinaryOperator =
   | '>>'
   | '<<'
   | '%'
-  | '&&'
-  | '||'
   | '&'
   | '|'
   | '^'
+
+export type BinaryOperator =
+  | BaseBinaryOperator
+  | AssignmentOperator
+  | LogicalOperator
 
 export class MemberExpression extends Expression {
   constructor(
@@ -111,24 +118,68 @@ export class MemberExpression extends Expression {
   }
 }
 
+export class PointerMemberExpression extends Expression {
+  constructor(public object: Expression, public property: Expression) {
+    super(ASTNodeType.PointerMemberExpression)
+  }
+}
+
 export class BinaryExpression extends Expression {
   constructor(
     public left: Expression,
     public right: Expression,
-    public op: BinaryOperator
+    public op: BinaryOperator,
+    type = ASTNodeType.BinaryExpression
   ) {
-    super(ASTNodeType.BinaryExpression)
+    super(type)
+  }
+}
+
+type AssignmentOperator =
+  | '='
+  | '+='
+  | '-='
+  | '*='
+  | '/='
+  | '%='
+  | '&='
+  | '|='
+  | '^|'
+  | '>>='
+  | '<<='
+
+export class AssignmentExpression extends BinaryExpression {
+  constructor(
+    public left: Expression,
+    public right: Expression,
+    public op: AssignmentOperator
+  ) {
+    super(left, right, op, ASTNodeType.AssignmentExpression)
   }
 }
 
 type LogicalOperator = '&&' | '||'
 
-export class LogicalExpression extends Expression {
+export class LogicalExpression extends BinaryExpression {
   constructor(
     public left: Expression,
     public right: Expression,
     public op: LogicalOperator
   ) {
-    super(ASTNodeType.LogicalExpression)
+    super(left, right, op, ASTNodeType.LogicalExpression)
   }
 }
+
+export class SequenceExpression extends Expression {
+  constructor(public expressions: Expression[]) {
+    super(ASTNodeType.SequenceExpression)
+  }
+}
+
+export class Declaration {}
+
+export class EnumDeclaration extends Declaration {}
+
+export class VariableDeclaration extends Declaration {}
+
+export class FunctionDeclaration extends Declaration {}

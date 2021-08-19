@@ -8,8 +8,8 @@ globalDeclaration:
 	| functionDeclaration;
 
 enumDeclaration:
-	'enum' Identifier? '{' enumConstant (',' enumConstant)* '}';
-enumConstant: Identifier ('=' NumericLiteral)?;
+	'enum' Identifier? '{' enumMember (',' enumMember)* '}';
+enumMember: Identifier ('=' NumericLiteral)?;
 
 // 不支持变量声明的同时初始化
 variableDeclaration: type variable (',' variable)*;

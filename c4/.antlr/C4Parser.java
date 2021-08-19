@@ -25,7 +25,7 @@ public class C4Parser extends Parser {
 		LineComment=46, Whitespace=47, Newline=48, NumericLiteral=49;
 	public static final int
 		RULE_program = 0, RULE_globalDeclaration = 1, RULE_enumDeclaration = 2, 
-		RULE_enumConstant = 3, RULE_variableDeclaration = 4, RULE_variable = 5, 
+		RULE_enumMember = 3, RULE_variableDeclaration = 4, RULE_variable = 5, 
 		RULE_type = 6, RULE_functionDeclaration = 7, RULE_functionParameterList = 8, 
 		RULE_functionParameter = 9, RULE_functionBody = 10, RULE_statement = 11, 
 		RULE_nonEmptyStatement = 12, RULE_ifStatement = 13, RULE_whileStatement = 14, 
@@ -33,7 +33,7 @@ public class C4Parser extends Parser {
 		RULE_expressionStatement = 18, RULE_expr = 19;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"program", "globalDeclaration", "enumDeclaration", "enumConstant", "variableDeclaration", 
+			"program", "globalDeclaration", "enumDeclaration", "enumMember", "variableDeclaration", 
 			"variable", "type", "functionDeclaration", "functionParameterList", "functionParameter", 
 			"functionBody", "statement", "nonEmptyStatement", "ifStatement", "whileStatement", 
 			"blockStatement", "returnStatement", "emptyStatement", "expressionStatement", 
@@ -217,11 +217,11 @@ public class C4Parser extends Parser {
 	}
 
 	public static class EnumDeclarationContext extends ParserRuleContext {
-		public List<EnumConstantContext> enumConstant() {
-			return getRuleContexts(EnumConstantContext.class);
+		public List<EnumMemberContext> enumMember() {
+			return getRuleContexts(EnumMemberContext.class);
 		}
-		public EnumConstantContext enumConstant(int i) {
-			return getRuleContext(EnumConstantContext.class,i);
+		public EnumMemberContext enumMember(int i) {
+			return getRuleContext(EnumMemberContext.class,i);
 		}
 		public TerminalNode Identifier() { return getToken(C4Parser.Identifier, 0); }
 		public EnumDeclarationContext(ParserRuleContext parent, int invokingState) {
@@ -252,7 +252,7 @@ public class C4Parser extends Parser {
 			setState(54);
 			match(T__1);
 			setState(55);
-			enumConstant();
+			enumMember();
 			setState(60);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -262,7 +262,7 @@ public class C4Parser extends Parser {
 				setState(56);
 				match(T__2);
 				setState(57);
-				enumConstant();
+				enumMember();
 				}
 				}
 				setState(62);
@@ -284,18 +284,18 @@ public class C4Parser extends Parser {
 		return _localctx;
 	}
 
-	public static class EnumConstantContext extends ParserRuleContext {
+	public static class EnumMemberContext extends ParserRuleContext {
 		public TerminalNode Identifier() { return getToken(C4Parser.Identifier, 0); }
 		public TerminalNode NumericLiteral() { return getToken(C4Parser.NumericLiteral, 0); }
-		public EnumConstantContext(ParserRuleContext parent, int invokingState) {
+		public EnumMemberContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_enumConstant; }
+		@Override public int getRuleIndex() { return RULE_enumMember; }
 	}
 
-	public final EnumConstantContext enumConstant() throws RecognitionException {
-		EnumConstantContext _localctx = new EnumConstantContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_enumConstant);
+	public final EnumMemberContext enumMember() throws RecognitionException {
+		EnumMemberContext _localctx = new EnumMemberContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_enumMember);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
