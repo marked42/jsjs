@@ -5,11 +5,41 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "Launch AstPrinter",
+      "request": "launch",
+      "mainClass": "com.kos.language.AstPrinter",
+      "projectName": "jlox"
+    },
+    {
+      "type": "java",
+      "name": "Launch GenerateAst",
+      "request": "launch",
+      "mainClass": "com.kos.tool.GenerateAst",
+      "projectName": "jlox"
+    },
+    {
+      "type": "java",
+      "name": "Launch Lox",
+      "request": "launch",
+      "mainClass": "com.kos.language.Lox",
+      "projectName": "jlox"
+    },
+    {
+      "type": "java",
+      "name": "Launch App",
+      "request": "launch",
+      "mainClass": "com.kos.language.App",
+      "projectName": "jlox"
+    },
+    {
       "name": "Current TS File",
       "type": "node",
       "request": "launch",
       "program": "${workspaceRoot}/node_modules/.bin/ts-node",
-      "args": ["${relativeFile}"],
+      "args": [
+        "${relativeFile}"
+      ],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector"
     },
@@ -18,7 +48,9 @@
       "request": "launch",
       "name": "Jest Tests",
       "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
-      "args": ["-i"],
+      "args": [
+        "-i"
+      ],
       "internalConsoleOptions": "openOnSessionStart"
     }
   ]
