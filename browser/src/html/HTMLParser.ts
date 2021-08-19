@@ -1,27 +1,11 @@
-import { NodeType, Node, ElementNode, TextNode } from './Node'
+import { NodeType, Node, ElementNode, TextNode, NodeAttributeMap } from './Node'
+import { BasicParser } from '../BasicParser'
 
 function isHTMLElement(node: Node): node is ElementNode {
   return node.type === NodeType.Element && (node as ElementNode).name === 'html'
 }
 
-export default class HTMLParser {
-  private index = 0
-  constructor(private input: string) {}
-
-  char() {
-    return this.input[this.index]
-  }
-
-  next() {
-    this.index++
-  }
-
-  eat() {
-    const char = this.char()
-    this.next()
-    return char
-  }
-
+export default class HTMLParser extends BasicParser {
   parseHTML(): ElementNode {
     const nodes = this.parseNodes()
 
@@ -33,58 +17,93 @@ export default class HTMLParser {
       throw new Error(`single root node must be html, get ${nodes[0]}`)
     }
 
-    return new ElementNode('html', {}, this.parseNodes())
-  }
-
-  consumeWhitespace() {
-    const whitespace = /[\t|\r|\n| ]/
-    const startIndex = this.index
-    while (whitespace.test(this.char())) {
-      this.eat()
-    }
-
-    return this.input.substring(startIndex, this.index)
-  }
-
-  parseTagName() {}
-
-  parseStartTag() {}
-
-  parseEndTag() {}
-
-  parseTagAttributes() {}
-
-  parseTagAttribute() {}
-
-  parseElement(): ElementNode {
-    return
+    return new ElementNode('html', {}, nodes)
   }
 
   parseNodes(): Node[] {
     const nodes: Node[] = []
 
     for (;;) {
-      if (this.char() === '<') {
-        nodes.push(this.parseElement())
-      } else if (this.char() === undefined) {
-        throw new Error('unexpected EOF token')
-      } else if (this.char() === '>') {
+      if (this.startsWith('</') || this.end()) {
         break
-      } else {
-        nodes.push(this.parseTextNode())
       }
+      nodes.push(this.parseNode())
     }
 
     return nodes
   }
 
-  consumeCharsWhile(predicate: (char: string) => boolean) {
-    let text = ''
-    while (predicate(this.char())) {
-      text += this.eat()
+  parseNode(): Node {
+    if (this.startsWith('<')) {
+      return this.parseElement()
     }
 
-    return text
+    return this.parseTextNode()
+  }
+
+  parseElement(): ElementNode {
+    this.eat('<')
+    const tagName = this.parseTagName()
+    const attributes = this.parseTagAttributes()
+
+    this.eat('>')
+
+    const children = this.parseNodes()
+
+    this.eat('<')
+    this.eat('/')
+    this.eat(tagName)
+    this.eat('>')
+
+    return new ElementNode(tagName, attributes, children)
+  }
+
+  parseTagName() {
+    return this.parseIdentifier()
+  }
+
+  parseTagAttributes() {
+    const attributes: NodeAttributeMap = {}
+    for (;;) {
+      if (this.char() === '>') {
+        break
+      }
+
+      const { name, value } = this.parseTagAttribute()
+      attributes[name] = value
+    }
+    return attributes
+  }
+
+  parseTagAttribute() {
+    this.consumeWhitespace()
+    const name = this.parseTagName()
+    this.eat('=')
+    const value = this.parseTagValue()
+    return {
+      name,
+      value,
+    }
+  }
+
+  parseTagValue() {
+    const quote = this.char()
+    if (quote !== '"' && quote !== "'") {
+      throw new Error('expect quote')
+    }
+    this.next()
+
+    let value = ''
+    for (;;) {
+      if (this.char() === quote) {
+        this.next()
+        break
+      }
+      value += this.char()
+      this.next()
+    }
+
+    return value
   }
 
   parseTextNode() {

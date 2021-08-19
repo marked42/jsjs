@@ -1,0 +1,348 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`box generation should generate anonymous boxes 1`] = `
+LayoutBox {
+  "boxType": 0,
+  "children": Array [
+    LayoutBox {
+      "boxType": 0,
+      "children": Array [],
+      "dimensions": Dimensions {
+        "border": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "content": Rect {
+          "height": 0,
+          "width": 0,
+          "x": 0,
+          "y": 0,
+        },
+        "margin": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "padding": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+      },
+      "node": StyleNode {
+        "children": Array [],
+        "node": ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "a",
+          "type": 0,
+        },
+        "specifiedValues": Object {
+          "display": DeclarationValueKeyword {
+            "type": 0,
+            "value": "block",
+          },
+        },
+      },
+    },
+    LayoutBox {
+      "boxType": 2,
+      "children": Array [
+        LayoutBox {
+          "boxType": 1,
+          "children": Array [],
+          "dimensions": Dimensions {
+            "border": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+            "content": Rect {
+              "height": 0,
+              "width": 0,
+              "x": 0,
+              "y": 0,
+            },
+            "margin": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+            "padding": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+          },
+          "node": StyleNode {
+            "children": Array [],
+            "node": ElementNode {
+              "attributes": Object {},
+              "children": Array [],
+              "name": "b",
+              "type": 0,
+            },
+            "specifiedValues": Object {
+              "display": DeclarationValueKeyword {
+                "type": 0,
+                "value": "inline",
+              },
+            },
+          },
+        },
+        LayoutBox {
+          "boxType": 1,
+          "children": Array [],
+          "dimensions": Dimensions {
+            "border": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+            "content": Rect {
+              "height": 0,
+              "width": 0,
+              "x": 0,
+              "y": 0,
+            },
+            "margin": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+            "padding": EdgeSize {
+              "bottom": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+            },
+          },
+          "node": StyleNode {
+            "children": Array [],
+            "node": ElementNode {
+              "attributes": Object {},
+              "children": Array [],
+              "name": "c",
+              "type": 0,
+            },
+            "specifiedValues": Object {
+              "display": DeclarationValueKeyword {
+                "type": 0,
+                "value": "inline",
+              },
+            },
+          },
+        },
+      ],
+      "dimensions": Dimensions {
+        "border": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "content": Rect {
+          "height": 0,
+          "width": 0,
+          "x": 0,
+          "y": 0,
+        },
+        "margin": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "padding": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+      },
+      "node": undefined,
+    },
+    LayoutBox {
+      "boxType": 0,
+      "children": Array [],
+      "dimensions": Dimensions {
+        "border": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "content": Rect {
+          "height": 0,
+          "width": 0,
+          "x": 0,
+          "y": 0,
+        },
+        "margin": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+        "padding": EdgeSize {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        },
+      },
+      "node": StyleNode {
+        "children": Array [],
+        "node": ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "d",
+          "type": 0,
+        },
+        "specifiedValues": Object {
+          "display": DeclarationValueKeyword {
+            "type": 0,
+            "value": "block",
+          },
+        },
+      },
+    },
+  ],
+  "dimensions": Dimensions {
+    "border": EdgeSize {
+      "bottom": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+    },
+    "content": Rect {
+      "height": 0,
+      "width": 0,
+      "x": 0,
+      "y": 0,
+    },
+    "margin": EdgeSize {
+      "bottom": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+    },
+    "padding": EdgeSize {
+      "bottom": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+    },
+  },
+  "node": StyleNode {
+    "children": Array [
+      StyleNode {
+        "children": Array [],
+        "node": ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "a",
+          "type": 0,
+        },
+        "specifiedValues": Object {
+          "display": DeclarationValueKeyword {
+            "type": 0,
+            "value": "block",
+          },
+        },
+      },
+      StyleNode {
+        "children": Array [],
+        "node": ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "b",
+          "type": 0,
+        },
+        "specifiedValues": Object {
+          "display": DeclarationValueKeyword {
+            "type": 0,
+            "value": "inline",
+          },
+        },
+      },
+      StyleNode {
+        "children": Array [],
+        "node": ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "c",
+          "type": 0,
+        },
+        "specifiedValues": Object {
+          "display": DeclarationValueKeyword {
+            "type": 0,
+            "value": "inline",
+          },
+        },
+      },
+      StyleNode {
+        "children": Array [],
+        "node": ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "d",
+          "type": 0,
+        },
+        "specifiedValues": Object {
+          "display": DeclarationValueKeyword {
+            "type": 0,
+            "value": "block",
+          },
+        },
+      },
+    ],
+    "node": ElementNode {
+      "attributes": Object {},
+      "children": Array [
+        ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "a",
+          "type": 0,
+        },
+        ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "b",
+          "type": 0,
+        },
+        ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "c",
+          "type": 0,
+        },
+        ElementNode {
+          "attributes": Object {},
+          "children": Array [],
+          "name": "d",
+          "type": 0,
+        },
+      ],
+      "name": "html",
+      "type": 0,
+    },
+    "specifiedValues": Object {
+      "display": DeclarationValueKeyword {
+        "type": 0,
+        "value": "block",
+      },
+    },
+  },
+}
+`;

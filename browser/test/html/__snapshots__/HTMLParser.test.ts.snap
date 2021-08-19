@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parse html should parse html 1`] = `
+ElementNode {
+  "attributes": Object {},
+  "children": Array [
+    TextNode {
+      "type": 1,
+      "value": "
+			",
+    },
+    ElementNode {
+      "attributes": Object {
+        "test": "a",
+      },
+      "children": Array [
+        TextNode {
+          "type": 1,
+          "value": "hello",
+        },
+      ],
+      "name": "div",
+      "type": 0,
+    },
+    TextNode {
+      "type": 1,
+      "value": "
+		",
+    },
+  ],
+  "name": "html",
+  "type": 0,
+}
+`;
