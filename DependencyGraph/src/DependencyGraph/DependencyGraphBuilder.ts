@@ -22,8 +22,10 @@ export class DependencyGraphBuilder {
     context: string,
     moduleSpecifier: ModuleSpecifier,
     allModules: Map<string, Module>
-  ) {
+  ): DependencyGraphNode {
     const module = this.moduleResolver.resolveModule(context, moduleSpecifier)
+
+    allModules.set(module.id(), module)
 
     const dependencies = module
       .getSubModuleSpecifiers()

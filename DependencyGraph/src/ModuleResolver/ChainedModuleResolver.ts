@@ -11,5 +11,9 @@ export class ChainedModuleResolver implements ModuleResolver {
         return module
       }
     }
+
+    throw new Error(
+      `Unable to resolve module for specifier ${specifier} under ${context}`
+    )
   }
 }

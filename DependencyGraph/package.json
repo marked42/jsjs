@@ -1,5 +1,5 @@
 {
-  "name": "DependencyGraph",
+  "name": "module-dependency-graph",
   "version": "1.0.0",
   "description": "## 参考",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watch"
   },
   "keywords": [],
   "author": "",

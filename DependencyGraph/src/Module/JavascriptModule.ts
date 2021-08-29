@@ -2,15 +2,19 @@ import { ModuleSpecifier } from './Module'
 import { Module } from './Module'
 import traverse from '@babel/traverse'
 import { parse } from '@babel/parser'
-import * as t from '@babel/types'
+import fs from 'fs'
+import path from 'path'
 
 export class JavascriptModule extends Module {
-  constructor(private readonly _id: string, specifier: ModuleSpecifier) {
-    super(specifier)
+  constructor(
+    private readonly _id: string,
+    private readonly _filePath: string
+  ) {
+    super()
   }
 
   filePath(): string {
-    throw new Error('Method not implemented.')
+    return this._filePath
   }
 
   id(): string {
@@ -18,27 +22,31 @@ export class JavascriptModule extends Module {
   }
 
   source(): string {
-    throw new Error('Method not implemented.')
+    return fs.readFileSync(this.filePath(), { encoding: 'utf-8' })
   }
 
   getSubModuleSpecifiers(): ModuleSpecifier[] {
-    const subModuleSpecifiers = [] as ModuleSpecifier[]
-
-    return subModuleSpecifiers
+    return getModuleSpecifiers(this.source())
   }
 }
 
-function getModuleSpecifiers(source: string) {
-  const ast = parse(source, { sourceType: 'unambiguous' })
-
-  if (!ast) {
-    return []
-  }
+export function getModuleSpecifiers(source: string) {
+  const ast = parse(source, {
+    sourceType: 'unambiguous',
+    plugins: ['typescript'],
+  })
 
   const subModuleSpecifiers = [] as ModuleSpecifier[]
+  if (!ast) {
+    return subModuleSpecifiers
+  }
 
-  traverse(ast as t.File, {
-    ImportDeclaration(path) {},
+  traverse(ast, {
+    ImportDeclaration(path) {
+      const moduleSpecifier = path.node.source.value
+
+      subModuleSpecifiers.push(moduleSpecifier)
+    },
   })
 
   return subModuleSpecifiers

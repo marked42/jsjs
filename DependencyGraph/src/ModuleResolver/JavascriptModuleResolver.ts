@@ -6,21 +6,43 @@ import fs from 'fs'
 
 export class JavascriptModuleResolver implements ModuleResolver {
   resolveModule(context: string, specifier: ModuleSpecifier): JavascriptModule {
-    if (path.isAbsolute(specifier)) {
-      throw new Error('cannot resolve absolute path')
+    const filePath = path.isAbsolute(specifier)
+      ? specifier
+      : path.resolve(context, specifier)
+
+    const id = path.relative(context, filePath)
+
+    const extensions = ['.js', '.jsx', '.ts', '.tsx']
+
+    const specifierExt = path.extname(specifier)
+    if (specifierExt && !extensions.includes(specifierExt)) {
+      throw new Error(
+        `Javascript module only supports .js/.jsx extension, got ${specifierExt}`
+      )
     }
 
-    const filePath = path.resolve(context, specifier)
-
-    if (fs.existsSync(filePath)) {
-      const stat = fs.statSync(filePath)
-      if (stat.isDirectory()) {
-      } else if (stat.isFile()) {
-      } else {
-        throw new Error('not file or directory')
+    // TODO: 整理这个逻辑
+    let sourceFilePath = ''
+    if (specifierExt) {
+      if (fs.existsSync(filePath)) {
+        sourceFilePath = filePath
+      }
+    } else {
+      const candidateFiles = [
+        ...extensions.map((ext) => filePath + ext),
+        ...extensions.map((ext) => path.join(filePath, `index${ext}`)),
+      ]
+      for (const file of candidateFiles) {
+        if (fs.existsSync(file)) {
+          const stat = fs.statSync(file)
+          if (stat.isFile()) {
+            sourceFilePath = file
+          }
+          break
+        }
       }
     }
 
-    throw new Error('Method not implemented.')
+    return new JavascriptModule(id, sourceFilePath)
   }
 }
