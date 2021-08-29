@@ -10,7 +10,7 @@ function leftBindingPower(
 ) {
   const { hasPrecedingOperand, isFirstOperator } = options
   if (!hasPrecedingOperand) {
-    return
+    throw new Error('operator has no left binding power')
   }
 
   if (isFirstOperator) {
@@ -36,7 +36,7 @@ function rightBindingPower(
     associativity,
   } = options
   if (!hasFollowingOperand) {
-    return
+    throw new Error('operator has no right binding power')
   }
 
   if (!isLastOperator) {

@@ -106,7 +106,7 @@ rule names:
 program
 globalDeclaration
 enumDeclaration
-enumConstant
+enumMember
 variableDeclaration
 variable
 type

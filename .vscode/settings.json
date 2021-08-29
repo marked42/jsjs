@@ -2,5 +2,13 @@
 	"cSpell.words": [
 		"Parselets",
 		"parselet"
-	]
+	],
+	"maven.view": "hierarchical",
+	"files.associations": {
+		"*.rs": "rust",
+		"__bit_reference": "c",
+		"__split_buffer": "c",
+		"string": "c",
+		"vector": "c"
+	}
 }

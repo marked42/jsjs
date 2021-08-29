@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parse html should parse html 1`] = `
+StyleNode {
+  "children": Array [
+    StyleNode {
+      "children": Array [],
+      "node": TextNode {
+        "type": 1,
+        "value": "
+			",
+      },
+      "specifiedValues": Object {},
+    },
+    StyleNode {
+      "children": Array [
+        StyleNode {
+          "children": Array [],
+          "node": TextNode {
+            "type": 1,
+            "value": "hello",
+          },
+          "specifiedValues": Object {},
+        },
+      ],
+      "node": ElementNode {
+        "attributes": Object {
+          "class": "test",
+        },
+        "children": Array [
+          TextNode {
+            "type": 1,
+            "value": "hello",
+          },
+        ],
+        "name": "div",
+        "type": 0,
+      },
+      "specifiedValues": Object {
+        "font-color": DeclarationValueKeyword {
+          "type": 0,
+          "value": "red",
+        },
+        "font-size": DeclarationValueLength {
+          "type": 1,
+          "unit": 0,
+          "value": 14,
+        },
+      },
+    },
+    StyleNode {
+      "children": Array [],
+      "node": TextNode {
+        "type": 1,
+        "value": "
+		",
+      },
+      "specifiedValues": Object {},
+    },
+  ],
+  "node": ElementNode {
+    "attributes": Object {},
+    "children": Array [
+      TextNode {
+        "type": 1,
+        "value": "
+			",
+      },
+      ElementNode {
+        "attributes": Object {
+          "class": "test",
+        },
+        "children": Array [
+          TextNode {
+            "type": 1,
+            "value": "hello",
+          },
+        ],
+        "name": "div",
+        "type": 0,
+      },
+      TextNode {
+        "type": 1,
+        "value": "
+		",
+      },
+    ],
+    "name": "html",
+    "type": 0,
+  },
+  "specifiedValues": Object {},
+}
+`;

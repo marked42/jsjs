@@ -1,0 +1,591 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnumDeclaration should parse enum declaration 1`] = `
+Object {
+  "declarations": Array [
+    Object {
+      "members": Array [
+        Object {
+          "initializer": Object {
+            "source": "1",
+            "type": 2,
+            "value": 1,
+          },
+          "name": Identifier {
+            "name": undefined,
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "type": "EnumMember",
+        },
+        Object {
+          "initializer": undefined,
+          "name": Identifier {
+            "name": undefined,
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "type": "EnumMember",
+        },
+        Object {
+          "initializer": undefined,
+          "name": Identifier {
+            "name": undefined,
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "type": "EnumMember",
+        },
+      ],
+      "name": Object {
+        "name": "Dir",
+        "source": "Dir",
+        "type": 1,
+      },
+      "type": "enumDeclaration",
+    },
+  ],
+  "type": "Program",
+}
+`;
+
+exports[`array subscripting operator should parse [] 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": MemberExpression {
+    "computed": true,
+    "object": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "property": Identifier {
+      "name": "c",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "MemberExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`assignment expression should parse assignment expression 1`] = `
+AssignmentExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "=",
+  "parenthesized": false,
+  "right": AssignmentExpression {
+    "left": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "+=",
+    "parenthesized": false,
+    "right": AssignmentExpression {
+      "left": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "op": "-=",
+      "parenthesized": false,
+      "right": AssignmentExpression {
+        "left": Identifier {
+          "name": "d",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "op": "*=",
+        "parenthesized": false,
+        "right": AssignmentExpression {
+          "left": Identifier {
+            "name": "e",
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "op": "/=",
+          "parenthesized": false,
+          "right": AssignmentExpression {
+            "left": Identifier {
+              "name": "f",
+              "parenthesized": false,
+              "type": "Identifier",
+            },
+            "op": "&=",
+            "parenthesized": false,
+            "right": AssignmentExpression {
+              "left": Identifier {
+                "name": "g",
+                "parenthesized": false,
+                "type": "Identifier",
+              },
+              "op": "|=",
+              "parenthesized": false,
+              "right": AssignmentExpression {
+                "left": Identifier {
+                  "name": "h",
+                  "parenthesized": false,
+                  "type": "Identifier",
+                },
+                "op": "^=",
+                "parenthesized": false,
+                "right": Identifier {
+                  "name": "i",
+                  "parenthesized": false,
+                  "type": "Identifier",
+                },
+                "type": "AssignmentExpression",
+              },
+              "type": "AssignmentExpression",
+            },
+            "type": "AssignmentExpression",
+          },
+          "type": "AssignmentExpression",
+        },
+        "type": "AssignmentExpression",
+      },
+      "type": "AssignmentExpression",
+    },
+    "type": "AssignmentExpression",
+  },
+  "type": "AssignmentExpression",
+}
+`;
+
+exports[`binary expression should parse arithmetic binary expression 1`] = `
+BinaryExpression {
+  "left": BinaryExpression {
+    "left": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "+",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "op": "-",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": BinaryExpression {
+      "left": BinaryExpression {
+        "left": Identifier {
+          "name": "c",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "op": "*",
+        "parenthesized": false,
+        "right": Identifier {
+          "name": "d",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "type": "BinaryExpression",
+      },
+      "op": "/",
+      "parenthesized": false,
+      "right": Identifier {
+        "name": "e",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "type": "BinaryExpression",
+    },
+    "op": "%",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "f",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`binary expression should parse bitwise binary expression 1`] = `
+BinaryExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "|",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "^",
+    "parenthesized": false,
+    "right": BinaryExpression {
+      "left": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "op": "&",
+      "parenthesized": false,
+      "right": Identifier {
+        "name": "d",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "type": "BinaryExpression",
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`binary expression should parse bitwise shift binary expression 1`] = `
+BinaryExpression {
+  "left": BinaryExpression {
+    "left": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "<<",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "op": ">>",
+  "parenthesized": false,
+  "right": Identifier {
+    "name": "c",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`binary expression should parse member expression 1`] = `
+BinaryExpression {
+  "left": BinaryExpression {
+    "left": NumericLiteral {
+      "parenthesized": false,
+      "type": "NumericLiteral",
+      "value": 2,
+    },
+    "op": "*",
+    "parenthesized": false,
+    "right": PointerMemberExpression {
+      "object": MemberExpression {
+        "computed": false,
+        "object": Identifier {
+          "name": "a",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "parenthesized": false,
+        "property": Identifier {
+          "name": "b",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "type": "MemberExpression",
+      },
+      "parenthesized": false,
+      "property": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "type": "PointerMemberExpression",
+    },
+    "type": "BinaryExpression",
+  },
+  "op": "+",
+  "parenthesized": false,
+  "right": NumericLiteral {
+    "parenthesized": false,
+    "type": "NumericLiteral",
+    "value": 1,
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`binary expression should parse relational binary expression 1`] = `
+BinaryExpression {
+  "left": BinaryExpression {
+    "left": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "==",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "op": "!=",
+  "parenthesized": false,
+  "right": BinaryExpression {
+    "left": BinaryExpression {
+      "left": BinaryExpression {
+        "left": BinaryExpression {
+          "left": Identifier {
+            "name": "c",
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "op": "<",
+          "parenthesized": false,
+          "right": Identifier {
+            "name": "d",
+            "parenthesized": false,
+            "type": "Identifier",
+          },
+          "type": "BinaryExpression",
+        },
+        "op": "<=",
+        "parenthesized": false,
+        "right": Identifier {
+          "name": "f",
+          "parenthesized": false,
+          "type": "Identifier",
+        },
+        "type": "BinaryExpression",
+      },
+      "op": ">=",
+      "parenthesized": false,
+      "right": Identifier {
+        "name": "e",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "type": "BinaryExpression",
+    },
+    "op": ">",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "g",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "BinaryExpression",
+  },
+  "type": "BinaryExpression",
+}
+`;
+
+exports[`comma expression should parse comma expression priority 15 1`] = `
+Identifier {
+  "name": "a",
+  "parenthesized": false,
+  "type": "Identifier",
+}
+`;
+
+exports[`conditional expression should parse conditional expression 1`] = `
+ConditionalExpression {
+  "alternate": ConditionalExpression {
+    "alternate": Identifier {
+      "name": "f",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "consequent": Identifier {
+      "name": "e",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "test": Identifier {
+      "name": "d",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "ConditionalExpression",
+  },
+  "consequent": Identifier {
+    "name": "b",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "parenthesized": false,
+  "test": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "type": "ConditionalExpression",
+}
+`;
+
+exports[`conditional expression should parse conditional expression with correct precedence 1`] = `
+AssignmentExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "=",
+  "parenthesized": false,
+  "right": AssignmentExpression {
+    "left": ConditionalExpression {
+      "alternate": Identifier {
+        "name": "c",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "consequent": Identifier {
+        "name": "b",
+        "parenthesized": false,
+        "type": "Identifier",
+      },
+      "parenthesized": false,
+      "test": NumericLiteral {
+        "parenthesized": false,
+        "type": "NumericLiteral",
+        "value": 1,
+      },
+      "type": "ConditionalExpression",
+    },
+    "op": "=",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "d",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "AssignmentExpression",
+  },
+  "type": "AssignmentExpression",
+}
+`;
+
+exports[`function call should parse function call 1`] = `
+CallExpression {
+  "callee": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "params": Array [
+    Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    Identifier {
+      "name": "c",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+  ],
+  "parenthesized": false,
+  "type": "CallExpression",
+}
+`;
+
+exports[`logical expression should parse logical expression 1`] = `
+LogicalExpression {
+  "left": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "op": "||",
+  "parenthesized": false,
+  "right": LogicalExpression {
+    "left": Identifier {
+      "name": "b",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "op": "&&",
+    "parenthesized": false,
+    "right": Identifier {
+      "name": "c",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "type": "LogicalExpression",
+  },
+  "type": "LogicalExpression",
+}
+`;
+
+exports[`postfix operators should parse postfix expression 1`] = `
+UnaryExpression {
+  "op": "--",
+  "operand": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "parenthesized": false,
+  "prefix": false,
+  "type": "UnaryExpression",
+}
+`;
+
+exports[`postfix operators should parse postfix expression with correct precedence 1`] = `
+UnaryExpression {
+  "op": "++",
+  "operand": UnaryExpression {
+    "op": "--",
+    "operand": Identifier {
+      "name": "a",
+      "parenthesized": false,
+      "type": "Identifier",
+    },
+    "parenthesized": false,
+    "prefix": false,
+    "type": "UnaryExpression",
+  },
+  "parenthesized": false,
+  "prefix": true,
+  "type": "UnaryExpression",
+}
+`;
+
+exports[`prefix operators should parse prefix expression 1`] = `
+UnaryExpression {
+  "op": "++",
+  "operand": Identifier {
+    "name": "a",
+    "parenthesized": false,
+    "type": "Identifier",
+  },
+  "parenthesized": false,
+  "prefix": true,
+  "type": "UnaryExpression",
+}
+`;
