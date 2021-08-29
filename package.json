@@ -16,6 +16,7 @@
   "devDependencies": {
     "@jest/core": "^26.6.3",
     "@types/jest": "^26.0.23",
+    "@types/node": "^16.7.5",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.6",
     "ts-loader": "^9.2.5",

@@ -1,0 +1,19 @@
+{
+  "name": "DependencyGraph",
+  "version": "1.0.0",
+  "description": "## 参考",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/parser": "^7.15.3",
+    "@babel/traverse": "^7.15.0"
+  }
+}
