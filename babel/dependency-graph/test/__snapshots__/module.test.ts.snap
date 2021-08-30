@@ -4,15 +4,15 @@ exports[`getModuleSpecifiers should build module dependency graph by file path 1
 DependencyGraph {
   "allModules": Map {
     "dependency-graph/test/module-test/index.ts" => JavascriptModule {
-      "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/index.ts",
+      "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/index.ts",
       "_id": "dependency-graph/test/module-test/index.ts",
     },
     "math" => JavascriptModule {
-      "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/math.ts",
+      "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/math.ts",
       "_id": "math",
     },
     "data" => JavascriptModule {
-      "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/data.ts",
+      "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/data.ts",
       "_id": "data",
     },
   },
@@ -21,20 +21,20 @@ DependencyGraph {
       DependencyGraphNode {
         "dependencies": Array [],
         "value": JavascriptModule {
-          "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/math.ts",
+          "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/math.ts",
           "_id": "math",
         },
       },
       DependencyGraphNode {
         "dependencies": Array [],
         "value": JavascriptModule {
-          "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/data.ts",
+          "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/data.ts",
           "_id": "data",
         },
       },
     ],
     "value": JavascriptModule {
-      "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/index.ts",
+      "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/index.ts",
       "_id": "dependency-graph/test/module-test/index.ts",
     },
   },
@@ -45,15 +45,15 @@ exports[`getModuleSpecifiers should build module dependency graph by folder path
 DependencyGraph {
   "allModules": Map {
     "dependency-graph/test/module-test" => JavascriptModule {
-      "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/index.ts",
+      "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/index.ts",
       "_id": "dependency-graph/test/module-test",
     },
     "math" => JavascriptModule {
-      "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/math.ts",
+      "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/math.ts",
       "_id": "math",
     },
     "data" => JavascriptModule {
-      "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/data.ts",
+      "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/data.ts",
       "_id": "data",
     },
   },
@@ -62,20 +62,20 @@ DependencyGraph {
       DependencyGraphNode {
         "dependencies": Array [],
         "value": JavascriptModule {
-          "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/math.ts",
+          "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/math.ts",
           "_id": "math",
         },
       },
       DependencyGraphNode {
         "dependencies": Array [],
         "value": JavascriptModule {
-          "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/data.ts",
+          "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/data.ts",
           "_id": "data",
         },
       },
     ],
     "value": JavascriptModule {
-      "_filePath": "/Users/penghui/coding/jsjs/babel/dependency-graph/test/module-test/index.ts",
+      "_filePath": "/Users/zhangpenghui/code/jsjs/babel/dependency-graph/test/module-test/index.ts",
       "_id": "dependency-graph/test/module-test",
     },
   },

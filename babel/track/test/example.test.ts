@@ -27,9 +27,9 @@ const d = function () {
 `
 
     const result = transformSync(input, {
-      plugins: [autoTrackPlugin, [autoTrackPlugin, {}, 'unique']],
+      plugins: [autoTrackPlugin],
     })
 
-    expect(result).toMatchSnapshot()
+    expect(result?.code).toMatchSnapshot()
   })
 })

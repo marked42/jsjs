@@ -1,147 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`auto track should insert track method 1`] = `
-Object {
-  "ast": null,
-  "code": "import aa from 'aa';
+"import _tracker2 from \\"tracker\\";
+import aa from 'aa';
 import * as bb from 'bb';
 import { cc } from 'cc';
 import 'dd';
 
 function a() {
-  pre();
-  pre();
+  tracker();
   console.log('aaa');
 }
 
 class B {
   bb() {
-    pre();
-    pre();
+    tracker();
     return 'bbb';
   }
 
 }
 
-const c = () => 'ccc';
+const c = () => {
+  _tracker2();
+
+  return 'ccc';
+};
 
 const d = function () {
-  pre();
-  pre();
+  tracker();
   console.log('ddd');
-};",
-  "map": null,
-  "metadata": Object {},
-  "options": Object {
-    "assumptions": Object {},
-    "babelrc": false,
-    "browserslistConfigFile": false,
-    "cloneInputAst": true,
-    "configFile": false,
-    "cwd": "/Users/penghui/coding/jsjs/babel",
-    "envName": "test",
-    "generatorOpts": Object {
-      "auxiliaryCommentAfter": undefined,
-      "auxiliaryCommentBefore": undefined,
-      "comments": true,
-      "compact": "auto",
-      "filename": undefined,
-      "minified": undefined,
-      "retainLines": undefined,
-      "shouldPrintComment": undefined,
-      "sourceFileName": "unknown",
-      "sourceMaps": false,
-      "sourceRoot": undefined,
-    },
-    "parserOpts": Object {
-      "plugins": Array [],
-      "sourceFileName": undefined,
-      "sourceType": "module",
-    },
-    "passPerPreset": false,
-    "plugins": Array [
-      Plugin {
-        "generatorOverride": undefined,
-        "key": "track",
-        "manipulateOptions": undefined,
-        "options": Object {},
-        "parserOverride": undefined,
-        "post": undefined,
-        "pre": undefined,
-        "visitor": Object {
-          "ArrowFunctionExpression": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "ClassMethod": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "FunctionDeclaration": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "FunctionExpression": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "Program": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "_exploded": true,
-          "_verified": true,
-        },
-      },
-      Plugin {
-        "generatorOverride": undefined,
-        "key": "track",
-        "manipulateOptions": undefined,
-        "options": Object {},
-        "parserOverride": undefined,
-        "post": undefined,
-        "pre": undefined,
-        "visitor": Object {
-          "ArrowFunctionExpression": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "ClassMethod": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "FunctionDeclaration": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "FunctionExpression": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "Program": Object {
-            "enter": Array [
-              [Function],
-            ],
-          },
-          "_exploded": true,
-          "_verified": true,
-        },
-      },
-    ],
-    "presets": Array [],
-    "root": "/Users/penghui/coding/jsjs/babel",
-    "rootMode": "root",
-    "targets": Object {},
-  },
-  "sourceType": "module",
-}
+};"
 `;

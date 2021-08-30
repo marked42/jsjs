@@ -8,6 +8,7 @@ import path from 'path'
 export class JavascriptModule extends Module {
   constructor(
     private readonly _id: string,
+    // TODO: absolute path generates different jest snapshot on different machine
     private readonly _filePath: string
   ) {
     super()
