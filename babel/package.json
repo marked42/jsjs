@@ -20,6 +20,7 @@
     "@babel/types": "^7.15.0"
   },
   "devDependencies": {
-    "@types/babel__helper-plugin-utils": "^7.10.0"
+    "@types/babel__helper-plugin-utils": "^7.10.0",
+    "@types/babel__template": "^7.4.1"
   }
 }
