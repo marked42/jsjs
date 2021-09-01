@@ -86,14 +86,8 @@ static Token string() {
 	return makeToken(TOKEN_STRING);
 }
 
-static Token identifier() {
-	while (isAlpha(peek()) || isDigit(peek())) advance();
-
-	return makeToken(identifierType());
-}
-
 TokenType checkKeyword(int start, int length, const char* text, TokenType type) {
-	if (scanner.current - scanner.start == start + length && memcpy(scanner.start + start, text, length) == 0) {
+	if (scanner.current - scanner.start == start + length && memcpy((void*)(scanner.start + start), text, length) == 0) {
 		return type;
 	}
 	return TOKEN_IDENTIFIER;
@@ -130,6 +124,14 @@ static TokenType identifierType() {
 	}
 	return TOKEN_IDENTIFIER;
 }
+
+
+static Token identifier() {
+	while (isAlpha(peek()) || isDigit(peek())) advance();
+
+	return makeToken(identifierType());
+}
+
 
 Token number() {
 	while (isDigit(peek())) advance();
