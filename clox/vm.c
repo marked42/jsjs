@@ -4,6 +4,7 @@
 #include "value.h"
 #include "debug.h"
 #include "compiler.h"
+#include "chunk.h"
 
 VM vm;
 
@@ -20,8 +21,20 @@ void freeVM() {
 }
 
 InterpertResult interpret(const char* source) {
-	compile(source);
-	return INTERPRET_OK;
+	Chunk chunk;
+	initChunk(&chunk);
+	if (!compile(source, &chunk)) {
+		freeChunk(&chunk);
+		return INTERPRET_COMPILE_ERROR;
+	}
+
+	vm.chunk = &chunk;
+	vm.ip = chunk.code;
+
+	InterpertResult result = run();
+
+	freeChunk(&chunk);
+	return result;
 }
 
 static InterpertResult run() {

@@ -49,6 +49,4 @@ static Token makeToken(TokenType type);
 
 static Token errorToken();
 
-char advance();
-
 #endif
