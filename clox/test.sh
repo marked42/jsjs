@@ -1,1 +1,1 @@
-gcc main.c chunk.c debug.c memory.c value.c && ./a.out
+gcc main.c chunk.c vm.c debug.c memory.c value.c && ./a.out

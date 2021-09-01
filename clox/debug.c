@@ -6,7 +6,7 @@ static int simpleInstruction(const char* name, int offset) {
 	return offset + 1;
 }
 
-static int constantInstructino(const char* name, Chunk* chunk, int offset) {
+static int constantInstruction(const char* name, Chunk* chunk, int offset) {
 	// const constant = chunk->code[offset + 1];
 	// printf("%s %d\n", name, chunk->constants.values[constant]);
 	uint8_t constant = chunk->code[offset + 1];
@@ -32,14 +32,23 @@ int disassembleInstruction(Chunk* chunk, int offset) {
 	switch (instruction) {
 		case OP_RETURN:
 			return simpleInstruction("OP_RETURN", offset);
+		case OP_NEGATE:
+			return simpleInstruction("OP_NEGATE", offset);
 		case OP_CONSTANT:
-			return constantInstructino("OP_CONSTANT", chunk, offset);
+			return constantInstruction("OP_CONSTANT", chunk, offset);
+		case OP_ADD:
+			return simpleInstruction("OP_ADD", offset);
+		case OP_SUBTRACT:
+			return simpleInstruction("OP_SUBTRACT", offset);
+		case OP_MULTIPLY:
+			return simpleInstruction("OP_MULTIPLY", offset);
+		case OP_DIVIDE:
+			return simpleInstruction("OP_DIVIDE", offset);
 		default:
 			printf("unknown opcode %d\n", instruction);
 			return offset + 1;
 	}
 }
-
 
 void disassembleChunk(Chunk* chunk, const char* name) {
 	printf("== %s ==\n", name);
