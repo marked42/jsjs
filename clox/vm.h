@@ -26,7 +26,7 @@ typedef enum {
 	INTERPRET_RUNTIME_ERROR,
 } InterpertResult;
 
-InterpertResult interpret(Chunk* chunk);
+InterpertResult interpret(const char* source);
 
 static InterpertResult run();
 

@@ -12,7 +12,7 @@
 
 1. 内存管理，reallocate 使用了标准库函数 realloc，内部使用了 malloc 和 free，试着完全自己实现内存管理，初始状态可以向操作系统申请固定大小的内存，然后完全自己管理。
 
-## Stack base VM
+## Virtual Machine
 
 1. bytecode 的顺序是，逆波兰表达式
 1. Evaluation Order 规定从左到右，或者不规定（实现决定，存在优化空间）
@@ -20,6 +20,15 @@
 1. 设计最小指令集 OP_NEGATE 和 OP_SUBTRACT 可以只保留一个
 1. 指定实现优化，OP_NEGATE 实现为出栈、取负值、入栈三个操作，也可以实现为直接将栈顶元素去负值。单个指令实现的优化。
 1. Stack based VM
-1. Register Base VM https://craftinginterpreters.com/a-virtual-machine.html#design-note
 1. https://en.wikipedia.org/wiki/Just-in-time_compilation
-1. [The Implementation of Lua 5.0](https://www.lua.org/doc/jucs05.pdf)
+1. Register Based VM
+   1. Register Base VM https://craftinginterpreters.com/a-virtual-machine.html#design-note
+   1. [The Implementation of Lua 5.0](https://www.lua.org/doc/jucs05.pdf)
+   1. Register Allocation https://en.wikipedia.org/wiki/Register_allocation
+
+## Scanner
+
+1. 区分关键字和标识符，使用 Trie 树， [v8](https://github.com/v8/v8/blob/e77eebfe3b747fb315bd3baad09bec0953e53e68/src/parsing/scanner.cc#L1643)
+1. string interpolation 的实现
+1. C++中 '>>'符号的解析问题
+1. contextual keywords 上下文相关的关键字，C#中 await 关键字在 async 函数中是关键字，其他函数中可以作为普通标识符。

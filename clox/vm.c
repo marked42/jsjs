@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "value.h"
 #include "debug.h"
+#include "compiler.h"
 
 VM vm;
 
@@ -18,10 +19,9 @@ void freeVM() {
 
 }
 
-InterpertResult interpret(Chunk* chunk) {
-	vm.chunk = chunk;
-	vm.ip = chunk->code;
-	return run();
+InterpertResult interpret(const char* source) {
+	compile(source);
+	return INTERPRET_OK;
 }
 
 static InterpertResult run() {
