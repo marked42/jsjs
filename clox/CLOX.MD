@@ -140,14 +140,25 @@ static uint32_t hashString(const char* key, int length) {
 1. Declaration 声明，区别在于Declaration引入了一个名称绑定（Binding）。
 2. Statement 普通语句
 
-变量的相关的三个功能
+变量的相关的功能问题
 
 1. 变量声明
-```c
-var a = 1;
-对应bytecode
-// 效果是存储到vm的全局变量中.globals中
-//OP_DEFINE_GLOBAL "a" 1
-```
+   ```c
+   var a = 1;
+   对应bytecode
+   // 效果是存储到vm的全局变量中.globals中
+   //OP_DEFINE_GLOBAL "a" 1
+   ```
 2. 变量值读取
 3. 变量值设置
+4. 全局变量的名称字符串被保存到常量池中，但是同一个变量名每次使用都会生成新的变量，存在重复，浪费常量池的空间，如何优化？
+5. 是否支持隐式变量声明。
+6. 使用名称访问哈希表形式存储的全局变量比较慢，如何优化 ？
+7. 对于可以检测出来的变量未使用情况如何进行错误处理，编译时
+   ```text
+   fun useVar() {
+     print oops;
+   }
+
+   var ooops = "too many o's!";
+   ```

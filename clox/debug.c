@@ -67,6 +67,8 @@ int disassembleInstruction(Chunk* chunk, int offset) {
                                        offset);
         case OP_GET_GLOBAL:
             return constantInstruction("OP_GET_GLOBAL", chunk, offset);
+        case OP_SET_GLOBAL:
+            return constantInstruction("OP_SET_GLOBAL", chunk, offset);
 		default:
 			printf("unknown opcode %d\n", instruction);
 			return offset + 1;
