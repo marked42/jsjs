@@ -89,3 +89,32 @@ ObjString的表示形式
    3. UTF-16 支持所有Unicode字符集,变长表示，浪费空间
    4. UTF-8 支持所有Unicode字符集，变长表示，空间紧凑，对于一个字节的字符来说和ASCII一致
 
+
+## 哈希表
+
+Load Factor 所有可能元素的个数/分桶个数, 衡量哈希表发生键冲突的可能性。 
+
+冲突解决：
+
+1. Separate Chaining，最坏的情况下哈希表退化称为一个单项链表，查询操作由O(1)退化为O(n)，内存不友好，破坏Locality原则。
+2. Open Addressing(closed hashing)，存在键值冲突时，寻找下一个合适的bucket，probing，寻找bucket的顺序叫做probe sequence，
+   1. linear probing
+   
+哈希函数
+
+1. deterministic 同样的输入产生同样的哈希值
+2. uniform 对于一组输入，产生的哈希值应该均匀分布，避免聚集或者出现某种模式，减少冲突.
+3. fast 
+
+FNV-1a 
+
+```c
+static uint32_t hashString(const char* key, int length) {
+  uint32_t hash = 2166136261u;
+  for (int i = 0; i < length; i++) {
+    hash ^= (uint8_t)key[i];
+    hash *= 16777619;
+  }
+  return hash;
+}
+```

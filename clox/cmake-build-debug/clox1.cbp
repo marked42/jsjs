@@ -120,6 +120,12 @@
 		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/scanner.h">
 			<Option target="clox1"/>
 		</Unit>
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/table.c">
+			<Option target="clox1"/>
+		</Unit>
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/table.h">
+			<Option target="clox1"/>
+		</Unit>
 		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/value.c">
 			<Option target="clox1"/>
 		</Unit>

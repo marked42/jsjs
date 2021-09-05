@@ -297,6 +297,30 @@ scanner.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/scanner.c.s
 .PHONY : scanner.c.s
 
+table.o: table.c.o
+.PHONY : table.o
+
+# target to build an object file
+table.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/table.c.o
+.PHONY : table.c.o
+
+table.i: table.c.i
+.PHONY : table.i
+
+# target to preprocess a source file
+table.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/table.c.i
+.PHONY : table.c.i
+
+table.s: table.c.s
+.PHONY : table.s
+
+# target to generate assembly for a file
+table.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/table.c.s
+.PHONY : table.c.s
+
 value.o: value.c.o
 .PHONY : value.o
 
@@ -375,6 +399,9 @@ help:
 	@echo "... scanner.o"
 	@echo "... scanner.i"
 	@echo "... scanner.s"
+	@echo "... table.o"
+	@echo "... table.i"
+	@echo "... table.s"
 	@echo "... value.o"
 	@echo "... value.i"
 	@echo "... value.s"

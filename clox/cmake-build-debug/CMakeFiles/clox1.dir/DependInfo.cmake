@@ -15,6 +15,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/Users/zhangpenghui/code/jsjs/clox/memory.c" "/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/memory.c.o"
   "/Users/zhangpenghui/code/jsjs/clox/object.c" "/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/object.c.o"
   "/Users/zhangpenghui/code/jsjs/clox/scanner.c" "/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/scanner.c.o"
+  "/Users/zhangpenghui/code/jsjs/clox/table.c" "/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/table.c.o"
   "/Users/zhangpenghui/code/jsjs/clox/value.c" "/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/value.c.o"
   "/Users/zhangpenghui/code/jsjs/clox/vm.c" "/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/vm.c.o"
   )
