@@ -8,7 +8,12 @@
 2. static变量声明的含义、
 3. extern 关键字的作用
 4. c语言的separate compilation模型
-5. 作者开发的一个Scripting Language [Wren](https://wren.io/)
+5. 作者开发的其他语言
+   1. 一个Scripting Language [Wren](https://wren.io/)
+   2. http://finch.stuffwithstuff.com/index.html
+   3. http://magpie-lang.org/
+   4. https://github.com/munificent/vigil
+   5. blog http://journal.stuffwithstuff.com/
 
 ## 字节码格式
 
