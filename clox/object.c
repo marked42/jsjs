@@ -15,6 +15,11 @@
 static Obj* allocateObject(size_t size, ObjType objType) {
     Obj* object = (Obj*) reallocate(NULL, 0, size);
     object->type = objType;
+
+    // tracks every allocated obj
+    object->next = vm.objects;
+    vm.objects = object;
+
     return object;
 }
 
@@ -30,6 +35,10 @@ ObjString* copyString(const char* chars, int length) {
     memcpy(heapChars, chars, length);
     heapChars[length] = '\0';
     return allocateString(heapChars, length);
+}
+
+ObjString* takeString(const char* chars, int length) {
+    return allocateString(chars, length);
 }
 
 void printObject(Value value) {

@@ -6,7 +6,9 @@ CMakeFiles/clox1.dir/chunk.c.o
  /Users/zhangpenghui/code/jsjs/clox/chunk.h
  /Users/zhangpenghui/code/jsjs/clox/common.h
  /Users/zhangpenghui/code/jsjs/clox/memory.h
+ /Users/zhangpenghui/code/jsjs/clox/object.h
  /Users/zhangpenghui/code/jsjs/clox/value.h
+ /Users/zhangpenghui/code/jsjs/clox/vm.h
 CMakeFiles/clox1.dir/compiler.c.o
  /Users/zhangpenghui/code/jsjs/clox/chunk.h
  /Users/zhangpenghui/code/jsjs/clox/common.h
@@ -33,9 +35,13 @@ CMakeFiles/clox1.dir/main.c.o
  /Users/zhangpenghui/code/jsjs/clox/value.h
  /Users/zhangpenghui/code/jsjs/clox/vm.h
 CMakeFiles/clox1.dir/memory.c.o
+ /Users/zhangpenghui/code/jsjs/clox/chunk.h
  /Users/zhangpenghui/code/jsjs/clox/common.h
  /Users/zhangpenghui/code/jsjs/clox/memory.c
  /Users/zhangpenghui/code/jsjs/clox/memory.h
+ /Users/zhangpenghui/code/jsjs/clox/object.h
+ /Users/zhangpenghui/code/jsjs/clox/value.h
+ /Users/zhangpenghui/code/jsjs/clox/vm.h
 CMakeFiles/clox1.dir/object.c.o
  /Users/zhangpenghui/code/jsjs/clox/chunk.h
  /Users/zhangpenghui/code/jsjs/clox/common.h
@@ -49,16 +55,19 @@ CMakeFiles/clox1.dir/scanner.c.o
  /Users/zhangpenghui/code/jsjs/clox/scanner.c
  /Users/zhangpenghui/code/jsjs/clox/scanner.h
 CMakeFiles/clox1.dir/value.c.o
+ /Users/zhangpenghui/code/jsjs/clox/chunk.h
  /Users/zhangpenghui/code/jsjs/clox/common.h
  /Users/zhangpenghui/code/jsjs/clox/memory.h
  /Users/zhangpenghui/code/jsjs/clox/object.h
  /Users/zhangpenghui/code/jsjs/clox/value.c
  /Users/zhangpenghui/code/jsjs/clox/value.h
+ /Users/zhangpenghui/code/jsjs/clox/vm.h
 CMakeFiles/clox1.dir/vm.c.o
  /Users/zhangpenghui/code/jsjs/clox/chunk.h
  /Users/zhangpenghui/code/jsjs/clox/common.h
  /Users/zhangpenghui/code/jsjs/clox/compiler.h
  /Users/zhangpenghui/code/jsjs/clox/debug.h
+ /Users/zhangpenghui/code/jsjs/clox/memory.h
  /Users/zhangpenghui/code/jsjs/clox/object.h
  /Users/zhangpenghui/code/jsjs/clox/value.h
  /Users/zhangpenghui/code/jsjs/clox/vm.c

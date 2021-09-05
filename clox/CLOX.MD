@@ -5,6 +5,9 @@
 ## 问题
 
 1. C语言的switch case中不能直接声明变量，需要包裹在显式的块中？
+2. static变量声明的含义、
+3. extern 关键字的作用
+4. c语言的separate compilation模型
 
 ## 字节码格式
 
