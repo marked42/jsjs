@@ -19,11 +19,13 @@ void initVM() {
 	resetStack();
     vm.objects = NULL;
     initTable(&vm.strings);
+    initTable(&vm.globals);
 }
 
 void freeVM() {
     freeObjects();
     freeTable(&vm.strings);
+    freeTable(&vm.globals);
 }
 
 InterpertResult interpret(const char* source) {
@@ -91,6 +93,7 @@ static void concatenate() {
 static InterpertResult run() {
 #define READ_BYTE() (*vm.ip++)
 #define READ_CONSTANT() (vm.chunk->constants.values[READ_BYTE()])
+#define READ_STRING() (AS_STRING(READ_CONSTANT()))
 #define BINARY_OP(valueType, op) \
     do {              \
         if (!IS_NUMBER(peek(0)) || !IS_NUMBER(peek(1))) { \
@@ -117,8 +120,8 @@ static InterpertResult run() {
         uint8_t instruction;
         switch (instruction = READ_BYTE()) {
             case OP_RETURN:
-                printValue(pop());
-                printf("\n");
+//                printValue(pop());
+//                printf("\n");
                 return INTERPRET_OK;
             case OP_NEGATE:
                 if (!IS_NUMBER(peek(0))) {
@@ -167,6 +170,19 @@ static InterpertResult run() {
             }
             case OP_GREATER:  BINARY_OP(BOOL_VAL, >); break;
             case OP_LESS:     BINARY_OP(BOOL_VAL, <); break;
+            case OP_PRINT:
+                printValue(pop());
+                printf("\n");
+                break;
+            case OP_POP:
+                pop();
+                break;
+            case OP_DEFINE_GLOBAL: {
+                ObjString* name = READ_STRING();
+                tableSet(&vm.globals, name, peek(0));
+                pop();
+                break;
+            }
         }
     }
 

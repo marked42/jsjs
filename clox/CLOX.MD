@@ -92,7 +92,7 @@ ObjString的表示形式
 
 TODO: string interning，Java有显式的进行API进行interning。
 使用哈希表对所有字符串实例ObjString进行interning的操作，这时比较字符串相等只需要比较指针即可。
-
+****
 #### 哈希表
 
 Load Factor 所有可能元素的个数/分桶个数, 衡量哈希表发生键冲突的可能性。 
@@ -133,4 +133,21 @@ static uint32_t hashString(const char* key, int length) {
 7. 哈希表扩容
 8. 释放内存
 
+## 全局变量
 
+两种语句分类
+
+1. Declaration 声明，区别在于Declaration引入了一个名称绑定（Binding）。
+2. Statement 普通语句
+
+变量的相关的三个功能
+
+1. 变量声明
+```c
+var a = 1;
+对应bytecode
+// 效果是存储到vm的全局变量中.globals中
+//OP_DEFINE_GLOBAL "a" 1
+```
+2. 变量值读取
+3. 变量值设置
