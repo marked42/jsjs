@@ -4,6 +4,19 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+		{
+			"name": "clox",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${fileDirname}/${fileBasenameNoExtension}",
+			"args": [],
+			"stopAtEntry": true,
+			"cwd": "${workspaceFolder}",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "lldb",
+			"preLaunchTask": "build clox"
+    },
     {
       "type": "java",
       "name": "Launch AstPrinter",
