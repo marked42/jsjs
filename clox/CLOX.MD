@@ -8,6 +8,7 @@
 2. static变量声明的含义、
 3. extern 关键字的作用
 4. c语言的separate compilation模型
+5. 作者开发的一个Scripting Language [Wren](https://wren.io/)
 
 ## 字节码格式
 
@@ -69,3 +70,22 @@ typedef struct {
 } ObjString;
 
 ```
+
+### 字符串
+
+ObjString的表示形式
+
+1. Value -> Obj -> ObjString 使用动态分配的Obj中嵌套动态分配的字符串数组表示，访问字符串内容需要两次指针解引用indirection，性能有影响。
+2. 使用[flexible array members](https://en.wikipedia.org/wiki/Flexible_array_member)方法去除一层指针，
+3. 每个新建的ObjString在堆中拷贝一个原始字符串const char*的副本，方便后续对象回收内存时正常调用free操作。但是对于只读字符串类型，多个字符串对象可以
+共享同一个内存字符串，避免多个副本。
+
+字符串API的设计
+
+1. 什么是单个字符？ ASCII, Unicode，Unicode中有单个码点（Code Point）代表一个字符，也有多个组合字符（combining character）由多个码点组成。
+2. 内存中如何表示单个码点
+   1. ASCII 只支持英文
+   2. UTF-32 支持所有Unicode字符集，定长表示,O(1)访问第i个字符，太浪费空间
+   3. UTF-16 支持所有Unicode字符集,变长表示，浪费空间
+   4. UTF-8 支持所有Unicode字符集，变长表示，空间紧凑，对于一个字节的字符来说和ASCII一致
+
