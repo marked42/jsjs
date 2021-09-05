@@ -8,14 +8,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/penghui/CLionProjects/clox1/chunk.c" "/Users/penghui/CLionProjects/clox1/cmake-build-debug/CMakeFiles/clox1.dir/chunk.c.o"
-  "/Users/penghui/CLionProjects/clox1/compiler.c" "/Users/penghui/CLionProjects/clox1/cmake-build-debug/CMakeFiles/clox1.dir/compiler.c.o"
-  "/Users/penghui/CLionProjects/clox1/debug.c" "/Users/penghui/CLionProjects/clox1/cmake-build-debug/CMakeFiles/clox1.dir/debug.c.o"
-  "/Users/penghui/CLionProjects/clox1/main.c" "/Users/penghui/CLionProjects/clox1/cmake-build-debug/CMakeFiles/clox1.dir/main.c.o"
-  "/Users/penghui/CLionProjects/clox1/memory.c" "/Users/penghui/CLionProjects/clox1/cmake-build-debug/CMakeFiles/clox1.dir/memory.c.o"
-  "/Users/penghui/CLionProjects/clox1/scanner.c" "/Users/penghui/CLionProjects/clox1/cmake-build-debug/CMakeFiles/clox1.dir/scanner.c.o"
-  "/Users/penghui/CLionProjects/clox1/value.c" "/Users/penghui/CLionProjects/clox1/cmake-build-debug/CMakeFiles/clox1.dir/value.c.o"
-  "/Users/penghui/CLionProjects/clox1/vm.c" "/Users/penghui/CLionProjects/clox1/cmake-build-debug/CMakeFiles/clox1.dir/vm.c.o"
+  "/Users/penghui/coding/jsjs/clox/chunk.c" "/Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/chunk.c.o"
+  "/Users/penghui/coding/jsjs/clox/compiler.c" "/Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/compiler.c.o"
+  "/Users/penghui/coding/jsjs/clox/debug.c" "/Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/debug.c.o"
+  "/Users/penghui/coding/jsjs/clox/main.c" "/Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/main.c.o"
+  "/Users/penghui/coding/jsjs/clox/memory.c" "/Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/memory.c.o"
+  "/Users/penghui/coding/jsjs/clox/scanner.c" "/Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/scanner.c.o"
+  "/Users/penghui/coding/jsjs/clox/value.c" "/Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/value.c.o"
+  "/Users/penghui/coding/jsjs/clox/vm.c" "/Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles/clox1.dir/vm.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 
