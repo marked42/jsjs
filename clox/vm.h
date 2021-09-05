@@ -28,10 +28,11 @@ typedef enum {
 
 InterpertResult interpret(const char* source);
 
-static InterpertResult run();
 
 static void push(Value value);
 
 static Value pop();
 
 #endif
+
+static InterpertResult run();

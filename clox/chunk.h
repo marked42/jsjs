@@ -12,6 +12,13 @@ typedef enum {
 	OP_MULTIPLY,
 	OP_DIVIDE,
 	OP_CONSTANT,
+    OP_NIL,
+    OP_TRUE,
+    OP_FALSE,
+    OP_NOT,
+    OP_EQUAL,
+    OP_LESS,
+    OP_GREATER,
 } OpCode;
 
 typedef struct {

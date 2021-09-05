@@ -87,7 +87,7 @@ static Token string() {
 }
 
 TokenType checkKeyword(int start, int length, const char* text, TokenType type) {
-	if (scanner.current - scanner.start == start + length && memcpy((void*)(scanner.start + start), text, length) == 0) {
+	if (scanner.current - scanner.start == start + length && memcmp((void*)(scanner.start + start), text, length) == 0) {
 		return type;
 	}
 	return TOKEN_IDENTIFIER;
@@ -106,6 +106,7 @@ static TokenType identifierType() {
 					case 'u': return checkKeyword(2, 1, "n", TOKEN_FUN);
 				}
 			}
+            break;
 		case 'i': return checkKeyword(1, 1, "f", TOKEN_IF);
 		case 'n': return checkKeyword(1, 2, "il", TOKEN_NIL);
 		case 'o': return checkKeyword(1, 1, "r", TOKEN_OR);
@@ -119,6 +120,7 @@ static TokenType identifierType() {
 				case 'r': return checkKeyword(2, 2, "ue", TOKEN_TRUE);
 				}
 			}
+            break;
 		case 'v': return checkKeyword(1, 2, "ar", TOKEN_VAR);
 		case 'w': return checkKeyword(1, 4, "hile", TOKEN_WHILE);
 	}
@@ -146,8 +148,9 @@ Token number() {
 	return makeToken(TOKEN_NUMBER);
 }
 
-
 Token scanToken() {
+    skipWhitespace();
+
 	scanner.start = scanner.current;
 
 	if (isAtEnd()) return makeToken(TOKEN_EOF);
