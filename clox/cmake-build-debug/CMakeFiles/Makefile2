@@ -54,10 +54,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/zhangpenghui/code/jsjs/clox
+CMAKE_SOURCE_DIR = /Users/penghui/coding/jsjs/clox
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/zhangpenghui/code/jsjs/clox/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/penghui/coding/jsjs/clox/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/clox1.dir/clean
 CMakeFiles/clox1.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Built target clox1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Built target clox1"
 .PHONY : CMakeFiles/clox1.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/clox1.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles 11
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles 11
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/clox1.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/clox1.dir/rule
 
 # Convenience name for target.

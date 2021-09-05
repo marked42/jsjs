@@ -54,6 +54,15 @@ CMakeFiles/clox1.dir/scanner.c.o: \
  ../common.h \
  ../scanner.c \
  ../scanner.h
+CMakeFiles/clox1.dir/table.c.o: \
+ ../chunk.h \
+ ../common.h \
+ ../memory.h \
+ ../object.h \
+ ../table.c \
+ ../table.h \
+ ../value.h \
+ ../vm.h
 CMakeFiles/clox1.dir/value.c.o: \
  ../chunk.h \
  ../common.h \

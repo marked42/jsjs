@@ -118,3 +118,14 @@ static uint32_t hashString(const char* key, int length) {
   return hash;
 }
 ```
+
+哈希表的操作
+
+1. 初始化
+2. 添加元素
+3. 查询元素，
+4. 内部操作findEntry，存在时找到元素Entry，不存在时找到第一个tombstone的位置或者空元素
+5. 拷贝哈希表，不能直接拷贝内存，因为哈希表中元素插入的位置跟size有关，需要重新将所有元素插入一遍初始化新的哈希表。
+6. 删除元素，删除元素需要使用tombstone元素，
+7. 哈希表扩容
+8. 释放内存

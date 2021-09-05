@@ -44,6 +44,7 @@ bool tableGet(Table* table, ObjString* key, Value* value) {
     if (table->count == 0)     { return false; }
 
     Entry* entry = findEntry(table->entries, table->capacity, key);
+    // tombstone or empty
     if (entry->key == NULL) { return false; }
 
     *value = entry->value;
@@ -55,6 +56,7 @@ bool tableDelete(Table* table, ObjString* key) {
     if (table->count == 0) { return false;}
 
     Entry* entry = findEntry(table->entries, table->capacity, key);
+    // tombstone or empty
     if (entry->key == NULL) { return false; }
 
     // tombstone
@@ -71,13 +73,18 @@ static void adjustCapacity(Table* table, int capacity) {
         entries[i].value = NIL_VAL;
     }
 
-    for (int i = 0; i < capacity; i++) {
+    table->count = 0;
+    for (int i = 0; i < table->capacity; i++) {
         Entry* entry = &table->entries[i];
+        // empty or tombstone
         if (entry->key == NULL) { continue; }
 
+        // 不存在重复元素，所以找到的都是空的Entry，直接写入新数据
         Entry* dest = findEntry(entries, capacity, entry->key);
         dest->key = entry->key;
         dest->value = entry->value;
+
+        table->count++;
     }
 
     FREE_ARRAY(Entry, table->entries, table->capacity);
@@ -94,7 +101,8 @@ bool tableSet(Table* table, ObjString* key, Value value) {
 
     Entry* entry = findEntry(table->entries, table->capacity, key);
     bool isNewKey = entry->key == NULL;
-    if (isNewKey) {
+    // 不是tombstone时count加1，count表示tombstone Entry和普通entry的总数
+    if (isNewKey && IS_NIL(entry->value)) {
         table->count++;
     }
 
