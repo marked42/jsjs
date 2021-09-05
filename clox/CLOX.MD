@@ -90,7 +90,10 @@ ObjString的表示形式
    4. UTF-8 支持所有Unicode字符集，变长表示，空间紧凑，对于一个字节的字符来说和ASCII一致
 
 
-## 哈希表
+TODO: string interning，Java有显式的进行API进行interning。
+使用哈希表对所有字符串实例ObjString进行interning的操作，这时比较字符串相等只需要比较指针即可。
+
+#### 哈希表
 
 Load Factor 所有可能元素的个数/分桶个数, 衡量哈希表发生键冲突的可能性。 
 
@@ -129,3 +132,5 @@ static uint32_t hashString(const char* key, int length) {
 6. 删除元素，删除元素需要使用tombstone元素，
 7. 哈希表扩容
 8. 释放内存
+
+

@@ -18,10 +18,12 @@ void resetStack() {
 void initVM() {
 	resetStack();
     vm.objects = NULL;
+    initTable(&vm.strings);
 }
 
 void freeVM() {
     freeObjects();
+    freeTable(&vm.strings);
 }
 
 InterpertResult interpret(const char* source) {

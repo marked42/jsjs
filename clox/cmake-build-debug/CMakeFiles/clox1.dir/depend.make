@@ -7,6 +7,7 @@ CMakeFiles/clox1.dir/chunk.c.o: \
  ../common.h \
  ../memory.h \
  ../object.h \
+ ../table.h \
  ../value.h \
  ../vm.h
 CMakeFiles/clox1.dir/compiler.c.o: \
@@ -17,6 +18,7 @@ CMakeFiles/clox1.dir/compiler.c.o: \
  ../debug.h \
  ../object.h \
  ../scanner.h \
+ ../table.h \
  ../value.h \
  ../vm.h
 CMakeFiles/clox1.dir/debug.c.o: \
@@ -32,6 +34,7 @@ CMakeFiles/clox1.dir/main.c.o: \
  ../debug.h \
  ../main.c \
  ../object.h \
+ ../table.h \
  ../value.h \
  ../vm.h
 CMakeFiles/clox1.dir/memory.c.o: \
@@ -40,6 +43,7 @@ CMakeFiles/clox1.dir/memory.c.o: \
  ../memory.c \
  ../memory.h \
  ../object.h \
+ ../table.h \
  ../value.h \
  ../vm.h
 CMakeFiles/clox1.dir/object.c.o: \
@@ -48,6 +52,7 @@ CMakeFiles/clox1.dir/object.c.o: \
  ../memory.h \
  ../object.c \
  ../object.h \
+ ../table.h \
  ../value.h \
  ../vm.h
 CMakeFiles/clox1.dir/scanner.c.o: \
@@ -68,6 +73,7 @@ CMakeFiles/clox1.dir/value.c.o: \
  ../common.h \
  ../memory.h \
  ../object.h \
+ ../table.h \
  ../value.c \
  ../value.h \
  ../vm.h
@@ -78,6 +84,7 @@ CMakeFiles/clox1.dir/vm.c.o: \
  ../debug.h \
  ../memory.h \
  ../object.h \
+ ../table.h \
  ../value.h \
  ../vm.c \
  ../vm.h
