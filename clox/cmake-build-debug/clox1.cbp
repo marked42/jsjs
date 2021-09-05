@@ -8,125 +8,131 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/penghui/coding/jsjs/clox/cmake-build-debug"/>
+				<Option working_dir="/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/penghui/coding/jsjs/clox/cmake-build-debug"/>
+				<Option working_dir="/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/penghui/coding/jsjs/clox/cmake-build-debug"/>
+				<Option working_dir="/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="clox1">
-				<Option output="/Users/penghui/coding/jsjs/clox/cmake-build-debug/clox1" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/penghui/coding/jsjs/clox/cmake-build-debug"/>
+				<Option output="/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/clox1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include"/>
-					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clox1"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clox1"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="clox1/fast">
-				<Option output="/Users/penghui/coding/jsjs/clox/cmake-build-debug/clox1" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/penghui/coding/jsjs/clox/cmake-build-debug"/>
+				<Option output="/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/clox1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include"/>
-					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clox1/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/penghui/coding/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clox1/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/chunk.c">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/chunk.c">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/chunk.h">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/chunk.h">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/common.h">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/common.h">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/compiler.c">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/compiler.c">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/compiler.h">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/compiler.h">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/debug.c">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/debug.c">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/debug.h">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/debug.h">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/main.c">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/main.c">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/memory.c">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/memory.c">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/memory.h">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/memory.h">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/scanner.c">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/object.c">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/scanner.h">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/object.h">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/value.c">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/scanner.c">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/value.h">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/scanner.h">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/vm.c">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/value.c">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/vm.h">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/value.h">
 			<Option target="clox1"/>
 		</Unit>
-		<Unit filename="/Users/penghui/coding/jsjs/clox/CMakeLists.txt">
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/vm.c">
+			<Option target="clox1"/>
+		</Unit>
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/vm.h">
+			<Option target="clox1"/>
+		</Unit>
+		<Unit filename="/Users/zhangpenghui/code/jsjs/clox/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

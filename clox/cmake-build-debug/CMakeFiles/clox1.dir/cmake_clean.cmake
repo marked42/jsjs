@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/clox1.dir/debug.c.o"
   "CMakeFiles/clox1.dir/main.c.o"
   "CMakeFiles/clox1.dir/memory.c.o"
+  "CMakeFiles/clox1.dir/object.c.o"
   "CMakeFiles/clox1.dir/scanner.c.o"
   "CMakeFiles/clox1.dir/value.c.o"
   "CMakeFiles/clox1.dir/vm.c.o"

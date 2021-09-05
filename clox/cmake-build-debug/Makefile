@@ -57,10 +57,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/penghui/coding/jsjs/clox
+CMAKE_SOURCE_DIR = /Users/zhangpenghui/code/jsjs/clox
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/penghui/coding/jsjs/clox/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/zhangpenghui/code/jsjs/clox/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles /Users/penghui/coding/jsjs/clox/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles /Users/zhangpenghui/code/jsjs/clox/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/penghui/coding/jsjs/clox/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/zhangpenghui/code/jsjs/clox/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -249,6 +249,30 @@ memory.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/memory.c.s
 .PHONY : memory.c.s
 
+object.o: object.c.o
+.PHONY : object.o
+
+# target to build an object file
+object.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/object.c.o
+.PHONY : object.c.o
+
+object.i: object.c.i
+.PHONY : object.i
+
+# target to preprocess a source file
+object.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/object.c.i
+.PHONY : object.c.i
+
+object.s: object.c.s
+.PHONY : object.s
+
+# target to generate assembly for a file
+object.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox1.dir/build.make CMakeFiles/clox1.dir/object.c.s
+.PHONY : object.c.s
+
 scanner.o: scanner.c.o
 .PHONY : scanner.o
 
@@ -345,6 +369,9 @@ help:
 	@echo "... memory.o"
 	@echo "... memory.i"
 	@echo "... memory.s"
+	@echo "... object.o"
+	@echo "... object.i"
+	@echo "... object.s"
 	@echo "... scanner.o"
 	@echo "... scanner.i"
 	@echo "... scanner.s"

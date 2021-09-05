@@ -2,6 +2,10 @@
 
 [Github Repo](https://github.com/munificent/craftinginterpreters)
 
+## 问题
+
+1. C语言的switch case中不能直接声明变量，需要包裹在显式的块中？
+
 ## 字节码格式
 
 1. 指令占据一个字节（byte），表示具体的操作类型，一个指令后面跟若干个字节的内容作为操作数，操作数的具体含义与指令的定义相关。
@@ -32,3 +36,33 @@
 1. string interpolation 的实现
 1. C++中 '>>'符号的解析问题
 1. contextual keywords 上下文相关的关键字，C#中 await 关键字在 async 函数中是关键字，其他函数中可以作为普通标识符。
+
+## 数据类型
+
+数据类型的表示，基础类型number/boolean/nil，对象类型Obj。基础类型与对象类型的区分在于基础类型的大小固定且较小，可以直接有结构体表示，方便在栈上分配。
+对象类型大小不确定且无长度限制，需要在运行时分配，适合分配在堆内存中。
+
+宏参数需要用括号括起来，防止与其他语法冲突，如果宏参数被多次使用，且被展开的宏参数有副作用的话会造成多次副作用，下面例子中的宏使用函数实现，避免这个问题。
+
+```c
+#define IS_STRING(value) isObjType(value, OBJ_STRING)
+
+static inline bool isObjType(Value value, ObjType type) {
+return IS_OBJ(value) && AS_OBJ(value)->type == type;
+}
+```
+
+使用C语言struct结构体模拟类继承效果，`ObjString`的第一个成员是基类`Obj`类型，这样任何`ObjString*`类型可以被安全的转换为基类指针类型`Obj*`。
+C语言规定结构体中字段在内存中的顺序和成员声明顺序一致，允许其中因为内存对其有padding，成员数据之间在内存上不连续，但是第一个成员之前不能有padding。
+这样结构体的指针可以安全的转换为第一个成员类型的指针。
+
+```c
+typedef struct {
+    ObjType type;
+} Obj;
+
+typedef struct {
+    Obj obj;
+} ObjString;
+
+```
