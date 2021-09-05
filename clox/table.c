@@ -124,8 +124,9 @@ void tableAddAll(Table* from, Table* to) {
 ObjString* tableFindString(Table* table, const char* chars, int length, uint32_t hash) {
     if (table->count == 0) { return NULL; }
 
-    for (int i = 0; i < table->capacity; i++) {
-        Entry* entry = &table->entries[i];
+    uint32_t index = hash % table->capacity;
+    for (;;) {
+        Entry* entry = &table->entries[index];
 
         // Empty or tombstone element
         if (entry->key == NULL) {
@@ -134,10 +135,10 @@ ObjString* tableFindString(Table* table, const char* chars, int length, uint32_t
                 return NULL;
             }
             // continue on tome stone
-        }  else if (entry->key->length == length && entry->key->hash == hash && memcmp(entry->key->chars, chars, length)) {
+        }  else if (entry->key->length == length && entry->key->hash == hash && memcmp(entry->key->chars, chars, length) == 0) {
             return entry->key;
         }
 
-        i = (i + 1) % table->capacity;
+        index = (index + 1) % table->capacity;
     }
 }
