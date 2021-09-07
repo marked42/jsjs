@@ -222,3 +222,54 @@ var b = b + 1;
 ### 重复声明
 
 同一个作用域中重新声明同名变量，Javascript var允许 let/const不允许， REPL环境下允许 rust允许。
+
+## 流程控制
+
+使用OP_JUMP_IF_FALSE/OP_JUMP指令，接受两字节跳转参数作为ip跳转偏移量。
+
+1. if/else语句，注意语句在执行完成后操作数栈应该恢复到原来的深度，使用OP_POP弹出操作数
+2. 逻辑操作符 
+   1. a and b，短路逻辑，a为真值时不对b进行求值操作，表达式的值就是a的值；a为假值时对b求值，表达式的值就是b的值，表达式值不被转换为布尔值。使用一个OP_JUMP_IF_FALSE指令和OP_POP指令实现。
+   2. a or b, 类似逻辑，可以使用一个OP_JUMP_IF_FALSE，一个OP_JUMP和一个OP_POP实现
+   3. or使用了三个指令会比and执行慢一个指令，可以通过添加新执行OP_JUMP_IF_TRUE实现，不添加新指令如何实现？
+3. while loop
+4. for loop
+5. continue 跳转到最近一层的下次循环顶部，相当于跳过剩余循环体的执行；continue必须被循环体包围，否则是语法错误；注意continue跳转出，内部scope结束，其中局部变量应该被清理。
+6. continue label 调到指定语句
+7. break 结束最近一层的循环，同样注意局部变量和作用域的处理
+8. switch case
+9. rust的loop
+
+Goto Statement Considered Harmful
+
+break只能中断一层循环，中断多层循环的写法比较麻烦，使用goto简洁很多。
+
+```c
+// See if the matrix contains a zero.
+bool found = false;
+for (int x = 0; x < xSize; x++) {
+  for (int y = 0; y < ySize; y++) {
+    for (int z = 0; z < zSize; z++) {
+      if (matrix[x][y][z] == 0) {
+        printf("found");
+        found = true;
+        break;
+      }
+    }
+    if (found) break;
+  }
+  if (found) break;
+}
+
+for (int x = 0; x < xSize; x++) {
+   for (int y = 0; y < ySize; y++) {
+      for (int z = 0; z < zSize; z++) {
+         if (matrix[x][y][z] == 0) {
+            printf("found");
+            goto done;
+         }
+      }
+   }
+}
+done:
+```
