@@ -530,9 +530,65 @@ static void block() {
     consume(TOKEN_RIGHT_BRACE, "Expect '}' after block");
 }
 
+/**
+ * condition
+ * OP_JUMP_IF_FALSE     op
+ * byte1                high byte of jump offset
+ * byte2                low byte of jump offset
+ *                      count after emitted
+ *
+ * @param jumpInstruction
+ * @return byte1 start position of jump offset address to be patched
+ */
+int emitJump(uint8_t jumpInstruction) {
+    emitByte(jumpInstruction);
+    // value doesn't matter since it'll be patched later, but set to max to report error if not patched
+    emitByte(0xff);
+    emitByte(0xff);
+
+    // index of op code jumpInstruction
+    return currentChunk()->count - 2;
+}
+
+/**
+ * @param offset jump offset start address index
+ */
+static void patchJump(int offset) {
+    int jump = currentChunk()->count - offset - 2;
+    if (jump > UINT16_MAX) {
+        error("Too much code to jump over");
+    }
+
+    currentChunk()->code[offset] = (jump >> 8) & 0xff;
+    currentChunk()->code[offset + 1] = jump & 0xff;
+}
+
+static void ifStatement() {
+    consume(TOKEN_LEFT_PAREN, "Expect '(' after 'if'.");
+    expression();
+    consume(TOKEN_RIGHT_PAREN, "Expect ')' after condition.");
+
+    int thenJump = emitJump(OP_JUMP_IF_FALSE);
+    emitByte(OP_POP);
+    statement();
+
+    int elseJump = emitJump(OP_JUMP);
+
+    patchJump(thenJump);
+    emitByte(OP_POP);
+
+    if (match(TOKEN_ELSE)) {
+        statement();
+    }
+
+    patchJump(elseJump);
+}
+
 static void statement() {
     if (match(TOKEN_PRINT)) {
         printStatement();
+    } else if (match(TOKEN_IF)) {
+        ifStatement();
     } else if (match(TOKEN_LEFT_BRACE)) {
         beginScope();
         block();
