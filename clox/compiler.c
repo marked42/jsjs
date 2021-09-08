@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "common.h"
 #include "scanner.h"
 #include "compiler.h"
@@ -7,6 +8,16 @@
 #ifdef DEBUG_PRINT_CODE
 #include "debug.h"
 #endif
+
+/**
+ * set local variable depth to -1 means it's uninitialized yet
+ */
+static const int LOCAL_VARIABLE_UNINITIALIZED = -1;
+
+/**
+ * use a negative value to represent non exist local variable index
+ */
+static const int LOCAL_VARIABLE_NOT_FOUND = -1;
 
 typedef struct {
 	Token previous;
@@ -37,7 +48,19 @@ typedef struct {
   Precedence precedence;
 } ParseRule;
 
+typedef struct {
+    Token name;
+    int depth;
+} Local;
+
+typedef struct {
+    Local locals[UINT8_COUNT];
+    int localCount;
+    int scopeDepth;
+} Compiler;
+
 Parser parser;
+Compiler *current = NULL;
 Chunk* compilingChunk;
 
 Chunk* currentChunk() {
@@ -141,6 +164,12 @@ static void emitConstant(Value value) {
 	emitBytes(OP_CONSTANT, makeConstant(value));
 }
 
+static void initCompiler(Compiler* compiler) {
+    compiler->localCount = 0;
+    compiler->scopeDepth = 0;
+    current = compiler;
+}
+
 static void number(bool canAssign) {
 	double value = strtod(parser.previous.start, NULL);
 
@@ -196,13 +225,46 @@ static uint8_t identifierConstant(Token* name) {
     return makeConstant(OBJ_VAL(copyString(name->start, name->length)));
 }
 
+static bool identifiersEqual(Token* left, Token* right) {
+    // quick check for strings of different length
+    if (left->length != right->length) { return false; }
+
+    return memcmp(left->start, right->start, left->length) == 0;
+}
+
+static int resolveLocal(Compiler* compiler, Token* name) {
+    for (int i = compiler->localCount - 1; i >= 0; i--) {
+        Local* local = &compiler->locals[i];
+
+        if (identifiersEqual(&local->name, name)) {
+            if (local->depth == LOCAL_VARIABLE_UNINITIALIZED) {
+                error("Can't read local variable in it's own initializer");
+            }
+            return i;
+        }
+    }
+
+    return LOCAL_VARIABLE_NOT_FOUND;
+}
+
 static void namedVariable(Token* token, bool canAssign) {
-    uint8_t name = identifierConstant(token);
+    uint8_t arg = resolveLocal(current, token);
+    uint8_t getOp, setOp;
+    // find no local variable of name token, so it's a global variable
+    if (arg == LOCAL_VARIABLE_NOT_FOUND) {
+        arg = identifierConstant(token);
+        getOp = OP_GET_GLOBAL;
+        setOp = OP_SET_GLOBAL;
+    // local variable
+    } else {
+        getOp = OP_GET_LOCAL;
+        setOp = OP_SET_LOCAL;
+    }
     if (canAssign && match(TOKEN_EQUAL)) {
         expression();
-        emitBytes(OP_SET_GLOBAL, name);
+        emitBytes(getOp, arg);
     } else {
-        emitBytes(OP_GET_GLOBAL, name);
+        emitBytes(setOp, arg);
     }
 }
 
@@ -274,13 +336,60 @@ static void parsePrecedence(Precedence precedence) {
     }
 }
 
+static void addLocal(Token name) {
+    // report an error if total local count exceeds limit
+    if (current->localCount == UINT8_COUNT) {
+        error("Too many local variables in function.");
+        return;
+    }
+
+    Local* variable = &current->locals[current->localCount];
+    variable->name = name;
+    // mark local variable as uninitialized using depth
+    variable->depth = LOCAL_VARIABLE_UNINITIALIZED;
+
+    current->localCount++;
+}
+
+static void markInitialized() {
+    current->locals[current->localCount - 1].depth = current->scopeDepth;
+}
+
+
+static void declareVariable() {
+    if (current->localCount == 0) {
+        return;
+    }
+
+    Token* name = &parser.previous;
+    for (int i = current->localCount - 1; i >= 0; i--) {
+        Local* local = &current->locals[i];
+        // stop when exiting closest enclosing scope
+        if (local->depth != LOCAL_VARIABLE_UNINITIALIZED && local->depth < current->scopeDepth) {
+            break;
+        }
+
+        if (identifiersEqual(name, &local->name)) {
+            error("Already a variable with this name in this scope.");
+        }
+    }
+
+    addLocal(*name);
+}
+
 static uint8_t parseVariable(const char* message) {
     consume(TOKEN_IDENTIFIER, message);
 
+    declareVariable();
+
+    // don't generate constant string for local variable name
+    const isLocalVariable = current->scopeDepth > 0;
+    if (isLocalVariable) return 0;
     return identifierConstant(&parser.previous);
 }
 
 static void defineVariable(uint8_t global) {
+    if (current->scopeDepth > 0) { return; }
     emitBytes(OP_DEFINE_GLOBAL, global);
 }
 
@@ -295,6 +404,8 @@ static void expression() {
 bool compile(const char* source, Chunk* chunk) {
 	initScanner(source);
 
+    Compiler compiler;
+    initCompiler(&compiler);
 	compilingChunk = chunk;
 
 	parser.hadError = false;
@@ -382,9 +493,50 @@ static void expressionStatement() {
     emitByte(OP_POP);
 }
 
+static void beginScope() {
+    current->scopeDepth++;
+}
+
+/**
+ * pop off local variable values of current scope from operands stack
+ * pop off local variable record of current scope from scope stack
+ */
+static void endScope() {
+    for (int i = current->localCount - 1; i >= 0; i--) {
+        if (current->locals[i].depth < current->scopeDepth) {
+            break;
+        }
+        current->localCount--;
+        emitByte(OP_POP);
+    }
+    current->scopeDepth--;
+
+//  reference author implementation if there's a problem
+//    current->scopeDepth--;
+//
+//    while (current->localCount > 0 &&
+//           current->locals[current->localCount - 1].depth >
+//           current->scopeDepth) {
+//        emitByte(OP_POP);
+//        current->localCount--;
+//    }
+}
+
+static void block() {
+    while (!check(TOKEN_RIGHT_BRACE) && !check(TOKEN_EOF)) {
+        declaration();
+    }
+
+    consume(TOKEN_RIGHT_BRACE, "Expect '}' after block");
+}
+
 static void statement() {
-    if (match(TOKEN_PRINT))  {
+    if (match(TOKEN_PRINT)) {
         printStatement();
+    } else if (match(TOKEN_LEFT_BRACE)) {
+        beginScope();
+        block();
+        endScope();
     } else {
         expressionStatement();
     }
