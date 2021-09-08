@@ -139,6 +139,39 @@ void endCompiler() {
 	emitByte(OP_RETURN);
 }
 
+/**
+ * condition
+ * OP_JUMP_IF_FALSE     op
+ * byte1                high byte of jump offset
+ * byte2                low byte of jump offset
+ *                      count after emitted
+ *
+ * @param jumpInstruction
+ * @return byte1 start position of jump offset address to be patched
+ */
+int emitJump(uint8_t jumpInstruction) {
+    emitByte(jumpInstruction);
+    // value doesn't matter since it'll be patched later, but set to max to report error if not patched
+    emitByte(0xff);
+    emitByte(0xff);
+
+    // index of op code jumpInstruction
+    return currentChunk()->count - 2;
+}
+
+/**
+ * @param offset jump offset start address index
+ */
+static void patchJump(int offset) {
+    int jump = currentChunk()->count - offset - 2;
+    if (jump > UINT16_MAX) {
+        error("Too much code to jump over");
+    }
+
+    currentChunk()->code[offset] = (jump >> 8) & 0xff;
+    currentChunk()->code[offset + 1] = jump & 0xff;
+}
+
 static void expression();
 static void statement();
 static void declaration();
@@ -272,6 +305,27 @@ static void variable(bool canAssign) {
     namedVariable(&parser.previous, canAssign);
 }
 
+static void and_(bool canAssign) {
+    int endJump = emitJump(OP_JUMP_IF_FALSE);
+
+    emitByte(OP_POP);
+
+    parsePrecedence(PREC_AND);
+
+    patchJump(endJump);
+}
+
+static void or_(bool canAssign) {
+    int elseJump = emitJump(OP_JUMP_IF_FALSE);
+    int endJump = emitJump(OP_JUMP);
+
+    patchJump(elseJump);
+    emitByte(OP_POP);
+
+    parsePrecedence(PREC_OR);
+    patchJump(endJump);
+}
+
 ParseRule rules[] = {
   [TOKEN_LEFT_PAREN]    = {grouping, NULL,   PREC_NONE},
   [TOKEN_RIGHT_PAREN]   = {NULL,     NULL,   PREC_NONE},
@@ -295,7 +349,7 @@ ParseRule rules[] = {
   [TOKEN_IDENTIFIER]    = {variable,     NULL,   PREC_NONE},
   [TOKEN_STRING]        = {string,     NULL,   PREC_NONE},
   [TOKEN_NUMBER]        = {number,   NULL,   PREC_NONE},
-  [TOKEN_AND]           = {NULL,     NULL,   PREC_NONE},
+  [TOKEN_AND]           = {NULL,     and_,   PREC_NONE},
   [TOKEN_CLASS]         = {NULL,     NULL,   PREC_NONE},
   [TOKEN_ELSE]          = {NULL,     NULL,   PREC_NONE},
   [TOKEN_FALSE]         = {literal,     NULL,   PREC_NONE},
@@ -528,39 +582,6 @@ static void block() {
     }
 
     consume(TOKEN_RIGHT_BRACE, "Expect '}' after block");
-}
-
-/**
- * condition
- * OP_JUMP_IF_FALSE     op
- * byte1                high byte of jump offset
- * byte2                low byte of jump offset
- *                      count after emitted
- *
- * @param jumpInstruction
- * @return byte1 start position of jump offset address to be patched
- */
-int emitJump(uint8_t jumpInstruction) {
-    emitByte(jumpInstruction);
-    // value doesn't matter since it'll be patched later, but set to max to report error if not patched
-    emitByte(0xff);
-    emitByte(0xff);
-
-    // index of op code jumpInstruction
-    return currentChunk()->count - 2;
-}
-
-/**
- * @param offset jump offset start address index
- */
-static void patchJump(int offset) {
-    int jump = currentChunk()->count - offset - 2;
-    if (jump > UINT16_MAX) {
-        error("Too much code to jump over");
-    }
-
-    currentChunk()->code[offset] = (jump >> 8) & 0xff;
-    currentChunk()->code[offset + 1] = jump & 0xff;
 }
 
 static void ifStatement() {
