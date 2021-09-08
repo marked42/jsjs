@@ -33,6 +33,8 @@ stdio.h
 -
 stdlib.h
 -
+string.h
+-
 common.h
 /Users/penghui/coding/jsjs/clox/common.h
 scanner.h
@@ -115,6 +117,16 @@ common.h
 /Users/penghui/coding/jsjs/clox/common.h
 value.h
 /Users/penghui/coding/jsjs/clox/value.h
+
+/Users/penghui/coding/jsjs/clox/scanner.c
+stdio.h
+-
+string.h
+-
+common.h
+/Users/penghui/coding/jsjs/clox/common.h
+scanner.h
+/Users/penghui/coding/jsjs/clox/scanner.h
 
 /Users/penghui/coding/jsjs/clox/scanner.h
 

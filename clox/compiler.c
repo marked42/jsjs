@@ -632,6 +632,53 @@ static void ifStatement() {
     patchJump(elseJump);
 }
 
+static void forStatement() {
+    // initializer can be variable declaration, forStatement creates a new scope
+    beginScope();
+    consume(TOKEN_LEFT_PAREN, "Expect '(' after for.");
+    if (match(TOKEN_SEMICOLON)) {
+    } else if (match(TOKEN_VAR)) {
+        varDeclaration();
+    } else {
+        expressionStatement();
+    }
+
+    int loopStart = currentChunk()->count;
+    int exitJump = -1;
+    if (!match(TOKEN_SEMICOLON)) {
+        expression();
+        consume(TOKEN_SEMICOLON, "Expect ';' after condition.");
+
+        exitJump = emitJump(OP_JUMP_IF_FALSE);
+        // pop condition when true
+        emitByte(OP_POP);
+    }
+
+    if (!match(TOKEN_RIGHT_PAREN)) {
+        int bodyJump = emitJump(OP_JUMP);
+        int incrementStart = currentChunk()->count;
+
+        expression();
+        emitByte(OP_POP);
+        consume(TOKEN_RIGHT_PAREN, "Expect ')' after increment.");
+
+        emitLoop(loopStart);
+        loopStart = incrementStart;
+        patchJump(bodyJump);
+    }
+
+    statement();
+    emitLoop(loopStart);
+
+    if (exitJump != -1) {
+        patchJump(exitJump);
+        // pop condition when false
+        emitByte(OP_POP);
+    }
+
+    endScope();
+}
+
 static void statement() {
     if (match(TOKEN_PRINT)) {
         printStatement();
@@ -641,6 +688,8 @@ static void statement() {
         beginScope();
         block();
         endScope();
+    } else if (match(TOKEN_FOR)){
+        forStatement();
     } else if (match(TOKEN_WHILE)) {
         whileStatement();
     } else {
