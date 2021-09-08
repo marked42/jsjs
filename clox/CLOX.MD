@@ -233,8 +233,8 @@ var b = b + 1;
    1. a and b，短路逻辑，a为真值时不对b进行求值操作，表达式的值就是a的值；a为假值时对b求值，表达式的值就是b的值，表达式值不被转换为布尔值。使用一个OP_JUMP_IF_FALSE指令和OP_POP指令实现。
    2. a or b, 类似逻辑，可以使用一个OP_JUMP_IF_FALSE，一个OP_JUMP和一个OP_POP实现
    3. or使用了三个指令会比and执行慢一个指令，可以通过添加新执行OP_JUMP_IF_TRUE实现，不添加新指令如何实现？
-3. while loop
-4. for loop
+3. while loop condition 只能是表达式？
+4. for loop initializer可以是变量声明或者表达式，不同的处理，对于栈影响不同。
 5. continue 跳转到最近一层的下次循环顶部，相当于跳过剩余循环体的执行；continue必须被循环体包围，否则是语法错误；注意continue跳转出，内部scope结束，其中局部变量应该被清理。
 6. continue label 调到指定语句
 7. break 结束最近一层的循环，同样注意局部变量和作用域的处理
