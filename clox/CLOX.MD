@@ -188,62 +188,63 @@ static uint32_t hashString(const char* key, int length) {
 
 局部变量的操作
 
-局部变量的ID  名称 name + 作用域嵌套深度 scopeDepth
+局部变量的 ID 名称 name + 作用域嵌套深度 scopeDepth
 
 1. 声明 declaration
 2. 定义（初始化） definition/initialization
-3. 初始化 两种初始化语句`var a/ var a = 1`认将a初始化为nil值，
-4. 读取 未声明的变量报错（Javascript严格模式），未初始化的变量(Javascript temporal deal zone)
-5. 写入，读取变量a的值时，该值被保存在栈顶，此时栈中存在a重复的值，寄存器的虚拟机做优化。
+3. 初始化 两种初始化语句`var a/ var a = 1`认将 a 初始化为 nil 值，
+4. 读取 未声明的变量报错（Javascript 严格模式），未初始化的变量(Javascript temporal deal zone)
+5. 写入，读取变量 a 的值时，该值被保存在栈顶，此时栈中存在 a 重复的值，寄存器的虚拟机做优化。
 6. 变量区分为可变和不可变
-7. 同时存在的局部变量的数量限制，使用一个字节表示局部变量的栈偏移量，以下标0为base，所以同时能存在的局部变量最多256个，可以根据需要拓展。
+7. 同时存在的局部变量的数量限制，使用一个字节表示局部变量的栈偏移量，以下标 0 为 base，所以同时能存在的局部变量最多 256 个，可以根据需要拓展。
 8. 对于 `var a = a;`的处理
-9. Compiler计算局部变量的偏移量时是线性扫描的，如何优化？
+9. Compiler 计算局部变量的偏移量时是线性扫描的，如何优化？
 10. 错误检查
     1. 局部变量个数超过上限
     2. 重新定义局部变量
-    3. 使用未初始化的局部变量 scope = -1表示未初始化，读取变量时如果scope = -1表示变量a的初始化语句中使用了a本身`var a = a + 1`。
+    3. 使用未初始化的局部变量 scope = -1 表示未初始化，读取变量时如果 scope = -1 表示变量 a 的初始化语句中使用了 a 本身`var a = a + 1`。
 
-Javascript中变量的声明 
+Javascript 中变量的声明
+
 ```javascript
 // VM547:1 Uncaught ReferenceError: e is not defined
-let a = a + 1;
+let a = a + 1
 
 // ok
-var b = b + 1;
+var b = b + 1
 ```
 
 表达式产生的值留在操作数栈顶，语句执行过程中产生副作用，栈会增加，但是执行结束后栈应该恢复到原来的高度。
 
 局部变量语法作用域 Lexical Scope
 
-编译时将计算局部变量偏移量，因此字节码中不存在局部变量的名称，对于debugger来说需要其他方式
+编译时将计算局部变量偏移量，因此字节码中不存在局部变量的名称，对于 debugger 来说需要其他方式
 来存储这些信息。
 
 ### 重复声明
 
-同一个作用域中重新声明同名变量，Javascript var允许 let/const不允许， REPL环境下允许 rust允许。
+同一个作用域中重新声明同名变量，Javascript var 允许 let/const 不允许， REPL 环境下允许 rust 允许。
 
 ## 流程控制
 
-使用OP_JUMP_IF_FALSE/OP_JUMP指令，接受两字节跳转参数作为ip跳转偏移量。
+使用 OP_JUMP_IF_FALSE/OP_JUMP 指令，接受两字节跳转参数作为 ip 跳转偏移量。
 
-1. if/else语句，注意语句在执行完成后操作数栈应该恢复到原来的深度，使用OP_POP弹出操作数
-2. 逻辑操作符 
-   1. a and b，短路逻辑，a为真值时不对b进行求值操作，表达式的值就是a的值；a为假值时对b求值，表达式的值就是b的值，表达式值不被转换为布尔值。使用一个OP_JUMP_IF_FALSE指令和OP_POP指令实现。
-   2. a or b, 类似逻辑，可以使用一个OP_JUMP_IF_FALSE，一个OP_JUMP和一个OP_POP实现
-   3. or使用了三个指令会比and执行慢一个指令，可以通过添加新执行OP_JUMP_IF_TRUE实现，不添加新指令如何实现？
+1. if/else 语句，注意语句在执行完成后操作数栈应该恢复到原来的深度，使用 OP_POP 弹出操作数
+2. 逻辑操作符
+   1. a and b，短路逻辑，a 为真值时不对 b 进行求值操作，表达式的值就是 a 的值；a 为假值时对 b 求值，表达式的值就是 b 的值，表达式值不被转换为布尔值。使用一个 OP_JUMP_IF_FALSE 指令和 OP_POP 指令实现。
+   2. a or b, 类似逻辑，可以使用一个 OP_JUMP_IF_FALSE，一个 OP_JUMP 和一个 OP_POP 实现
+   3. or 使用了三个指令会比 and 执行慢一个指令，可以通过添加新执行 OP_JUMP_IF_TRUE 实现，不添加新指令如何实现？
 3. while loop condition 只能是表达式？
-4. for loop initializer可以是变量声明或者表达式，不同的处理，对于栈影响不同。
-5. continue 跳转到最近一层的下次循环顶部，相当于跳过剩余循环体的执行；continue必须被循环体包围，否则是语法错误；注意continue跳转出，内部scope结束，其中局部变量应该被清理。
+4. for loop initializer 可以是变量声明或者表达式，不同的处理，对于栈影响不同。
+5. continue 跳转到最近一层的下次循环顶部，相当于跳过剩余循环体的执行；continue 必须被循环体包围，否则是语法错误；注意 continue 跳转出，内部 scope 结束，其中局部变量应该被清理。
 6. continue label 调到指定语句
 7. break 结束最近一层的循环，同样注意局部变量和作用域的处理
 8. switch case
-9. rust的loop
+9. rust 的 loop
 
 Goto Statement Considered Harmful
 
-break只能中断一层循环，中断多层循环的写法比较麻烦，使用goto简洁很多。
+break 只能中断一层循环，中断多层循环的写法比较麻烦，使用 goto 简洁很多。
 
 ```c
 // See if the matrix contains a zero.
@@ -274,3 +275,18 @@ for (int x = 0; x < xSize; x++) {
 }
 done:
 ```
+
+## 函数
+
+1. 函数定义
+1. 函数调用
+1. 递归支持
+1. inline
+1. 函数参数
+1. 函数返回值
+1. 变长参数
+1. 嵌套函数定义
+1. first-class function
+1. native function
+1. closure
+1. tail call optimization
