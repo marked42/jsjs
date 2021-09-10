@@ -206,6 +206,8 @@ static uint32_t hashString(const char* key, int length) {
 
 Javascript 中变量的声明
 
+Javascript 变量隐式创建设计，造成很多 BUG。
+
 ```javascript
 // VM547:1 Uncaught ReferenceError: e is not defined
 let a = a + 1
